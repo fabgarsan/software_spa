@@ -2,6 +2,9 @@ import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {loadUser, logIn, logOut} from "../api/authentication";
 import {RootState} from "./store";
 import axios from "axios";
+import {
+  createNotification
+} from './notificationSlice';
 
 type AuthUser = {
   id: number | null,
@@ -32,7 +35,13 @@ export const logInThunk = createAsyncThunk<{ token: string, user: AuthUser }, si
   async ({username, password}, thunkApi) => {
     try {
       const response = await logIn(username, password)
-      return (await response.data)
+      const data = await response.data
+      thunkApi.dispatch(createNotification({
+        message: `Bienvenido ${data?.user?.username || ''}`,
+        severity: 'success',
+        time: 10000
+      }))
+      return data
     } catch (error) {
       return thunkApi.rejectWithValue(error?.response?.data?.detail)
     }

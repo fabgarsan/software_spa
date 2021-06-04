@@ -1,6 +1,7 @@
 import {configureStore, getDefaultMiddleware} from '@reduxjs/toolkit';
 import {useDispatch} from "react-redux";
 import authSlice from "./authSlice";
+import notificationSlice from "./notificationSlice";
 
 import logger from 'redux-logger';
 
@@ -9,6 +10,7 @@ const middleware = [...getDefaultMiddleware(), logger];
 const store = configureStore({
   reducer: {
     auth: authSlice.reducer,
+    notification: notificationSlice.reducer
   },
   middleware
 });
