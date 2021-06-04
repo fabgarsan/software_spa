@@ -17,6 +17,9 @@ import {useSelector, useDispatch} from "react-redux";
 import {drawerState, changeOpenState} from "@stores/drawerSlices";
 import {IconName} from "@fortawesome/fontawesome-common-types";
 import {logOutThunk} from "@stores/authSlice";
+import {useHistory} from "react-router-dom";
+
+import {Paths} from "@utils/index";
 
 const drawerWidth = 240;
 
@@ -84,7 +87,7 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-interface IconList {
+export interface IconList {
   text: string,
   icon: IconName,
   onClick: () => void
@@ -100,6 +103,7 @@ interface MiniDrawerProps {
 export default function MiniDrawer({children, title, items}: MiniDrawerProps) {
   const classes = useStyles();
   const theme = useTheme();
+  const {push} = useHistory();
 
   const open = useSelector(drawerState);
   const dispatch = useDispatch();
@@ -112,7 +116,8 @@ export default function MiniDrawer({children, title, items}: MiniDrawerProps) {
     dispatch(changeOpenState());
   };
 
-  const logOut = () => dispatch(logOutThunk());
+  const goLogOut = () => dispatch(logOutThunk());
+  const goHome = () => push(Paths.root);
 
   return (
     <div className={classes.root}>
@@ -170,7 +175,13 @@ export default function MiniDrawer({children, title, items}: MiniDrawerProps) {
         </List>
         <Divider/>
         <List>
-          <ListItem button onClick={logOut}>
+          <ListItem button onClick={goHome}>
+            <ListItemIcon>
+              <FontAwesomeIcon icon={["fal", "home"]} size="2x"/>
+            </ListItemIcon>
+            <ListItemText primary='Principal'/>
+          </ListItem>
+          <ListItem button onClick={goLogOut}>
             <ListItemIcon>
               <FontAwesomeIcon icon={["fal", "sign-out"]} size="2x"/>
             </ListItemIcon>
