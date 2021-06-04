@@ -11,11 +11,13 @@ type AuthUser = {
 export type SliceState = {
   user: AuthUser | null,
   loading: boolean,
+  error: { [errorName: string]: string } | null,
   isAuthenticated: boolean
 }
 
 const initialState: SliceState = {
   user: null,
+  error: null,
   loading: false,
   isAuthenticated: false
 }
@@ -27,9 +29,13 @@ type singInParams = {
 
 export const logInThunk = createAsyncThunk<{ token: string, user: AuthUser }, singInParams>(
   'auth/logIn',
-  async ({username, password}) => {
-    const response = await logIn(username, password)
-    return (await response.data)
+  async ({username, password}, thunkApi) => {
+    try {
+      const response = await logIn(username, password)
+      return (await response.data)
+    } catch (error) {
+      return thunkApi.rejectWithValue(error?.response?.data?.detail)
+    }
   }
 )
 
@@ -45,7 +51,6 @@ export const loadUserThunk = createAsyncThunk<AuthUser>(
   'auth/current/',
   async () => {
     const response = await loadUser()
-    // Inferred return type: Promise<MyData>
     return (await response.data)
   }
 )
@@ -67,20 +72,21 @@ export const authSlice = createSlice({
       state.loading = true
       state.isAuthenticated = false
     })
-    builder.addCase(loadUserThunk.fulfilled, (state, action) => {
-      state.user = action.payload;
+    builder.addCase(loadUserThunk.fulfilled, (state, {payload}) => {
+      state.user = payload;
       state.loading = false
       state.isAuthenticated = true
     })
-    builder.addCase(logInThunk.fulfilled, (state, action) => {
-      const token = action.payload.token;
+    builder.addCase(logInThunk.fulfilled, (state, {payload}) => {
+      const token = payload.token;
       localStorage.setItem("token", token);
       axios.defaults.headers.common = {
         "Authorization": `Token ${token}`,
       };
-      state.user = action.payload.user
+      state.user = payload.user
       state.loading = false
       state.isAuthenticated = true
+      state.error = null
     })
     builder.addCase(logOutThunk.fulfilled, (state, action) => {
       state.user = null;
@@ -96,7 +102,10 @@ export const authSlice = createSlice({
       delete axios.defaults.headers.common["Authorization"];
       localStorage.removeItem('token');
     })
-    builder.addCase(logInThunk.rejected, state => {
+    builder.addCase(logInThunk.rejected, (state, {payload}) => {
+      if (typeof payload === 'string') {
+        state.error = {'non_field_errors': payload}
+      }
       state.loading = false
     })
     builder.addCase(loadUserThunk.rejected, state => {
