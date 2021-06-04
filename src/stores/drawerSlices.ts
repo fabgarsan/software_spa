@@ -1,0 +1,26 @@
+import {createSlice} from '@reduxjs/toolkit';
+import {RootState} from "./store";
+
+export type SliceState = {
+  drawerOpen: boolean
+}
+
+const initialState: SliceState = {
+  drawerOpen: false
+}
+
+const drawerSlice = createSlice({
+  name: 'drawer',
+  initialState: initialState,
+  reducers: {
+    changeOpenState: (state) => {
+      state.drawerOpen = !state.drawerOpen
+    },
+  }
+});
+
+export const drawerState = (state: RootState) => state.drawer.drawerOpen;
+export const {
+  changeOpenState
+} = drawerSlice.actions;
+export default drawerSlice;

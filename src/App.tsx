@@ -5,8 +5,9 @@ import SignInForm from "./components/SignInForm";
 import MainRouter from "./containers/MainRouter";
 import Notify from "./components/Notify";
 import {Box, Typography} from "@material-ui/core";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {Drawer} from "./components";
 import loadIcons from "./theme/loadIcons";
+
 loadIcons();
 
 function App() {
@@ -25,7 +26,6 @@ function App() {
   }
   return (
     <div>
-      <FontAwesomeIcon icon={["fal", "coffee"]} size={"10x"} spin />
       <Notify/>
       <MainRouter/>
       <div>
