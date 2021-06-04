@@ -5,6 +5,10 @@
 /.pnp
 .pnp.js
 
+
+# private licences
+.npmrc
+
 # testing
 /coverage
 
