@@ -1,5 +1,5 @@
 import React from 'react';
-import {useInterval} from '../../hooks';
+import {useInterval} from '@hooks/index';
 import {Alert, Color} from "@material-ui/lab";
 
 interface AlertTimerProps {

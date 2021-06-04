@@ -1,6 +1,6 @@
 import Box from '@material-ui/core/Box';
 import React from 'react';
-import {useNotifications} from '../../hooks';
+import {useNotifications} from '@hooks/index';
 
 const Notify = () => {
   const {renderNotification} = useNotifications();

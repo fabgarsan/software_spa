@@ -1,8 +1,8 @@
 import {useEffect} from "react";
 import {useDispatch, useSelector} from 'react-redux';
-import {logInThunk, logOutThunk, loadUserThunk, auth as authInfo} from "../stores/authSlice";
+import {logInThunk, logOutThunk, loadUserThunk, auth as authInfo} from "@stores/authSlice";
 
-export function useAuth() {
+export default function useAuth() {
   const dispatch = useDispatch();
 
   const logIn = (username: string, password: string) => {

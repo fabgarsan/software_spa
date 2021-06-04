@@ -1,10 +1,10 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import {loadUser, logIn, logOut} from "../api/authentication";
-import {RootState} from "./store";
+import {loadUser, logIn, logOut} from "@api/authentication";
+import {RootState} from "@stores/store";
 import axios from "axios";
 import {
   createNotification
-} from './notificationSlice';
+} from '@stores/notificationSlice';
 
 type AuthUser = {
   id: number | null,

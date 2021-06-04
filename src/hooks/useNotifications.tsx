@@ -1,13 +1,13 @@
 import React, {useMemo} from 'react';
 import {Box} from '@material-ui/core';
 import {useDispatch, useSelector} from 'react-redux';
-import AlertTimer from '../components/AlertTimer';
+import {AlertTimer} from '@components/index';
 import {Color} from "@material-ui/lab";
 import {
   createNotification,
   getNotifications,
   removeNotification
-} from '../stores/notificationSlice';
+} from '@stores/notificationSlice';
 
 const useNotifications = () => {
   const dispatch = useDispatch();

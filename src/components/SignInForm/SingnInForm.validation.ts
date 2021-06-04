@@ -1,6 +1,6 @@
 import {useMemo} from "react";
 import * as yup from "yup";
-import useYupValidationResolver from "../../hooks/useYupValidationResolver";
+import {useYupValidationResolver} from "@hooks/index";
 
 const useSingInValidation = () => {
   const validationSchema = useMemo(

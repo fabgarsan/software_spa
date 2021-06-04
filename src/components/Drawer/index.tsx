@@ -14,9 +14,9 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {useSelector, useDispatch} from "react-redux";
-import {drawerState, changeOpenState} from "../../stores/drawerSlices";
+import {drawerState, changeOpenState} from "@stores/drawerSlices";
 import {IconName} from "@fortawesome/fontawesome-common-types";
-import {logOutThunk} from "../../stores/authSlice";
+import {logOutThunk} from "@stores/authSlice";
 
 const drawerWidth = 240;
 

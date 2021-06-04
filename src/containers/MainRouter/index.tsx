@@ -1,6 +1,6 @@
 import React from "react";
-import {Paths} from "../../utils/urlHelper";
-import Root from "../Root";
+import {Paths} from "@utils/index";
+import {Root} from "@containers/index";
 import {
   BrowserRouter as Router,
   Switch,

@@ -1,12 +1,10 @@
 import React from 'react';
 import './App.css';
-import {useAuth} from "./hooks/useAuth";
-import SignInForm from "./components/SignInForm";
-import MainRouter from "./containers/MainRouter";
-import Notify from "./components/Notify";
+import {useAuth} from "@hooks/index";
 import {Box, Typography} from "@material-ui/core";
-import {Drawer} from "./components";
-import loadIcons from "./theme/loadIcons";
+import {SignInForm, Notify} from "@components/index";
+import {MainRouter} from "@containers/index";
+import loadIcons from "@theme/loadIcons";
 
 loadIcons();
 

@@ -1,6 +1,6 @@
 import {createSlice} from '@reduxjs/toolkit';
 import omit from 'lodash.omit';
-import {RootState} from "./store";
+import {RootState} from "@stores/store";
 import {Color} from "@material-ui/lab";
 
 export type Notification = {

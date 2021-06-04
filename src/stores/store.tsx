@@ -1,8 +1,8 @@
 import {configureStore, getDefaultMiddleware} from '@reduxjs/toolkit';
 import {useDispatch} from "react-redux";
-import authSlice from "./authSlice";
-import notificationSlice from "./notificationSlice";
-import drawerSlice from "./drawerSlices";
+import authSlice from "@stores/authSlice";
+import notificationSlice from "@stores/notificationSlice";
+import drawerSlice from "@stores/drawerSlices";
 
 import logger from 'redux-logger';
 

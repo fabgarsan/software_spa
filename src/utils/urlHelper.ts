@@ -1,3 +1,5 @@
 export const Paths = {
-  root:'/'
+  root: '/'
 }
+
+export default Paths;

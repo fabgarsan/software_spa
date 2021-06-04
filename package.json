@@ -24,7 +24,7 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
-    "build": "react-scripts build",
+    "build": "react-app-rewired build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -60,6 +60,7 @@
     "@types/react-router-dom": "^5.1.7",
     "@types/redux-logger": "^3.0.8",
     "babel-plugin-import": "^1.13.3",
+    "babel-plugin-module-resolver": "^4.1.0",
     "customize-cra": "^1.0.0",
     "react-app-rewired": "^2.1.8"
   }

@@ -1,6 +1,6 @@
 import React from "react";
-import {Drawer} from "../../components";
-import {Paths} from "../../utils/urlHelper";
+import Drawer from "@components/Drawer";
+import {Paths} from "@utils/index";
 import {useHistory} from "react-router-dom";
 
 const Root = () => {
