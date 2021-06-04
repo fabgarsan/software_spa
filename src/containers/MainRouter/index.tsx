@@ -11,8 +11,8 @@ import {
 const MainRouter = () => {
   return <Router>
     <Switch>
-      <Route exact path={Paths.root} component={Root}/>
-      <Route exact path={Paths.adminModule} component={AdminDashboard}/>
+      <Route path={Paths.adminModule} component={AdminDashboard}/>
+      <Route path={Paths.root} component={Root}/>
     </Switch>
   </Router>
 }

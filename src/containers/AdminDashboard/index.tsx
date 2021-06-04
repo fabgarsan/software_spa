@@ -1,16 +1,22 @@
 import React from "react";
-import {useHistory} from "react-router-dom";
+import {Route, Switch, useHistory} from "react-router-dom";
 import {Drawer} from "@components/index";
 import {IconList} from "@components/Drawer";
 import {Paths} from "@utils/index";
+import {AdminUserCRUD, AdminCategoryCRUD} from "@containers/index";
 
 const AdminDashboard = () => {
   const {push} = useHistory();
   const itemsMenu: IconList[] = [
-    {text: 'Admin', icon: 'cogs', onClick: () => push(Paths.adminModule)}
+    {text: 'Usuarios', icon: 'users', onClick: () => push(Paths.adminUsers)},
+    {text: 'Categorías', icon: 'user-nurse', onClick: () => push(Paths.adminCategories)},
   ];
+  console.log(Paths.adminUsers, 'Paths.adminUsers')
   return <Drawer title='Admin' items={itemsMenu}>
-    <div>This is the admin</div>
+    <Switch>
+      <Route exact path={Paths.adminUsers} component={AdminUserCRUD}/>
+      <Route exact path={Paths.adminCategories} component={AdminCategoryCRUD}/>
+    </Switch>
   </Drawer>
 };
 

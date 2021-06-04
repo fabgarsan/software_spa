@@ -1,12 +1,7 @@
 import axios from "axios";
+import {addTokenAxios} from "@utils/commonFunctions";
 
 const baseUrl = process.env.REACT_APP_API_URL;
-
-const addTokenAxios = (token: string) => {
-  axios.defaults.headers.common = {
-    "Authorization": `Token ${token}`,
-  };
-}
 
 export const logIn = (username: string, password: string) => {
   localStorage.removeItem('token');
