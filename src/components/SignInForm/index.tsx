@@ -1,6 +1,8 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {useForm} from 'react-hook-form';
 import {Box, Button, Grid, TextField, Typography} from "@material-ui/core";
+
+import useSingInValidation from "./SingnInForm.validation";
 
 type FormValues = {
   username: string;
@@ -13,7 +15,8 @@ interface SignInFormProps {
 }
 
 const SignInForm = ({logIn, errors}: SignInFormProps) => {
-  const {register, handleSubmit} = useForm<FormValues>();
+  const resolver = useSingInValidation();
+  const {register, handleSubmit, formState: {errors: formErrors}} = useForm<FormValues>({resolver});
   return <Box m={6}>
     <Box color="info.main" mt={5}>
       <Box
@@ -34,6 +37,8 @@ const SignInForm = ({logIn, errors}: SignInFormProps) => {
               fullWidth
               label="Nombre Usuario"
               variant="outlined"
+              helperText={formErrors?.username?.message}
+              error={Boolean(formErrors?.username)}
             />
           </Grid>
           <Grid item xs={12}>
@@ -43,6 +48,8 @@ const SignInForm = ({logIn, errors}: SignInFormProps) => {
               label="Contraseña"
               variant="outlined"
               type="password"
+              helperText={formErrors?.password?.message}
+              error={Boolean(formErrors?.password)}
             />
           </Grid>
           <Grid item xs={12}>
