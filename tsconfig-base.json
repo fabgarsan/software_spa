@@ -42,6 +42,10 @@
       "@dbTypes/*": [
         "src/dbTypes/*",
         "src/dbTypes/*/index"
+      ],
+      "@hoc/*": [
+        "src/hoc/*",
+        "src/hoc/*/index"
       ]
     },
     "allowJs": true,

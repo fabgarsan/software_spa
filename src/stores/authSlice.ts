@@ -71,59 +71,50 @@ export const loadUserThunk = createAsyncThunk<AuthUser>(
 export const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    setIsNotAuthenticated: (state): void => {
+      state.isAuthenticated = false;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(logInThunk.pending, (state) => {
-      state.loading = true;
       state.isAuthenticated = false;
     });
     builder.addCase(loadUserThunk.pending, (state) => {
-      state.loading = true;
       state.isAuthenticated = false;
     });
     builder.addCase(logOutThunk.pending, (state) => {
-      state.loading = true;
       state.isAuthenticated = false;
     });
     builder.addCase(loadUserThunk.fulfilled, (state, { payload }) => {
       state.user = payload;
-      state.loading = false;
       state.isAuthenticated = true;
     });
     builder.addCase(logInThunk.fulfilled, (state, { payload }) => {
       const { token } = payload;
       state.user = payload.user;
-      state.loading = false;
       state.isAuthenticated = true;
       state.error = null;
       mainAxiosClientManager.addToken(token);
     });
     builder.addCase(logOutThunk.fulfilled, (state) => {
       state.user = null;
-      state.loading = false;
       state.isAuthenticated = false;
       mainAxiosClientManager.removeToken();
     });
     builder.addCase(logOutThunk.rejected, (state) => {
       state.user = null;
-      state.loading = false;
       state.isAuthenticated = false;
       mainAxiosClientManager.removeToken();
-    });
-    builder.addCase(logInThunk.rejected, (state, { payload }) => {
-      if (typeof payload === "string") {
-        state.error = { non_field_errors: payload };
-      }
-      state.loading = false;
     });
     builder.addCase(loadUserThunk.rejected, (state) => {
       mainAxiosClientManager.removeToken();
       state.user = null;
-      state.loading = false;
       state.isAuthenticated = false;
     });
   },
 });
-
+export const { setIsNotAuthenticated } = authSlice.actions;
 export const auth = (state: RootState): SliceState => state.auth;
+
 export default authSlice;

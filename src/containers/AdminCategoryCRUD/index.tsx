@@ -31,20 +31,21 @@ const AdminCategoryCRUD: React.FunctionComponent = () => {
         paginator.offset
       );
       if (mounted) {
-        setEscortCategories(response?.data?.results);
-        setPaginator({
-          ...paginator,
-          count: response?.data?.count,
-          next: response?.data?.next,
-          previous: response?.data?.previous,
-        });
+        // setEscortCategories(response?.data?.results);
+        // setPaginator({
+        //   ...paginator,
+        //   count: response?.data?.count,
+        //   next: response?.data?.next,
+        //   previous: response?.data?.previous,
+        // });
       }
     };
     fetchEscortCategories();
     return () => {
       mounted = false;
     };
-  }, [paginator, paginator.offset]);
+  }, [paginator.limit, paginator.offset]);
+
   return (
     <div>
       Category Crud

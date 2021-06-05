@@ -4,6 +4,7 @@ import {
   logInThunk,
   logOutThunk,
   loadUserThunk,
+  setIsNotAuthenticated as setIsNotAuthenticatedAction,
   auth as authInfo,
 } from "@stores/authSlice";
 
@@ -17,6 +18,11 @@ const useAuth = () => {
   const logOut = () => {
     return dispatch(logOutThunk());
   };
+
+  const setIsNotAuthenticated = () => {
+    dispatch(setIsNotAuthenticatedAction());
+  };
+
   const auth = useSelector(authInfo);
   useEffect(() => {
     dispatch(loadUserThunk());
@@ -26,6 +32,7 @@ const useAuth = () => {
     auth,
     logIn,
     logOut,
+    setIsNotAuthenticated,
   };
 };
 
