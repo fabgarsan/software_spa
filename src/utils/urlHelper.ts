@@ -1,6 +1,6 @@
 export const Paths = {
-  root: '/',
-  adminModule: '/admin/'
-}
+  root: "/",
+  adminModule: "/admin/",
+};
 
 export default Paths;

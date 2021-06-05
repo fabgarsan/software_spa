@@ -1,7 +1,17 @@
-import {library} from '@fortawesome/fontawesome-svg-core'
-import {faCoffee, faBars, faAngleRight, faAngleLeft, faUsers, faAddressBook, faCogs, faSignOut, faHome} from "@fortawesome/pro-light-svg-icons"
+import { library } from "@fortawesome/fontawesome-svg-core";
+import {
+  faCoffee,
+  faBars,
+  faAngleRight,
+  faAngleLeft,
+  faUsers,
+  faAddressBook,
+  faCogs,
+  faSignOut,
+  faHome,
+} from "@fortawesome/pro-light-svg-icons";
 
-const loadIcons = () => {
+const loadIcons = (): void => {
   library.add(faCoffee);
   library.add(faBars);
   library.add(faAngleRight);
@@ -11,6 +21,6 @@ const loadIcons = () => {
   library.add(faCogs);
   library.add(faSignOut);
   library.add(faHome);
-}
+};
 
 export default loadIcons;

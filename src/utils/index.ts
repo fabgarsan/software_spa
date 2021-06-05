@@ -1,1 +1,1 @@
-export {default as Paths} from './urlHelper';
+export { default as Paths } from "./urlHelper";
