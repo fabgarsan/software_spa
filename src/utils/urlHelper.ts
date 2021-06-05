@@ -1,9 +1,9 @@
-const ROOT_ADMIN = '/admin/';
+const ROOT_ADMIN = "/admin/";
 export const Paths = {
-  root: '/',
+  root: "/",
   adminModule: ROOT_ADMIN,
   adminUsers: `${ROOT_ADMIN}usuarios/`,
-  adminCategories: `${ROOT_ADMIN}categorias/`
-}
+  adminCategories: `${ROOT_ADMIN}categorias/`,
+};
 
 export default Paths;

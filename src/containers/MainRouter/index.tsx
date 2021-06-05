@@ -1,20 +1,18 @@
 import React from "react";
-import {Paths} from "@utils/index";
-import {Root} from "@containers/index";
-import {AdminDashboard} from "@containers/index";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route
-} from "react-router-dom";
+import { Paths } from "@utils/index";
+import { Root, AdminDashboard } from "@containers/index";
+
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 const MainRouter = () => {
-  return <Router>
-    <Switch>
-      <Route path={Paths.adminModule} component={AdminDashboard}/>
-      <Route path={Paths.root} component={Root}/>
-    </Switch>
-  </Router>
-}
+  return (
+    <Router>
+      <Switch>
+        <Route path={Paths.adminModule} component={AdminDashboard} />
+        <Route path={Paths.root} component={Root} />
+      </Switch>
+    </Router>
+  );
+};
 
 export default MainRouter;

@@ -1,4 +1,4 @@
-import {library} from '@fortawesome/fontawesome-svg-core'
+import { library } from "@fortawesome/fontawesome-svg-core";
 import {
   faBars,
   faAngleRight,
@@ -8,7 +8,7 @@ import {
   faSignOut,
   faHome,
   faUserNurse,
-} from "@fortawesome/pro-light-svg-icons"
+} from "@fortawesome/pro-light-svg-icons";
 
 const loadIcons = () => {
   library.add(faBars);
@@ -19,6 +19,6 @@ const loadIcons = () => {
   library.add(faSignOut);
   library.add(faHome);
   library.add(faUserNurse);
-}
+};
 
 export default loadIcons;

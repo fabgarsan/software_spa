@@ -1,4 +1,4 @@
-import {useCallback} from "react";
+import { useCallback } from "react";
 
 // @ts-ignore
 const useYupValidationResolver = (validationSchema) =>
@@ -6,12 +6,12 @@ const useYupValidationResolver = (validationSchema) =>
     async (data) => {
       try {
         const values = await validationSchema.validate(data, {
-          abortEarly: false
+          abortEarly: false,
         });
 
         return {
           values,
-          errors: {}
+          errors: {},
         };
       } catch (errors) {
         return {
@@ -22,11 +22,11 @@ const useYupValidationResolver = (validationSchema) =>
               ...allErrors,
               [currentError.path]: {
                 type: currentError.type ?? "validation",
-                message: currentError.message
-              }
+                message: currentError.message,
+              },
             }),
             {}
-          )
+          ),
         };
       }
     },
