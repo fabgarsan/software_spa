@@ -50,11 +50,20 @@
       }
     ],
     "react/jsx-props-no-spreading": [
-      1,
+      "off",
       {
         "props": true,
         "ignorePropertyModificationsFor": [
           "register"
+        ]
+      }
+    ],
+    "@typescript-eslint/explicit-module-boundary-types": [
+      "off",
+      {
+        "props": true,
+        "ignorePropertyModificationsFor": [
+          "use"
         ]
       }
     ],
