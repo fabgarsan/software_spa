@@ -14,7 +14,10 @@ interface SignInFormProps {
   errors: { [errorName: string]: string } | null;
 }
 
-const SignInForm = ({ logIn, errors }: SignInFormProps) => {
+const SignInForm: React.FunctionComponent<SignInFormProps> = ({
+  logIn,
+  errors,
+}: SignInFormProps) => {
   const resolver = useSingInValidation();
   const {
     register,

@@ -5,8 +5,9 @@ import { IconList } from "@components/Drawer";
 import { Paths } from "@utils/index";
 import { AdminUserCRUD, AdminCategoryCRUD } from "@containers/index";
 
-const AdminDashboard = () => {
+const AdminDashboard: React.FunctionComponent = () => {
   const { push } = useHistory();
+
   const itemsMenu: IconList[] = [
     { text: "Usuarios", icon: "users", onClick: () => push(Paths.adminUsers) },
     {
@@ -15,6 +16,7 @@ const AdminDashboard = () => {
       onClick: () => push(Paths.adminCategories),
     },
   ];
+
   return (
     <Drawer title="Admin" items={itemsMenu}>
       <Switch>

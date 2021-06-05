@@ -1,1 +1,1 @@
-export type {EscortCategory} from './escorts';
+export type { EscortCategory } from "./escorts";

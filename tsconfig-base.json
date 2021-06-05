@@ -13,7 +13,7 @@
       ],
       "@components/*": [
         "src/components/*",
-        "src/components/index",
+        "src/components/index"
       ],
       "@containers/*": [
         "src/containers/*",
@@ -34,6 +34,10 @@
       "@utils/*": [
         "src/utils/*",
         "src/utils/*/index"
+      ],
+      "@clients/*": [
+        "src/clients/*",
+        "src/clients/*/index"
       ],
       "@dbTypes/*": [
         "src/dbTypes/*",

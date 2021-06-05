@@ -101,14 +101,14 @@ export interface IconList {
 interface MiniDrawerProps {
   title: string;
   items: IconList[];
-  children: React.ReactComponentElement<any>;
+  children: React.ReactNode;
 }
 
-export default function MiniDrawer({
+const MiniDrawer: React.FunctionComponent<MiniDrawerProps> = ({
   children,
   title,
   items,
-}: MiniDrawerProps) {
+}: MiniDrawerProps) => {
   const classes = useStyles();
   const theme = useTheme();
   const { push } = useHistory();
@@ -208,4 +208,6 @@ export default function MiniDrawer({
       </main>
     </div>
   );
-}
+};
+
+export default MiniDrawer;

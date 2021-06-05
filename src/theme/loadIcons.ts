@@ -10,7 +10,7 @@ import {
   faUserNurse,
 } from "@fortawesome/pro-light-svg-icons";
 
-const loadIcons = () => {
+const loadIcons = (): void => {
   library.add(faBars);
   library.add(faAngleRight);
   library.add(faAngleLeft);

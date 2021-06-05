@@ -4,7 +4,7 @@ import { IconList } from "@components/Drawer";
 import { Paths } from "@utils/index";
 import { useHistory } from "react-router-dom";
 
-const Root = () => {
+const Root: React.FunctionComponent = () => {
   const { push } = useHistory();
   const itemsMenu: IconList[] = [
     { text: "Admin", icon: "cogs", onClick: () => push(Paths.adminModule) },

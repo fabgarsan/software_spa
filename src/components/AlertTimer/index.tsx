@@ -9,7 +9,12 @@ interface AlertTimerProps {
   onClose: () => void;
 }
 
-const AlertTimer = ({ message, severity, onClose, time }: AlertTimerProps) => {
+const AlertTimer: React.FunctionComponent<AlertTimerProps> = ({
+  message,
+  severity,
+  onClose,
+  time,
+}: AlertTimerProps) => {
   if (time !== 0) {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useInterval(() => {

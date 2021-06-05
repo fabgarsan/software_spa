@@ -4,7 +4,7 @@ import { Root, AdminDashboard } from "@containers/index";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
-const MainRouter = () => {
+const MainRouter: React.FunctionComponent = () => {
   return (
     <Router>
       <Switch>

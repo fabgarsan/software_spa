@@ -8,7 +8,7 @@ import loadIcons from "@theme/loadIcons";
 
 loadIcons();
 
-function App() {
+const App: React.FunctionComponent = () => {
   const { auth, logIn } = useAuth();
   if (auth.loading) {
     return (
@@ -28,6 +28,6 @@ function App() {
       <MainRouter />
     </>
   );
-}
+};
 
 export default App;

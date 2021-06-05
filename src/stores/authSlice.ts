@@ -1,8 +1,15 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { loadUser, logIn, logOut } from "@api/authentication";
 import { RootState } from "@stores/store";
-import axios from "axios";
 import { createNotification } from "@stores/notificationSlice";
+import { mainAxiosClientManager } from "@clients/index";
+
+// Screen -> hook -> action -> service -> provider
+// Screen -> HTML
+// hook -> Logica ( useDispatch  ,useSelector())
+// action -> redux
+// services -> Track
+// provider -> api
 
 type AuthUser = {
   id: number | null;
@@ -48,7 +55,7 @@ export const logInThunk = createAsyncThunk<
   }
 });
 
-export const logOutThunk = createAsyncThunk<any>("auth/logOut", async () => {
+export const logOutThunk = createAsyncThunk<null>("auth/logOut", async () => {
   const response = await logOut();
   return await response.data;
 });
@@ -85,28 +92,23 @@ export const authSlice = createSlice({
     });
     builder.addCase(logInThunk.fulfilled, (state, { payload }) => {
       const { token } = payload;
-      localStorage.setItem("token", token);
-      axios.defaults.headers.common = {
-        Authorization: `Token ${token}`,
-      };
       state.user = payload.user;
       state.loading = false;
       state.isAuthenticated = true;
       state.error = null;
+      mainAxiosClientManager.addToken(token);
     });
     builder.addCase(logOutThunk.fulfilled, (state) => {
       state.user = null;
       state.loading = false;
       state.isAuthenticated = false;
-      localStorage.removeItem("token");
-      delete axios.defaults.headers.common.Authorization;
+      mainAxiosClientManager.removeToken();
     });
     builder.addCase(logOutThunk.rejected, (state) => {
       state.user = null;
       state.loading = false;
       state.isAuthenticated = false;
-      delete axios.defaults.headers.common.Authorization;
-      localStorage.removeItem("token");
+      mainAxiosClientManager.removeToken();
     });
     builder.addCase(logInThunk.rejected, (state, { payload }) => {
       if (typeof payload === "string") {
@@ -115,8 +117,7 @@ export const authSlice = createSlice({
       state.loading = false;
     });
     builder.addCase(loadUserThunk.rejected, (state) => {
-      delete axios.defaults.headers.common.Authorization;
-      localStorage.removeItem("token");
+      mainAxiosClientManager.removeToken();
       state.user = null;
       state.loading = false;
       state.isAuthenticated = false;
@@ -124,5 +125,5 @@ export const authSlice = createSlice({
   },
 });
 
-export const auth = (state: RootState) => state.auth;
+export const auth = (state: RootState): SliceState => state.auth;
 export default authSlice;

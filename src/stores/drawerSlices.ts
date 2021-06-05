@@ -19,6 +19,7 @@ const drawerSlice = createSlice({
   },
 });
 
-export const drawerState = (state: RootState) => state.drawer.drawerOpen;
+export const drawerState = (state: RootState): boolean =>
+  state.drawer.drawerOpen;
 export const { changeOpenState } = drawerSlice.actions;
 export default drawerSlice;

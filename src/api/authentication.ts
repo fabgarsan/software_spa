@@ -1,21 +1,21 @@
-import axios from "axios";
-import { addTokenAxios } from "@utils/commonFunctions";
+import { AxiosResponse } from "axios";
+import { mainAxiosClientManager } from "@clients/index";
 
-const baseUrl = process.env.REACT_APP_API_URL;
-
-export const logIn = (username: string, password: string) => {
+export const logIn = (
+  username: string,
+  password: string
+): Promise<AxiosResponse> => {
   localStorage.removeItem("token");
-  delete axios.defaults.headers.common.Authorization;
-  return axios.post(`${baseUrl}/auth/login/`, {
+  mainAxiosClientManager.removeToken();
+  return mainAxiosClientManager.client.post(`/auth/login/`, {
     username,
     password,
   });
 };
-export const logOut = () => axios.post(`${baseUrl}/auth/logout/`);
-export const loadUser = () => {
-  const token = localStorage.getItem("token");
-  if (token) {
-    addTokenAxios(token);
-  }
-  return axios.get(`${baseUrl}/users/current/`);
+
+export const logOut = (): Promise<AxiosResponse> =>
+  mainAxiosClientManager.client.post(`/auth/logout/`);
+
+export const loadUser = (): Promise<AxiosResponse> => {
+  return mainAxiosClientManager.client.get(`/users/current/`);
 };

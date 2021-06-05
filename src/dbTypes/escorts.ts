@@ -1,5 +1,5 @@
 export interface EscortCategory {
-  id: number,
-  name: string,
-  order: number
+  id: number;
+  name: string;
+  order: number;
 }

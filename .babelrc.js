@@ -31,6 +31,7 @@ const plugins = [
         '@stores': './src/stores',
         '@theme': './src/theme',
         '@utils': './src/utils',
+        '@clients': './src/clients',
       }
     }
   ]

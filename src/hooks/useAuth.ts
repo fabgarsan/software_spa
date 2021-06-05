@@ -7,7 +7,7 @@ import {
   auth as authInfo,
 } from "@stores/authSlice";
 
-export default function useAuth() {
+const useAuth = () => {
   const dispatch = useDispatch();
 
   const logIn = (username: string, password: string) => {
@@ -27,4 +27,6 @@ export default function useAuth() {
     logIn,
     logOut,
   };
-}
+};
+
+export default useAuth;

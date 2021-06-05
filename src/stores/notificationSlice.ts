@@ -19,7 +19,7 @@ const notificationSlice = createSlice({
   name: "notifications",
   initialState,
   reducers: {
-    createNotification: (state, { payload }) => ({
+    createNotification: (state, { payload }): SliceState => ({
       ...state,
       [payload.message]: {
         message: payload.message,
@@ -27,11 +27,13 @@ const notificationSlice = createSlice({
         time: payload?.time || 5000,
       },
     }),
-    removeNotification: (state, { payload }) => omit({ ...state }, payload),
+    removeNotification: (state, { payload }): SliceState =>
+      omit({ ...state }, payload),
   },
 });
 
-export const getNotifications = (state: RootState) => state.notification;
+export const getNotifications = (state: RootState): SliceState =>
+  state.notification;
 export const { createNotification, removeNotification } =
   notificationSlice.actions;
 export default notificationSlice;
