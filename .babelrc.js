@@ -33,6 +33,7 @@ const plugins = [
         '@utils': './src/utils',
         '@clients': './src/clients',
         '@hoc': './src/hoc',
+        '@modules': './src/modules',
       }
     }
   ]

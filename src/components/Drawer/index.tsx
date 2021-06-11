@@ -24,7 +24,7 @@ import { IconName } from "@fortawesome/pro-light-svg-icons";
 import { logOutThunk } from "@stores/authSlice";
 import { useHistory } from "react-router-dom";
 
-import { Paths } from "@utils/index";
+import { Paths, DRAWER } from "@utils/index";
 
 const drawerWidth = 240;
 
@@ -50,6 +50,9 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     menuButton: {
       marginRight: 36,
+    },
+    icon: {
+      color: theme.palette.primary.main,
     },
     hide: {
       display: "none",
@@ -180,7 +183,11 @@ const MiniDrawer: React.FunctionComponent<MiniDrawerProps> = ({
           {items.map((item) => (
             <ListItem button key={item.text} onClick={item.onClick}>
               <ListItemIcon>
-                <FontAwesomeIcon icon={["fal", item.icon]} size="lg" />
+                <FontAwesomeIcon
+                  className={classes.icon}
+                  icon={["fal", item.icon]}
+                  size="lg"
+                />
               </ListItemIcon>
               <ListItemText primary={item.text} />
             </ListItem>
@@ -192,13 +199,13 @@ const MiniDrawer: React.FunctionComponent<MiniDrawerProps> = ({
             <ListItemIcon>
               <FontAwesomeIcon icon={["fal", "home"]} size="2x" />
             </ListItemIcon>
-            <ListItemText primary="Principal" />
+            <ListItemText primary={DRAWER.MENU_HOME} />
           </ListItem>
           <ListItem button onClick={goLogOut}>
             <ListItemIcon>
               <FontAwesomeIcon icon={["fal", "sign-out"]} size="2x" />
             </ListItemIcon>
-            <ListItemText primary="Cerrar Sesión" />
+            <ListItemText primary={DRAWER.MENU_SIGN_OUT} />
           </ListItem>
         </List>
       </Drawer>

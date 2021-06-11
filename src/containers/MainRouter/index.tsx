@@ -1,6 +1,7 @@
 import React from "react";
 import { Paths } from "@utils/index";
-import { Root, AdminDashboard } from "@containers/index";
+import { Root } from "@containers/index";
+import { AdminDashboard } from "@modules/index";
 
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 

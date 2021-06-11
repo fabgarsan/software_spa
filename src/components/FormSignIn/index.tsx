@@ -2,23 +2,23 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { Box, Button, Grid, TextField, Typography } from "@material-ui/core";
 
-import useSingInValidation from "./SingnInForm.validation";
+import useFormSignInValidation from "./FormSignIn.validation";
 
 type FormValues = {
   username: string;
   password: string;
 };
 
-interface SignInFormProps {
+interface FormSignInProps {
   logIn: (username: string, password: string) => void;
   errors: { [errorName: string]: string } | null;
 }
 
-const SignInForm: React.FunctionComponent<SignInFormProps> = ({
+const FormSignIn: React.FunctionComponent<FormSignInProps> = ({
   logIn,
   errors,
-}: SignInFormProps) => {
-  const resolver = useSingInValidation();
+}: FormSignInProps) => {
+  const resolver = useFormSignInValidation();
   const {
     register,
     handleSubmit,
@@ -94,4 +94,4 @@ const SignInForm: React.FunctionComponent<SignInFormProps> = ({
   );
 };
 
-export default SignInForm;
+export default FormSignIn;

@@ -1,7 +1,7 @@
 import React from "react";
 import "./App.css";
 import { MainRouter } from "@containers/index";
-import loadIcons from "@theme/loadIcons";
+import { loadIcons } from "@theme/index";
 import { withInterceptorHandler } from "@hoc/index";
 
 loadIcons();

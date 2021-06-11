@@ -1,8 +1,9 @@
 import React, { useEffect, useCallback } from "react";
 import { mainAxiosClientManager } from "@clients/axios";
 import { useAuth, useNotifications } from "@hooks/index";
-import { Notify, SignInForm } from "@components/index";
-import { Box, Typography } from "@material-ui/core";
+import { Notify, FormSignIn, LoadingOverlay } from "@components/index";
+import { theme } from "@theme/index";
+import { ThemeProvider } from "@material-ui/core/styles";
 
 type WithInterceptorHandlerProps = {
   loading?: boolean;
@@ -66,25 +67,18 @@ const withInterceptorHandler = <P extends WithInterceptorHandlerProps>(
         }
       );
     }, [handleResponseError, handleRequestError]);
-    if (auth.loading) {
-      return (
-        <Box mt={5} m="auto" textAlign="center">
-          <Typography color="textSecondary" variant="h5" paragraph>
-            Loading...
-          </Typography>
-        </Box>
-      );
-    }
+    // }
 
     return (
-      <>
+      <ThemeProvider theme={theme}>
+        <LoadingOverlay />
         <Notify />
         {!auth.isAuthenticated ? (
-          <SignInForm logIn={logIn} errors={auth.error} />
+          <FormSignIn logIn={logIn} errors={auth.error} />
         ) : (
           <WrappedComponent {...(props as P)} />
         )}
-      </>
+      </ThemeProvider>
     );
   };
 };

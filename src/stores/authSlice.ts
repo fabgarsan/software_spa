@@ -4,6 +4,8 @@ import { RootState } from "@stores/store";
 import { createNotification } from "@stores/notificationSlice";
 import { mainAxiosClientManager } from "@clients/index";
 
+import { trackPromise } from "react-promise-tracker";
+
 // Screen -> hook -> action -> service -> provider
 // Screen -> HTML
 // hook -> Logica ( useDispatch  ,useSelector())
@@ -40,8 +42,7 @@ export const logInThunk = createAsyncThunk<
   SingInParams
 >("auth/logIn", async ({ username, password }, thunkApi) => {
   try {
-    const response = await logIn(username, password);
-    const data = await response.data;
+    const { data } = await trackPromise(logIn(username, password));
     thunkApi.dispatch(
       createNotification({
         message: `Bienvenido ${data?.user?.username || ""}`,
@@ -56,15 +57,15 @@ export const logInThunk = createAsyncThunk<
 });
 
 export const logOutThunk = createAsyncThunk<null>("auth/logOut", async () => {
-  const response = await logOut();
-  return await response.data;
+  const { data } = await trackPromise(logOut());
+  return data;
 });
 
 export const loadUserThunk = createAsyncThunk<AuthUser>(
   "auth/current/",
   async () => {
-    const response = await loadUser();
-    return await response.data;
+    const { data } = await trackPromise(loadUser());
+    return data;
   }
 );
 

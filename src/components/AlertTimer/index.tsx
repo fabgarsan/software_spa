@@ -22,7 +22,13 @@ const AlertTimer: React.FunctionComponent<AlertTimerProps> = ({
     }, time);
   }
   return (
-    <Alert elevation={6} variant="filled" severity={severity} onClose={onClose}>
+    <Alert
+      elevation={6}
+      variant="filled"
+      style={{ zIndex: 1300 }}
+      severity={severity}
+      onClose={onClose}
+    >
       {message}
     </Alert>
   );

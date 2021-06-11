@@ -1,18 +1,18 @@
 import { useMemo } from "react";
 import * as yup from "yup";
-import { MESSAGES } from "@utils/index";
+import { FORM_VALIDATIONS } from "@utils/index";
 import { useYupValidationResolver } from "@hooks/index";
 
-const useSingInValidation = () => {
+const useFormSignInValidation = () => {
   const validationSchema = useMemo(
     () =>
       yup.object({
-        username: yup.string().required(MESSAGES.FORM_REQUIRED_FIELD),
-        password: yup.string().required(MESSAGES.FORM_REQUIRED_FIELD),
+        username: yup.string().required(FORM_VALIDATIONS.REQUIRED_FIELD),
+        password: yup.string().required(FORM_VALIDATIONS.REQUIRED_FIELD),
       }),
     []
   );
   return useYupValidationResolver(validationSchema);
 };
 
-export default useSingInValidation;
+export default useFormSignInValidation;
