@@ -91,3 +91,10 @@ export const TABLE_PAGINATOR = {
   LABEL_DISPLAYED_ROWS: (info: LabelDisplayedRowsArgs) =>
     `[${info.from} a ${info.to}] de ${info.count}, Pág. ${info.page + 1}`,
 };
+
+export const API_ROUTES = {
+  PERMISSION_GROUP: "groups/",
+  ESCORT_CATEGORY: "escorts-categories/",
+  AUTHENTICATION: "auth/",
+  USER: "users/",
+};

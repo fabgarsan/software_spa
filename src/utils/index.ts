@@ -10,6 +10,7 @@ export {
   FORM_FIELDS,
   TABLE_HEADERS,
   TABLE_PAGINATOR,
+  API_ROUTES,
 } from "./constants";
 
 export {

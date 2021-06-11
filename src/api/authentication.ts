@@ -1,5 +1,6 @@
 import { AxiosResponse } from "axios";
 import { mainAxiosClientManager } from "@clients/index";
+import { API_ROUTES } from "@utils/index";
 
 export const logIn = (
   username: string,
@@ -7,15 +8,18 @@ export const logIn = (
 ): Promise<AxiosResponse> => {
   localStorage.removeItem("token");
   mainAxiosClientManager.removeToken();
-  return mainAxiosClientManager.client.post(`/auth/login/`, {
-    username,
-    password,
-  });
+  return mainAxiosClientManager.client.post(
+    `${API_ROUTES.AUTHENTICATION}login/`,
+    {
+      username,
+      password,
+    }
+  );
 };
 
 export const logOut = (): Promise<AxiosResponse> =>
-  mainAxiosClientManager.client.post(`/auth/logout/`);
+  mainAxiosClientManager.client.post(`${API_ROUTES.AUTHENTICATION}logout/`);
 
 export const loadUser = (): Promise<AxiosResponse> => {
-  return mainAxiosClientManager.client.get(`/users/current/`);
+  return mainAxiosClientManager.client.get(`${API_ROUTES.USER}current/`);
 };

@@ -1,34 +1,55 @@
 import { useCallback } from "react";
 import {
-  createEscortCategory,
-  fetchEscortCategories,
-  deleteEscortCategory,
-  fetchEscortCategory,
-  editEscortCategory,
-} from "@api/escortCategory";
+  createGenericApiCall,
+  fetchAllGenericPaginationApiCall,
+  deleteGenericApiCall,
+  fetchGenericApiCall,
+  editGenericApiCall,
+} from "@api/index";
+import { EscortCategory } from "@dbTypes/escorts";
 import { trackPromise } from "react-promise-tracker";
+import { API_ROUTES } from "@utils/index";
 
 const useAdminCategoryCRUDApi = () => {
   const destroy = async (id: number | string) => {
-    const response = await trackPromise(deleteEscortCategory(id));
+    const response = await trackPromise(
+      deleteGenericApiCall(API_ROUTES.ESCORT_CATEGORY, id)
+    );
     return response.data;
   };
-  const fetch = async <T>(id: number | string) => {
-    const response = await trackPromise(fetchEscortCategory<T>(id));
+  const fetch = async (id: number | string) => {
+    const response = await trackPromise(
+      fetchGenericApiCall<EscortCategory>(API_ROUTES.ESCORT_CATEGORY, id)
+    );
     return response.data;
   };
-  const create = async <T>(dataCreate: T) => {
-    const response = await trackPromise(createEscortCategory<T>(dataCreate));
+  const create = async (dataCreate: EscortCategory) => {
+    const response = await trackPromise(
+      createGenericApiCall<EscortCategory>(
+        API_ROUTES.ESCORT_CATEGORY,
+        dataCreate
+      )
+    );
     return response.data;
   };
-  const edit = async <T>(id: number | string, dataCreate: T) => {
-    const response = await trackPromise(editEscortCategory<T>(id, dataCreate));
+  const edit = async (id: number | string, dataCreate: EscortCategory) => {
+    const response = await trackPromise(
+      editGenericApiCall<EscortCategory>(
+        API_ROUTES.ESCORT_CATEGORY,
+        id,
+        dataCreate
+      )
+    );
     return response.data;
   };
 
-  const fetchAll = useCallback(async <T>(limit: number, offset: number) => {
+  const fetchAll = useCallback(async (limit: number, offset: number) => {
     const response = await trackPromise(
-      fetchEscortCategories<T>(limit, offset)
+      fetchAllGenericPaginationApiCall<EscortCategory>(
+        API_ROUTES.ESCORT_CATEGORY,
+        limit,
+        offset
+      )
     );
     return response.data;
   }, []);
