@@ -4,6 +4,9 @@ import { useAuth, useNotifications } from "@hooks/index";
 import { Notify, FormSignIn, LoadingOverlay } from "@components/index";
 import { theme } from "@theme/index";
 import { ThemeProvider } from "@material-ui/core/styles";
+import { camelizeKeys, decamelizeKeys } from "humps";
+
+// https://morioh.com/p/8e8b33c25ea1 for camelize humps
 
 type WithInterceptorHandlerProps = {
   loading?: boolean;
@@ -50,6 +53,14 @@ const withInterceptorHandler = <P extends WithInterceptorHandlerProps>(
       mainAxiosClientManager.client.defaults.params = {};
       mainAxiosClientManager.client.interceptors.request.use(
         (request) => {
+          if (request.headers["Content-Type"] === "multipart/form-data")
+            return request;
+          if (request.params) {
+            request.params = decamelizeKeys(request.params);
+          }
+          if (request.data) {
+            request.data = decamelizeKeys(request.data);
+          }
           return request;
         },
         async (error) => {
@@ -59,6 +70,12 @@ const withInterceptorHandler = <P extends WithInterceptorHandlerProps>(
       );
       mainAxiosClientManager.client.interceptors.response.use(
         (response) => {
+          if (
+            response.data &&
+            response.headers["content-type"] === "application/json"
+          ) {
+            response.data = camelizeKeys(response.data);
+          }
           return response;
         },
         async (error: any) => {

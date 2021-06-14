@@ -5,10 +5,11 @@ import { AxiosResponsePaginationData } from "@dbTypes/common";
 export const fetchAllGenericPaginationApiCall = <T>(
   url: string,
   limit: number,
-  offset: number
+  offset: number,
+  params: any
 ): Promise<AxiosResponse<AxiosResponsePaginationData<T>>> =>
   mainAxiosClientManager.client.get(url, {
-    params: { limit, offset },
+    params: { limit, offset, ...params },
   });
 
 export const createGenericApiCall = <T>(
@@ -33,4 +34,4 @@ export const editGenericApiCall = <T>(
   id: number | string,
   data: T
 ): Promise<AxiosResponse<T>> =>
-  mainAxiosClientManager.client.put(`${url}${id}/`, data);
+  mainAxiosClientManager.client.patch(`${url}${id}/`, data);

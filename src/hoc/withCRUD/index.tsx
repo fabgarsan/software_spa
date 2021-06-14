@@ -1,9 +1,10 @@
-import React, { useCallback, useEffect, useReducer } from "react";
+import React, { useCallback, useEffect, useReducer, useState } from "react";
 import {
   Box,
   Button,
   Grid,
   TablePagination,
+  TextField,
   Typography,
 } from "@material-ui/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -47,9 +48,12 @@ interface DefaultCRUDProps<E> {
   createMethod?: (data: E) => Promise<E>;
   editMethod?: (id: number, data: E) => Promise<E>;
   fetchMethod?: (id: number) => Promise<E>;
-  fetchAllMethod?: (
+  fetchAllParams?: any;
+  hasSearch?: boolean;
+  fetchAllPaginationMethod?: (
     limit: number,
-    offset: number
+    offset: number,
+    params?: any
   ) => Promise<AxiosResponsePaginationData<E>>;
 }
 
@@ -64,11 +68,14 @@ const index = <ElementInterface,>(
     createMethod,
     editMethod,
     fetchMethod,
-    fetchAllMethod,
+    fetchAllPaginationMethod,
     idField,
     instanceNameSingular,
+    fetchAllParams,
+    hasSearch,
   }: DefaultCRUDProps<ElementInterface>) => {
     const { createSuccessNotification } = useNotifications();
+    const [searchText, setSearchText] = useState<string>("");
 
     const [paginatorState, dispatchPaginatorAction] = useReducer(
       reducerPagination<ElementInterface>(),
@@ -81,10 +88,11 @@ const index = <ElementInterface,>(
     );
 
     const handleOnFetchAll = useCallback(async () => {
-      if (fetchAllMethod) {
-        const data = await fetchAllMethod(
+      if (fetchAllPaginationMethod) {
+        const data = await fetchAllPaginationMethod(
           paginatorState.limit,
-          paginatorState.offset
+          paginatorState.offset,
+          { ...fetchAllParams, ...paginatorState.params }
         );
         dispatchPaginatorAction({
           type: "changeList",
@@ -96,7 +104,13 @@ const index = <ElementInterface,>(
           },
         });
       }
-    }, [fetchAllMethod, paginatorState.limit, paginatorState.offset]);
+    }, [
+      fetchAllPaginationMethod,
+      paginatorState.limit,
+      paginatorState.offset,
+      paginatorState.params,
+      fetchAllParams,
+    ]);
 
     const handleOnDestroy = async () => {
       if (deleteMethod) {
@@ -137,7 +151,7 @@ const index = <ElementInterface,>(
               instanceNameSingular,
               setIfNotString(data[toStringField])
             );
-            createSuccessNotification(message, 30000);
+            createSuccessNotification(message, 5000);
           }
         } else if (createMethod) {
           const data = await createMethod(formValues);
@@ -253,6 +267,30 @@ const index = <ElementInterface,>(
             )}
           </Grid>
         </Grid>
+        {hasSearch && (
+          <Grid container>
+            <Grid item xs={12} sm={4}>
+              <TextField
+                fullWidth
+                onChange={(event) => setSearchText(event.target.value)}
+              />
+            </Grid>
+            <Grid item xs={12} sm={2}>
+              <Button
+                onClick={() =>
+                  dispatchPaginatorAction({
+                    type: "setSearch",
+                    search: searchText,
+                  })
+                }
+                type="button"
+                color="secondary"
+              >
+                {UI.BUTTON_TEXT_SEARCH}
+              </Button>
+            </Grid>
+          </Grid>
+        )}
         {Table && (
           <Table
             list={paginatorState.list}
@@ -281,11 +319,13 @@ const index = <ElementInterface,>(
     );
   };
   CRUD.defaultProps = {
-    fetchAllMethod: undefined,
+    fetchAllPaginationMethod: undefined,
     createMethod: undefined,
     fetchMethod: undefined,
     deleteMethod: undefined,
     editMethod: undefined,
+    fetchAllParams: {},
+    hasSearch: false,
   };
   return CRUD;
 };

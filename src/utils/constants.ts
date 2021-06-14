@@ -41,6 +41,7 @@ export const DRAWER = {
   MAIN_DASHBOARD_MENU_ADMIN: "Admin",
   MODULE_ADMIN_TITLE: "Admin",
   MODULE_ADMIN_MENU_CATEGORIES: "Categorías",
+  MODULE_ADMIN_MENU_ESCORTS: "Acompañantes",
   MODULE_ADMIN_MENU_USERS: "Usuarios",
   MENU_SIGN_OUT: "Cerrar Sessión",
   MENU_HOME: "Principal",
@@ -49,10 +50,13 @@ export const DRAWER = {
 export const INSTANCES_NAMES = {
   ESCORT_CATEGORIES_SINGULAR: "Categoría Acompañante",
   ESCORT_CATEGORIES_PLURAL: "Categorías Acompañantes",
+  ESCORT_SINGULAR: "Acompañante",
+  ESCORT_PLURAL: "Acompañantes",
 };
 
 export const FORM_VALIDATIONS = {
   REQUIRED_FIELD: "Campo Requerido",
+  MUST_BE_AN_EMAIL_FIELD: "Debe ser un email válido",
 };
 
 export const UI = {
@@ -61,12 +65,42 @@ export const UI = {
   BUTTON_TEXT_ADD: "Nuevo",
   BUTTON_TEXT_SAVE: "Guardar",
   BUTTON_TEXT_CANCEL: "Cancelar",
+  BUTTON_TEXT_SEARCH: "Buscar",
 };
 
 export const FORM_FIELDS = {
   ESCORT_CATEGORIES: {
     LABEL_NAME: `Nombre ${INSTANCES_NAMES.ESCORT_CATEGORIES_SINGULAR}`,
     LABEL_ORDER: "Orden",
+  },
+  ESCORT: {
+    LABEL_ALIAS: `Alias ${INSTANCES_NAMES.ESCORT_SINGULAR}`,
+  },
+  USER: {
+    LABEL_FIRST_NAME: "Nombres",
+    LABEL_LAST_NAME: "Apellidos",
+    LABEL_EMAIL: "Email",
+    LABEL_ID_NUMBER: "Número Documento",
+    LABEL_ID_TYPE: "Tipo de Documento",
+    LABEL_CATEGORY: "Categoría",
+    LABEL_ID_TYPE_OPTIONS: {
+      CC: {
+        TYPE: "CC",
+        TEXT: "Cédula Ciudadanía",
+      },
+      CE: {
+        TYPE: "CE",
+        TEXT: "Cédula Extrangería",
+      },
+      PS: {
+        TYPE: "PS",
+        TEXT: "Pasaporte",
+      },
+      NI: {
+        TYPE: "NI",
+        TEXT: "NIT",
+      },
+    },
   },
 };
 
@@ -77,8 +111,14 @@ export const TABLE_HEADERS = {
     HEADER_EDIT: "Editar",
   },
   ESCORT_CATEGORIES: {
-    NAME: `Nombre`,
+    NAME: "Nombre",
     ORDER: "Orden",
+  },
+  USER: {
+    ALIAS: "Alias",
+    CATEGORY: "Categoría",
+    EMAIL: "Email",
+    USERNAME: "Nombre Usuario",
   },
 };
 
@@ -95,6 +135,7 @@ export const TABLE_PAGINATOR = {
 export const API_ROUTES = {
   PERMISSION_GROUP: "groups/",
   ESCORT_CATEGORY: "escorts-categories/",
+  ESCORT: "escorts/",
   AUTHENTICATION: "auth/",
   USER: "users/",
 };

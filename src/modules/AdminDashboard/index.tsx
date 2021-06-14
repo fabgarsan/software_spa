@@ -3,7 +3,11 @@ import { Route, Switch, useHistory } from "react-router-dom";
 import { Drawer } from "@components/index";
 import { IconList } from "@components/Drawer";
 import { Paths, DRAWER } from "@utils/index";
-import { AdminUserCRUD, AdminCategoryCRUD } from "@containers/index";
+import {
+  AdminUserCRUD,
+  AdminCategoryCRUD,
+  AdminEscortCRUD,
+} from "@containers/index";
 
 const AdminDashboard: React.FunctionComponent = () => {
   const { push } = useHistory();
@@ -19,6 +23,11 @@ const AdminDashboard: React.FunctionComponent = () => {
       icon: "user-nurse",
       onClick: () => push(Paths.adminCategories),
     },
+    {
+      text: DRAWER.MODULE_ADMIN_MENU_ESCORTS,
+      icon: "user-nurse",
+      onClick: () => push(Paths.adminEscorts),
+    },
   ];
 
   return (
@@ -30,6 +39,7 @@ const AdminDashboard: React.FunctionComponent = () => {
           path={Paths.adminCategories}
           component={AdminCategoryCRUD}
         />
+        <Route exact path={Paths.adminEscorts} component={AdminEscortCRUD} />
       </Switch>
     </Drawer>
   );

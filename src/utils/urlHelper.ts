@@ -4,6 +4,7 @@ export const Paths = {
   adminModule: ROOT_ADMIN,
   adminUsers: `${ROOT_ADMIN}usuarios/`,
   adminCategories: `${ROOT_ADMIN}categorias/`,
+  adminEscorts: `${ROOT_ADMIN}acompanantes/`,
 };
 
 export default Paths;

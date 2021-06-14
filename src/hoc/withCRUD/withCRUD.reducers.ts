@@ -9,11 +9,13 @@ export interface PaginatorState<L> {
   currentPage: number;
   next: string | null;
   previous: string | null;
+  params: { [name: string]: any };
 }
 
 export type PaginationActions<L> =
   | { type: "changePage"; newPage: number }
   | { type: "changeLimit"; newLimit: number }
+  | { type: "setSearch"; search: string }
   | {
       type: "changeList";
       payload: { next: string; previous: string; count: number; list: L[] };
@@ -27,6 +29,7 @@ export const paginatorInitial = {
   previous: null,
   offset: 0,
   currentPage: 0,
+  params: {},
 };
 
 export const reducerPagination = <T>() => {
@@ -47,6 +50,11 @@ export const reducerPagination = <T>() => {
           limit: action.newLimit,
           offset: 0,
           currentPage: 0,
+        };
+      case "setSearch":
+        return {
+          ...state,
+          params: { search: action.search },
         };
       case "changeList":
         return {

@@ -13,7 +13,12 @@ const DialogCreateEditBase: React.FunctionComponent<DialogCreateEditBaseProps> =
       return <></>;
     }
     return (
-      <Dialog open={open} aria-labelledby="form-dialog-title">
+      <Dialog
+        open={open}
+        aria-labelledby="form-dialog-title"
+        maxWidth="lg"
+        fullWidth
+      >
         <DialogTitle id="form-dialog-title">{title}</DialogTitle>
         <DialogContent>{children}</DialogContent>
       </Dialog>

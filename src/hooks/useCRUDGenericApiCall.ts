@@ -48,7 +48,7 @@ const setTrackPromise = <T>(
 // const hasConfig = (method: AllowedMethods, config: Config): boolean =>
 //   config.methods.map((m) => m.method).includes(method);
 
-const useCRUDGenericApiCall = <T>(url: string, config: Config) => {
+const useCRUDGenericApiCall = <T>(url: string, config?: Config) => {
   // const deleteConfig = getConfiguration("delete", config);
   // const fetchConfig = getConfiguration("fetch", config);
   // const createConfig = getConfiguration("create", config);
@@ -82,9 +82,9 @@ const useCRUDGenericApiCall = <T>(url: string, config: Config) => {
     return response.data;
   };
   const fetchAllPagination = useCallback(
-    async (limit: number, offset: number) => {
+    async (limit: number, offset: number, params: any) => {
       const response = await setTrackPromise(
-        fetchAllGenericPaginationApiCall<T>(url, limit, offset)
+        fetchAllGenericPaginationApiCall<T>(url, limit, offset, params)
       );
       return response.data;
     },
