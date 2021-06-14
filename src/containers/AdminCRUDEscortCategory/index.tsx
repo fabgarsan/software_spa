@@ -14,7 +14,7 @@ const DetailViewHOC = withCRUD<EscortCategory>(
   TableCRUDEscortCategory
 );
 
-const AdminCategoryCRUD: React.FunctionComponent = () => {
+const AdminCRUDEscortCategory: React.FunctionComponent = () => {
   const { fetchAllPagination, create, destroy, fetch, edit } =
     useCRUDGenericApiCall<EscortCategory>(API_ROUTES.ESCORT_CATEGORY, {
       methods: [
@@ -37,7 +37,8 @@ const AdminCategoryCRUD: React.FunctionComponent = () => {
       createMethod={create}
       editMethod={edit}
       hasSearch
+      withTitle={false}
     />
   );
 };
-export default AdminCategoryCRUD;
+export default AdminCRUDEscortCategory;

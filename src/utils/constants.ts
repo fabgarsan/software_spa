@@ -40,7 +40,6 @@ export const DRAWER = {
   MAIN_DASHBOARD_TITLE: "Principal",
   MAIN_DASHBOARD_MENU_ADMIN: "Admin",
   MODULE_ADMIN_TITLE: "Admin",
-  MODULE_ADMIN_MENU_CATEGORIES: "Categorías",
   MODULE_ADMIN_MENU_ESCORTS: "Acompañantes",
   MODULE_ADMIN_MENU_USERS: "Usuarios",
   MENU_SIGN_OUT: "Cerrar Sessión",

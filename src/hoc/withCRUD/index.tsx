@@ -50,6 +50,7 @@ interface DefaultCRUDProps<E> {
   fetchMethod?: (id: number) => Promise<E>;
   fetchAllParams?: any;
   hasSearch?: boolean;
+  withTitle?: boolean;
   fetchAllPaginationMethod?: (
     limit: number,
     offset: number,
@@ -73,6 +74,7 @@ const index = <ElementInterface,>(
     instanceNameSingular,
     fetchAllParams,
     hasSearch,
+    withTitle,
   }: DefaultCRUDProps<ElementInterface>) => {
     const { createSuccessNotification } = useNotifications();
     const [searchText, setSearchText] = useState<string>("");
@@ -240,9 +242,11 @@ const index = <ElementInterface,>(
         )}
         <Grid container>
           <Grid item sm={8} xs={12}>
-            <Typography variant="h5" gutterBottom color="primary">
-              {instanceNamePlural}
-            </Typography>
+            {withTitle && (
+              <Typography variant="h5" gutterBottom color="primary">
+                {instanceNamePlural}
+              </Typography>
+            )}
           </Grid>
           <Grid container item sm={4} xs={12}>
             {showForm && (
@@ -322,6 +326,7 @@ const index = <ElementInterface,>(
     fetchAllPaginationMethod: undefined,
     createMethod: undefined,
     fetchMethod: undefined,
+    withTitle: true,
     deleteMethod: undefined,
     editMethod: undefined,
     fetchAllParams: {},

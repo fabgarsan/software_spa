@@ -10,3 +10,4 @@ export { default as Notify } from "./Notify";
 export { default as TableCRUDEscort } from "./TableCRUDEscort";
 export { default as TableCRUDEscortCategory } from "./TableCRUDEscortCategory";
 export { default as TableGenericCRUD } from "./TableGenericCRUD";
+export { default as TabManager } from "./TabManager";

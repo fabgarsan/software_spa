@@ -7,6 +7,7 @@ import {
   TableRow,
   TableCell,
   Typography,
+  Paper,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { CRUDDefaultTableProps } from "@hoc/index";
