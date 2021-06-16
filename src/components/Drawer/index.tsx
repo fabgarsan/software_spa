@@ -26,6 +26,7 @@ import { useHistory } from "react-router-dom";
 
 import { Paths, DRAWER, CONTAINERS } from "@utils/index";
 import { Box } from "@material-ui/core";
+import { NoViewDisplayAllowed } from "@components/index";
 
 const drawerWidth = 240;
 
@@ -225,11 +226,7 @@ const MiniDrawer: React.FunctionComponent<MiniDrawerProps> = ({
         {canShowContent ? (
           children
         ) : (
-          <Box marginTop={5}>
-            <Typography variant="h6" gutterBottom>
-              {CONTAINERS.WITH_CRUD_WITHOUT_ANY_PERMISSION} {title}
-            </Typography>
-          </Box>
+          <NoViewDisplayAllowed instanceNamePlural={title} />
         )}
       </main>
     </div>

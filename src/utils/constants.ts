@@ -167,7 +167,7 @@ export const API_ROUTES = {
 export const CONTAINERS = {
   USER_SIGN_IN_TITLE: "Registro de Entrada",
   USER_SIGN_OUT_TITLE: "Registro de Salida",
-  WITH_CRUD_WITHOUT_ANY_PERMISSION: "No tienes permisos para ver",
+  WITHOUT_ANY_PERMISSION_TO_DISPLAY: "No tienes permisos para ver",
 };
 
 export type GenericPermission = {

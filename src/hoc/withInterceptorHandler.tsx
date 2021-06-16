@@ -1,4 +1,5 @@
 import React, { useEffect, useCallback } from "react";
+import { AxiosError } from "axios";
 import { mainAxiosClientManager } from "@clients/axios";
 import { useAuth, useNotifications } from "@hooks/index";
 import { Notify, FormSignIn, LoadingOverlay } from "@components/index";
@@ -19,8 +20,11 @@ const withInterceptorHandler = <P extends WithInterceptorHandlerProps>(
     const { createErrorNotification } = useNotifications();
     const { auth, logIn, setIsNotAuthenticated } = useAuth();
     const handleResponseError = useCallback(
-      (error: any) => {
-        switch (error.response.status) {
+      (error: AxiosError) => {
+        switch (error.response?.status) {
+          case 400:
+            createErrorNotification(error.response.data.detail);
+            break;
           case 401:
             setIsNotAuthenticated();
             createErrorNotification(error.response.data.detail);
@@ -29,10 +33,19 @@ const withInterceptorHandler = <P extends WithInterceptorHandlerProps>(
           case 403:
             createErrorNotification(error.response.data.detail);
             break;
+          case 500:
+            createErrorNotification(error.response.data.detail);
+            console.log(error.config.method, "EL METODO");
+            console.log(error.config.url, "EL URL");
+            console.log(error.message, "EL MENSAGE");
+            console.log(error.name, "EL NAME");
+            console.log(error.response);
+            console.log(error.response.status);
+            break;
           default:
             console.log(
-              `ERROR ${error.response.status}`,
-              error.response.data.detail
+              `ERROR ${error.response?.status}`,
+              error.response?.data.detail
             );
             break;
         }

@@ -1,4 +1,5 @@
 export { default as AlertTimer } from "./AlertTimer";
+export { default as CommonLayout } from "./CommonLayout";
 export { default as DialogConfirmation } from "./DialogConfirmation";
 export { default as DialogCreateEditBase } from "./DialogCreateEditBase";
 export { default as DialogCreateEditCRUDEmployee } from "./DialogCreateEditCRUDEmployee";
@@ -9,6 +10,7 @@ export { default as Drawer } from "./Drawer";
 export { default as FormSignIn } from "./FormSignIn";
 export { default as LoadingOverlay } from "./LoadingOverlay";
 export { default as Notify } from "./Notify";
+export { default as NoViewDisplayAllowed } from "./NoViewDisplayAllowed";
 export { default as SignInOutControlConfirmationDialog } from "./SignInOutControlConfirmationDialog";
 export { default as SignInOutControlList } from "./SignInOutControlList";
 export { default as SignInControlSearch } from "./SignInControlSearch";

@@ -1,12 +1,18 @@
 import React, { useEffect, useReducer } from "react";
-import { useCRUDGenericApiCall, useNotifications } from "@hooks/index";
+import {
+  useCheckPermissions,
+  useCRUDGenericApiCall,
+  useNotifications,
+} from "@hooks/index";
 import { Escort } from "@dbTypes/escorts";
 import {
   API_ROUTES,
   CONTAINERS,
   NOTIFICATION_MESSAGES,
+  PERMISSION_INSTANCES,
 } from "@utils/constants";
 import {
+  CommonLayout,
   SignInOutControlConfirmationDialog,
   SignInOutControlList,
 } from "@components/index";
@@ -85,10 +91,12 @@ const SignOutControlContainer = () => {
   };
 
   return (
-    <Box>
-      <Typography variant="h5" gutterBottom color="primary">
-        {CONTAINERS.USER_SIGN_OUT_TITLE}
-      </Typography>
+    <CommonLayout
+      title={CONTAINERS.USER_SIGN_OUT_TITLE}
+      canView={useCheckPermissions([
+        PERMISSION_INSTANCES.SIGN_IN_CONTROL.MADE_SIGN_OUT_OTHERS,
+      ])}
+    >
       {signOutState.selectedUser && (
         <SignInOutControlConfirmationDialog
           title={CONTAINERS.USER_SIGN_OUT_TITLE}
@@ -108,7 +116,7 @@ const SignOutControlContainer = () => {
         list={signOutState.userList}
         handleOnSelectEscort={onSelectUser}
       />
-    </Box>
+    </CommonLayout>
   );
 };
 

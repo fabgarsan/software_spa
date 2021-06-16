@@ -1,9 +1,18 @@
 import React, { useReducer } from "react";
 import { Escort } from "@dbTypes/index";
-import { API_ROUTES, CONTAINERS, NOTIFICATION_MESSAGES } from "@utils/index";
+import {
+  API_ROUTES,
+  CONTAINERS,
+  NOTIFICATION_MESSAGES,
+  PERMISSION_INSTANCES,
+} from "@utils/index";
 import { Box, Typography } from "@material-ui/core";
 import { signIn } from "@api/index";
-import { useCRUDGenericApiCall, useNotifications } from "@hooks/index";
+import {
+  useCheckPermissions,
+  useCRUDGenericApiCall,
+  useNotifications,
+} from "@hooks/index";
 import {
   reducerSignInOut,
   signInOutInitial,
@@ -14,6 +23,7 @@ import {
   SignInOutControlConfirmationDialog,
 } from "@components/index";
 import { trackPromise } from "react-promise-tracker";
+import CommonLayout from "@components/CommonLayout";
 
 const generateQuestion = () => {
   const option: ("first" | "last")[] = ["first", "last"];
@@ -75,37 +85,43 @@ const SignInControlContainer = () => {
     }
   };
   return (
-    <Box>
-      <Typography variant="h5" gutterBottom color="primary">
-        {CONTAINERS.USER_SIGN_IN_TITLE}
-      </Typography>
-      {signInState.selectedUser && (
-        <SignInOutControlConfirmationDialog
-          title={CONTAINERS.USER_SIGN_IN_TITLE}
-          errorMessage={signInState.errorMessage}
-          open={Boolean(signInState.selectedUser)}
-          onCancel={() => dispatchSignInAction({ type: "cancelConfirmation" })}
-          onConfirm={onConfirm}
-          answer={signInState.answer}
-          fullName={signInState.selectedUser.fullName}
-          questionType={signInState.confirmationQuestionOption}
-          setTextAnswer={(text) =>
-            dispatchSignInAction({ type: "setAnswerText", text })
+    <CommonLayout
+      title={CONTAINERS.USER_SIGN_IN_TITLE}
+      canView={useCheckPermissions([
+        PERMISSION_INSTANCES.SIGN_IN_CONTROL.MADE_SIGN_IN_OTHERS,
+      ])}
+    >
+      <Box>
+        {signInState.selectedUser && (
+          <SignInOutControlConfirmationDialog
+            title={CONTAINERS.USER_SIGN_IN_TITLE}
+            errorMessage={signInState.errorMessage}
+            open={Boolean(signInState.selectedUser)}
+            onCancel={() =>
+              dispatchSignInAction({ type: "cancelConfirmation" })
+            }
+            onConfirm={onConfirm}
+            answer={signInState.answer}
+            fullName={signInState.selectedUser.fullName}
+            questionType={signInState.confirmationQuestionOption}
+            setTextAnswer={(text) =>
+              dispatchSignInAction({ type: "setAnswerText", text })
+            }
+          />
+        )}
+        <SignInControlSearch
+          onSearch={onSearch}
+          searchText={signInState.searchText}
+          handleOnSearchTextChange={(text) =>
+            dispatchSignInAction({ type: "setSearchText", text })
           }
         />
-      )}
-      <SignInControlSearch
-        onSearch={onSearch}
-        searchText={signInState.searchText}
-        handleOnSearchTextChange={(text) =>
-          dispatchSignInAction({ type: "setSearchText", text })
-        }
-      />
-      <SignInOutControlList
-        list={signInState.userList}
-        handleOnSelectEscort={onSelectUser}
-      />
-    </Box>
+        <SignInOutControlList
+          list={signInState.userList}
+          handleOnSelectEscort={onSelectUser}
+        />
+      </Box>
+    </CommonLayout>
   );
 };
 

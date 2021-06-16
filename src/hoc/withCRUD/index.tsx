@@ -20,6 +20,7 @@ import {
   TABLE_PAGINATOR,
 } from "@utils/index";
 import { AxiosResponseListPaginationData } from "@dbTypes/common";
+import NoViewDisplayAllowed from "@components/NoViewDisplayAllowed";
 import {
   reducerPagination,
   paginatorInitial,
@@ -220,13 +221,7 @@ const index = <ElementInterface,>(
     }, [handleOnFetchAll]);
 
     if (!permissions.HAS_ANY) {
-      return (
-        <Box marginTop={5}>
-          <Typography variant="h6" gutterBottom>
-            {CONTAINERS.WITH_CRUD_WITHOUT_ANY_PERMISSION} {instanceNamePlural}
-          </Typography>
-        </Box>
-      );
+      return <NoViewDisplayAllowed instanceNamePlural={instanceNamePlural} />;
     }
 
     return (
