@@ -23,7 +23,7 @@ const CRUDAdminEmployee: React.FunctionComponent = () => {
     useCRUDGenericApiCall<ExtendedUser>(API_ROUTES.USER);
   return (
     <DetailViewHOC
-      genericPermission={PERMISSION_INSTANCES.USER.GENERIC}
+      genericPermission={PERMISSION_INSTANCES.EMPLOYEE.GENERIC}
       instanceNamePlural={INSTANCES_NAMES.EMPLOYEE_PLURAL}
       instanceNameSingular={INSTANCES_NAMES.EMPLOYEE_SINGULAR}
       toStringField="fullName"

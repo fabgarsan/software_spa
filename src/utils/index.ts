@@ -13,6 +13,7 @@ export {
   API_ROUTES,
   CONTAINERS,
   PERMISSION_INSTANCES,
+  PERMISSION_MODULES,
 } from "./constants";
 
 export {

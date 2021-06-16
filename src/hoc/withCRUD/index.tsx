@@ -85,6 +85,9 @@ const index = <ElementInterface,>(
     const [searchText, setSearchText] = useState<string>("");
     const permissions = useCheckGenericUserPermissions(genericPermission);
 
+    const showAddButton = Form && createMethod && permissions.ADD;
+    const showList = Table && fetchAllPaginationMethod && permissions.LIST;
+
     const [paginatorState, dispatchPaginatorAction] = useReducer(
       reducerPagination<ElementInterface>(),
       paginatorInitial
@@ -96,7 +99,7 @@ const index = <ElementInterface,>(
     );
 
     const handleOnFetchAll = useCallback(async () => {
-      if (fetchAllPaginationMethod) {
+      if (fetchAllPaginationMethod && showList) {
         const data = await fetchAllPaginationMethod(
           paginatorState.limit,
           paginatorState.offset,
@@ -118,6 +121,7 @@ const index = <ElementInterface,>(
       paginatorState.offset,
       paginatorState.params,
       fetchAllParams,
+      showList,
     ]);
 
     const handleOnDestroy = async () => {
@@ -215,8 +219,6 @@ const index = <ElementInterface,>(
       };
     }, [handleOnFetchAll]);
 
-    const showAddButton = Form && createMethod && permissions.ADD;
-    const showList = Table && fetchAllPaginationMethod && permissions.LIST;
     if (!permissions.HAS_ANY) {
       return (
         <Box marginTop={5}>

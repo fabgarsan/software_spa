@@ -24,7 +24,8 @@ import { IconName } from "@fortawesome/pro-light-svg-icons";
 import { logOutThunk } from "@stores/authSlice";
 import { useHistory } from "react-router-dom";
 
-import { Paths, DRAWER } from "@utils/index";
+import { Paths, DRAWER, CONTAINERS } from "@utils/index";
+import { Box } from "@material-ui/core";
 
 const drawerWidth = 240;
 
@@ -104,6 +105,7 @@ export interface IconList {
 
 interface MiniDrawerProps {
   title: string;
+  canShowContent: boolean;
   items: IconList[];
   children: React.ReactNode;
   withMainIcon?: boolean;
@@ -114,6 +116,7 @@ const MiniDrawer: React.FunctionComponent<MiniDrawerProps> = ({
   title,
   items,
   withMainIcon,
+  canShowContent,
 }: MiniDrawerProps) => {
   const classes = useStyles();
   const theme = useTheme();
@@ -185,18 +188,19 @@ const MiniDrawer: React.FunctionComponent<MiniDrawerProps> = ({
         </div>
         <Divider />
         <List>
-          {itemsToShow.map((item) => (
-            <ListItem button key={item.text} onClick={item.onClick}>
-              <ListItemIcon>
-                <FontAwesomeIcon
-                  className={classes.icon}
-                  icon={["fal", item.icon]}
-                  size="lg"
-                />
-              </ListItemIcon>
-              <ListItemText primary={item.text} />
-            </ListItem>
-          ))}
+          {canShowContent &&
+            itemsToShow.map((item) => (
+              <ListItem button key={item.text} onClick={item.onClick}>
+                <ListItemIcon>
+                  <FontAwesomeIcon
+                    className={classes.icon}
+                    icon={["fal", item.icon]}
+                    size="lg"
+                  />
+                </ListItemIcon>
+                <ListItemText primary={item.text} />
+              </ListItem>
+            ))}
         </List>
         <Divider />
         <List>
@@ -218,7 +222,15 @@ const MiniDrawer: React.FunctionComponent<MiniDrawerProps> = ({
       </Drawer>
       <main className={classes.content}>
         <div className={classes.toolbar} />
-        {children}
+        {canShowContent ? (
+          children
+        ) : (
+          <Box marginTop={5}>
+            <Typography variant="h6" gutterBottom>
+              {CONTAINERS.WITH_CRUD_WITHOUT_ANY_PERMISSION} {title}
+            </Typography>
+          </Box>
+        )}
       </main>
     </div>
   );

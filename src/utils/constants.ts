@@ -193,7 +193,19 @@ export const PERMISSION_INSTANCES = {
   ESCORT_CATEGORY: {
     GENERIC: getGenericPermissionInstance("escortcategory"),
   },
+  EMPLOYEE: {
+    GENERIC: getGenericPermissionInstance("employee"),
+  },
   ESCORT: {
     GENERIC: getGenericPermissionInstance("escort"),
   },
+  SIGN_IN_CONTROL: {
+    MADE_SIGN_IN_OTHERS: "made_sign_in_others_signincontrol",
+    MADE_SIGN_OUT_OTHERS: "made_sign_out_others_signincontrol",
+  },
+};
+
+export const PERMISSION_MODULES = {
+  ADMIN: "module_admin",
+  RECEPTION: "module_reception",
 };
