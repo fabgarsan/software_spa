@@ -1,8 +1,8 @@
 import React from "react";
 import { CRUDDefaultTableProps } from "@hoc/index";
-import { Escort } from "@dbTypes/escorts";
+import { Escort } from "@dbTypes/index";
 import { TableGenericCRUD } from "@components/index";
-import { TABLE_HEADERS } from "@utils/constants";
+import { TABLE_HEADERS } from "@utils/index";
 
 const TableCRUDEscort: React.FunctionComponent<CRUDDefaultTableProps<Escort>> =
   ({ onOpenDelete, onOpenEdit, list }: CRUDDefaultTableProps<Escort>) => {
@@ -18,7 +18,7 @@ const TableCRUDEscort: React.FunctionComponent<CRUDDefaultTableProps<Escort>> =
           },
           {
             field: "fullName",
-            headerName: TABLE_HEADERS.USER.ALIAS,
+            headerName: TABLE_HEADERS.EXTENDED_USER.ALIAS,
             style: { maxWidth: "200px" },
             styleHeader: { maxWidth: "200px" },
           },
@@ -36,9 +36,16 @@ const TableCRUDEscort: React.FunctionComponent<CRUDDefaultTableProps<Escort>> =
           },
           {
             field: "categoryName",
-            headerName: TABLE_HEADERS.USER.CATEGORY,
+            headerName: TABLE_HEADERS.ESCORT_CATEGORIES.CATEGORY,
             style: { minWidth: "100px" },
             styleHeader: { minWidth: "100px" },
+          },
+          {
+            field: "isActive",
+            headerName: TABLE_HEADERS.USER.IS_ACTIVE,
+            style: { width: "70px", textAlign: "center" },
+            styleHeader: { width: "70px" },
+            isBoolean: true,
           },
         ]}
         list={list}

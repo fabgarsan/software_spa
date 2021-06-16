@@ -11,8 +11,11 @@ import {
   FormHelperText,
 } from "@material-ui/core";
 import { useForm, Controller } from "react-hook-form";
-import { Escort, EscortCategory } from "@dbTypes/escorts";
-import { DialogCreateEditBase } from "@components/index";
+import { Escort, EscortCategory } from "@dbTypes/index";
+import {
+  DialogCreateEditBase,
+  DialogCreateEditCRUDFormExtendedUser,
+} from "@components/index";
 import {
   DIALOG_MESSAGES,
   INSTANCES_NAMES,
@@ -76,6 +79,7 @@ const DialogCreateEditEscort: React.FunctionComponent<
       });
     }
   }, [instance, setValue]);
+
   return (
     <DialogCreateEditBase
       open={open}
@@ -109,45 +113,12 @@ const DialogCreateEditEscort: React.FunctionComponent<
         })}
       >
         <Grid container className={classes.root}>
-          <Grid item xs={12} sm={6}>
-            <Controller
-              name="firstName"
-              control={control}
-              defaultValue=""
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  fullWidth
-                  label={FORM_FIELDS.USER.LABEL_FIRST_NAME}
-                  variant="outlined"
-                  helperText={formErrors?.firstName?.message}
-                  error={Boolean(formErrors?.firstName)}
-                  autoComplete="off"
-                  value={field.value}
-                />
-              )}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Controller
-              name="lastName"
-              control={control}
-              defaultValue=""
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  fullWidth
-                  label={FORM_FIELDS.USER.LABEL_LAST_NAME}
-                  variant="outlined"
-                  helperText={formErrors?.lastName?.message}
-                  error={Boolean(formErrors?.lastName)}
-                  autoComplete="off"
-                  value={field.value}
-                />
-              )}
-            />
-          </Grid>
-          <Grid item xs={12} sm={5}>
+          <DialogCreateEditCRUDFormExtendedUser
+            formErrors={formErrors}
+            // @ts-ignore
+            control={control}
+          />
+          <Grid item xs={12} sm={5} md={3} lg={3}>
             <Controller
               name="alias"
               control={control}
@@ -166,96 +137,14 @@ const DialogCreateEditEscort: React.FunctionComponent<
               )}
             />
           </Grid>
-          <Grid item xs={12} sm={7}>
-            <Controller
-              name="email"
-              control={control}
-              defaultValue=""
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  fullWidth
-                  label={FORM_FIELDS.USER.LABEL_EMAIL}
-                  variant="outlined"
-                  helperText={formErrors?.email?.message}
-                  error={Boolean(formErrors?.email)}
-                  autoComplete="off"
-                  value={field.value}
-                />
-              )}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <Controller
-              name="idType"
-              control={control}
-              render={({ field }) => (
-                <FormControl className={classes.formControl}>
-                  <InputLabel htmlFor="id-type-select">
-                    {FORM_FIELDS.USER.LABEL_ID_TYPE}
-                  </InputLabel>
-                  <Select
-                    native
-                    fullWidth
-                    value={field.value}
-                    onChange={field.onChange}
-                    inputProps={{
-                      id: "id-type-select",
-                    }}
-                  >
-                    <option value={undefined}>-----</option>
-                    <option
-                      value={FORM_FIELDS.USER.LABEL_ID_TYPE_OPTIONS.CC.TYPE}
-                    >
-                      {FORM_FIELDS.USER.LABEL_ID_TYPE_OPTIONS.CC.TEXT}
-                    </option>
-                    <option
-                      value={FORM_FIELDS.USER.LABEL_ID_TYPE_OPTIONS.CE.TYPE}
-                    >
-                      {FORM_FIELDS.USER.LABEL_ID_TYPE_OPTIONS.CE.TEXT}
-                    </option>
-                    <option
-                      value={FORM_FIELDS.USER.LABEL_ID_TYPE_OPTIONS.PS.TYPE}
-                    >
-                      {FORM_FIELDS.USER.LABEL_ID_TYPE_OPTIONS.PS.TEXT}
-                    </option>
-                  </Select>
-                  {formErrors?.idType && (
-                    <FormHelperText className={classes.error}>
-                      {formErrors.idType.message}
-                    </FormHelperText>
-                  )}
-                </FormControl>
-              )}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6} md={3}>
-            <Controller
-              name="idNumber"
-              control={control}
-              defaultValue=""
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  fullWidth
-                  label={FORM_FIELDS.USER.LABEL_ID_NUMBER}
-                  variant="outlined"
-                  helperText={formErrors?.idNumber?.message}
-                  error={Boolean(formErrors?.idNumber)}
-                  autoComplete="off"
-                  value={field.value}
-                />
-              )}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
+          <Grid item xs={12} sm={3} md={2} lg={2}>
             <Controller
               name="category"
               control={control}
               render={({ field }) => (
                 <FormControl className={classes.formControl}>
                   <InputLabel htmlFor="id-category-select">
-                    {FORM_FIELDS.USER.LABEL_CATEGORY}
+                    {FORM_FIELDS.ESCORT.LABEL_CATEGORY}
                   </InputLabel>
                   <Select
                     fullWidth

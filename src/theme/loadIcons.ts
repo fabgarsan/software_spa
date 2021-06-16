@@ -6,12 +6,17 @@ import {
   faUsers,
   faCogs,
   faSignOut,
+  faSignIn,
   faHome,
   faUserNurse,
   faSpinner,
   faPlus,
   faTrash,
   faEdit,
+  faDoorOpen,
+  faCheckCircle,
+  faTimesCircle,
+  faUserHardHat,
 } from "@fortawesome/pro-light-svg-icons";
 
 const loadIcons = (): void => {
@@ -27,6 +32,11 @@ const loadIcons = (): void => {
   library.add(faSpinner);
   library.add(faTrash);
   library.add(faEdit);
+  library.add(faDoorOpen);
+  library.add(faSignIn);
+  library.add(faCheckCircle);
+  library.add(faTimesCircle);
+  library.add(faUserHardHat);
 };
 
 export default loadIcons;

@@ -1,8 +1,8 @@
 import React from "react";
 import { CRUDDefaultTableProps } from "@hoc/index";
-import { EscortCategory } from "@dbTypes/escorts";
+import { EscortCategory } from "@dbTypes/index";
 import { TableGenericCRUD } from "@components/index";
-import { TABLE_HEADERS } from "@utils/constants";
+import { TABLE_HEADERS } from "@utils/index";
 
 const TableCRUDEscortCategory: React.FunctionComponent<
   CRUDDefaultTableProps<EscortCategory>

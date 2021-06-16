@@ -5,6 +5,7 @@ import {
   deleteGenericApiCall,
   fetchGenericApiCall,
   editGenericApiCall,
+  fetchAllGenericApiCall,
 } from "@api/index";
 import { trackPromise } from "react-promise-tracker";
 
@@ -91,6 +92,16 @@ const useCRUDGenericApiCall = <T>(url: string, config?: Config) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [url]
   );
+  const fetchAll = useCallback(
+    async (params?: any) => {
+      const response = await setTrackPromise(
+        fetchAllGenericApiCall<T>(url, params)
+      );
+      return response.data;
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [url]
+  );
 
   return {
     create,
@@ -98,6 +109,7 @@ const useCRUDGenericApiCall = <T>(url: string, config?: Config) => {
     fetch,
     edit,
     destroy,
+    fetchAll,
   };
 };
 

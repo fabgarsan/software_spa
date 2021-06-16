@@ -19,6 +19,12 @@ export const DIALOG_MESSAGES = {
 };
 
 export const NOTIFICATION_MESSAGES = {
+  SIGN_IN_SUCCESSFUL_MESSAGE: "Se ha registrado con éxito la entrada de",
+  SIGN_OUT_SUCCESSFUL_MESSAGE: "Se ha registrado con éxito la salida de",
+  SIGN_IN_FAILED_MESSAGE:
+    "No se ha podido realizar correctamente el registro de entrada de",
+  SIGN_OUT_FAILED_MESSAGE:
+    "No se ha podido realizar correctamente el registro de salida de",
   CRUD_SUCCESS_ON_SAVE: (
     instanceNameSingular: string,
     toString: string
@@ -39,8 +45,12 @@ export const NOTIFICATION_MESSAGES = {
 export const DRAWER = {
   MAIN_DASHBOARD_TITLE: "Principal",
   MAIN_DASHBOARD_MENU_ADMIN: "Admin",
+  MODULE_RECEPTION_TITLE: "Recepción",
+  MODULE_RECEPTION_MENU_SIGN_IN: "Entrada",
+  MODULE_RECEPTION_MENU_SIGN_OUT: "Salida",
   MODULE_ADMIN_TITLE: "Admin",
   MODULE_ADMIN_MENU_ESCORTS: "Acompañantes",
+  MODULE_ADMIN_MENU_EMPLOYEES: "Colaboradores",
   MODULE_ADMIN_MENU_USERS: "Usuarios",
   MENU_SIGN_OUT: "Cerrar Sessión",
   MENU_HOME: "Principal",
@@ -51,6 +61,8 @@ export const INSTANCES_NAMES = {
   ESCORT_CATEGORIES_PLURAL: "Categorías Acompañantes",
   ESCORT_SINGULAR: "Acompañante",
   ESCORT_PLURAL: "Acompañantes",
+  EMPLOYEE_SINGULAR: "Colaborador",
+  EMPLOYEE_PLURAL: "Colaboradores",
 };
 
 export const FORM_VALIDATIONS = {
@@ -65,23 +77,30 @@ export const UI = {
   BUTTON_TEXT_SAVE: "Guardar",
   BUTTON_TEXT_CANCEL: "Cancelar",
   BUTTON_TEXT_SEARCH: "Buscar",
+  BUTTON_TEXT_ACCEPT: "Aceptar",
 };
 
 export const FORM_FIELDS = {
+  SIGN_IN_OUT_FORM: {
+    LABEL_ANSWER: "Respuesta",
+  },
   ESCORT_CATEGORIES: {
     LABEL_NAME: `Nombre ${INSTANCES_NAMES.ESCORT_CATEGORIES_SINGULAR}`,
     LABEL_ORDER: "Orden",
   },
   ESCORT: {
-    LABEL_ALIAS: `Alias ${INSTANCES_NAMES.ESCORT_SINGULAR}`,
+    LABEL_ALIAS: `Nombre Artístico ${INSTANCES_NAMES.ESCORT_SINGULAR}`,
+    LABEL_CATEGORY: "Categoría",
   },
   USER: {
     LABEL_FIRST_NAME: "Nombres",
     LABEL_LAST_NAME: "Apellidos",
     LABEL_EMAIL: "Email",
+    LABEL_IS_ACTIVE: "Activo",
+  },
+  EXTENDED_USER: {
     LABEL_ID_NUMBER: "Número Documento",
     LABEL_ID_TYPE: "Tipo de Documento",
-    LABEL_CATEGORY: "Categoría",
     LABEL_ID_TYPE_OPTIONS: {
       CC: {
         TYPE: "CC",
@@ -112,10 +131,13 @@ export const TABLE_HEADERS = {
   ESCORT_CATEGORIES: {
     NAME: "Nombre",
     ORDER: "Orden",
+    CATEGORY: "Categoría",
+  },
+  EXTENDED_USER: {
+    ALIAS: "Nombre Artístico",
   },
   USER: {
-    ALIAS: "Alias",
-    CATEGORY: "Categoría",
+    IS_ACTIVE: "Activo",
     EMAIL: "Email",
     USERNAME: "Nombre Usuario",
   },
@@ -134,7 +156,14 @@ export const TABLE_PAGINATOR = {
 export const API_ROUTES = {
   PERMISSION_GROUP: "groups/",
   ESCORT_CATEGORY: "escorts-categories/",
+  SIGN_IN_CONTROL: "sign-in-control/",
   ESCORT: "escorts/",
   AUTHENTICATION: "auth/",
   USER: "users/",
+  USER_SIGN_IN_OUT: "users-sign-in-out/",
+};
+
+export const CONTAINERS = {
+  USER_SIGN_IN_TITLE: "Registro de Entrada",
+  USER_SIGN_OUT_TITLE: "Registro de Salida",
 };

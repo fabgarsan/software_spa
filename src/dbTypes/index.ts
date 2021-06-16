@@ -1,2 +1,3 @@
-export type { EscortCategory } from "./escorts";
-export type { AxiosResponsePaginationData } from "./common";
+export type { User, ExtendedUser } from "./users";
+export type { EscortCategory, Escort } from "./escorts";
+export type { AxiosResponseListPaginationData } from "./common";

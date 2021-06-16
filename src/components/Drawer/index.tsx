@@ -105,12 +105,14 @@ interface MiniDrawerProps {
   title: string;
   items: IconList[];
   children: React.ReactNode;
+  withMainIcon?: boolean;
 }
 
 const MiniDrawer: React.FunctionComponent<MiniDrawerProps> = ({
   children,
   title,
   items,
+  withMainIcon,
 }: MiniDrawerProps) => {
   const classes = useStyles();
   const theme = useTheme();
@@ -128,7 +130,7 @@ const MiniDrawer: React.FunctionComponent<MiniDrawerProps> = ({
   };
 
   const goLogOut = () => dispatch(logOutThunk());
-  const goHome = () => push(Paths.root);
+  const goHome = () => push(Paths.moduleRoot);
 
   return (
     <div className={classes.root}>
@@ -195,12 +197,14 @@ const MiniDrawer: React.FunctionComponent<MiniDrawerProps> = ({
         </List>
         <Divider />
         <List>
-          <ListItem button onClick={goHome}>
-            <ListItemIcon>
-              <FontAwesomeIcon icon={["fal", "home"]} size="2x" />
-            </ListItemIcon>
-            <ListItemText primary={DRAWER.MENU_HOME} />
-          </ListItem>
+          {withMainIcon && (
+            <ListItem button onClick={goHome}>
+              <ListItemIcon>
+                <FontAwesomeIcon icon={["fal", "home"]} size="2x" />
+              </ListItemIcon>
+              <ListItemText primary={DRAWER.MENU_HOME} />
+            </ListItem>
+          )}
           <ListItem button onClick={goLogOut}>
             <ListItemIcon>
               <FontAwesomeIcon icon={["fal", "sign-out"]} size="2x" />
@@ -215,6 +219,9 @@ const MiniDrawer: React.FunctionComponent<MiniDrawerProps> = ({
       </main>
     </div>
   );
+};
+MiniDrawer.defaultProps = {
+  withMainIcon: true,
 };
 
 export default MiniDrawer;

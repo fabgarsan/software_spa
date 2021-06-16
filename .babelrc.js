@@ -20,7 +20,7 @@ const plugins = [
   [
     'module-resolver',
     {
-      "root": ["."],
+      "moduleRoot": ["."],
       'extensions': ['.ts', '.tsx', '.js', '.ios.js', '.android.js'],
       'alias': {
         '@api': './src/api',

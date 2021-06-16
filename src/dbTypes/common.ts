@@ -1,4 +1,4 @@
-export interface AxiosResponsePaginationData<E> {
+export interface AxiosResponseListPaginationData<E> {
   next: string;
   previous: string;
   count: number;

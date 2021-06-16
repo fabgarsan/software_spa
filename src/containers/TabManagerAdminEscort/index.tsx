@@ -1,9 +1,9 @@
 import React from "react";
-import { AdminCRUDEscort, AdminCRUDEscortCategory } from "@containers/index";
+import { CRUDAdminEscort, CRUDAdminEscortCategory } from "@containers/index";
 import { TabManager } from "@components/index";
 import { INSTANCES_NAMES } from "@utils/constants";
 
-const AdminTabManagerEscort = () => {
+const TabManagerAdminEscort = () => {
   return (
     <TabManager
       labels={[
@@ -14,12 +14,12 @@ const AdminTabManagerEscort = () => {
     >
       {({ tabIndex }) => (
         <>
-          {tabIndex === 0 && <AdminCRUDEscort />}
-          {tabIndex === 1 && <AdminCRUDEscortCategory />}
+          {tabIndex === 0 && <CRUDAdminEscort />}
+          {tabIndex === 1 && <CRUDAdminEscortCategory />}
         </>
       )}
     </TabManager>
   );
 };
 
-export default AdminTabManagerEscort;
+export default TabManagerAdminEscort;

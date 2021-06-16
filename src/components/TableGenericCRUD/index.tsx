@@ -7,7 +7,7 @@ import {
   TableRow,
   TableCell,
   Typography,
-  Paper,
+  Box,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { CRUDDefaultTableProps } from "@hoc/index";
@@ -22,6 +22,7 @@ interface TableHeader<DataTableInterface> {
   align?: "inherit" | "left" | "center" | "right" | "justify";
   styleHeader?: CSSProperties;
   style?: CSSProperties;
+  isBoolean?: boolean;
 }
 
 interface TableGenericProps<DataTableInterface>
@@ -128,7 +129,17 @@ const TableGenericCRUD = <DataTableInterface,>({
                     scope="row"
                     style={cellConfig.style || {}}
                   >
-                    {row[fieldName]}
+                    {cellConfig.isBoolean ? (
+                      <FontAwesomeIcon
+                        icon={[
+                          "fal",
+                          row[fieldName] ? "check-circle" : "times-circle",
+                        ]}
+                        size="lg"
+                      />
+                    ) : (
+                      row[fieldName]
+                    )}
                   </TableCell>
                 );
               })}

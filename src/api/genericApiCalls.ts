@@ -1,16 +1,22 @@
 import { AxiosResponse } from "axios";
 import { mainAxiosClientManager } from "@clients/index";
-import { AxiosResponsePaginationData } from "@dbTypes/common";
+import { AxiosResponseListPaginationData } from "@dbTypes/common";
 
 export const fetchAllGenericPaginationApiCall = <T>(
   url: string,
   limit: number,
   offset: number,
   params: any
-): Promise<AxiosResponse<AxiosResponsePaginationData<T>>> =>
+): Promise<AxiosResponse<AxiosResponseListPaginationData<T>>> =>
   mainAxiosClientManager.client.get(url, {
     params: { limit, offset, ...params },
   });
+
+export const fetchAllGenericApiCall = <T>(
+  url: string,
+  params: any
+): Promise<AxiosResponse<T[]>> =>
+  mainAxiosClientManager.client.get(url, { params });
 
 export const createGenericApiCall = <T>(
   url: string,

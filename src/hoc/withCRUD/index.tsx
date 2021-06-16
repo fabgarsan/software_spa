@@ -18,7 +18,7 @@ import {
   UI,
   TABLE_PAGINATOR,
 } from "@utils/index";
-import { AxiosResponsePaginationData } from "@dbTypes/common";
+import { AxiosResponseListPaginationData } from "@dbTypes/common";
 import {
   reducerPagination,
   paginatorInitial,
@@ -55,7 +55,7 @@ interface DefaultCRUDProps<E> {
     limit: number,
     offset: number,
     params?: any
-  ) => Promise<AxiosResponsePaginationData<E>>;
+  ) => Promise<AxiosResponseListPaginationData<E>>;
 }
 
 const index = <ElementInterface,>(

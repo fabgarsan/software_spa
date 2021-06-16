@@ -11,6 +11,7 @@ export {
   TABLE_HEADERS,
   TABLE_PAGINATOR,
   API_ROUTES,
+  CONTAINERS,
 } from "./constants";
 
 export {
