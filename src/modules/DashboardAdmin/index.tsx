@@ -2,7 +2,7 @@ import React from "react";
 import { Route, Switch, useHistory } from "react-router-dom";
 import { Drawer } from "@components/index";
 import { IconList } from "@components/Drawer";
-import { Paths, DRAWER } from "@utils/index";
+import { Paths, DRAWER, PERMISSION_INSTANCES } from "@utils/index";
 import {
   CRUDAdminEmployee,
   CRUDAdminUser,
@@ -11,6 +11,8 @@ import {
 
 const DashboardAdmin: React.FunctionComponent = () => {
   const { push } = useHistory();
+
+  console.log(PERMISSION_INSTANCES.ESCORT_CATEGORY);
 
   const itemsMenu: IconList[] = [
     {

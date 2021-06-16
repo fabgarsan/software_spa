@@ -17,6 +17,7 @@ import {
   signInOutInitial,
 } from "@components/SignInOutControlList/SignInOutControlList.reducer";
 import { signOut } from "@api/index";
+import { trackPromise } from "react-promise-tracker";
 
 const generateQuestion = () => {
   const option: ("first" | "last")[] = ["first", "last"];
@@ -66,7 +67,7 @@ const SignOutControlContainer = () => {
       dispatchSignOutAction({ type: "setError", errorMessage });
     } else if (signOutState.selectedUser) {
       try {
-        await signOut(signOutState.selectedUser.id);
+        await trackPromise(signOut(signOutState.selectedUser.id));
         createSuccessNotification(
           `${NOTIFICATION_MESSAGES.SIGN_OUT_SUCCESSFUL_MESSAGE} ${signOutState.selectedUser.fullName}`
         );

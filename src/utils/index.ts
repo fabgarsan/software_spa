@@ -12,6 +12,7 @@ export {
   TABLE_PAGINATOR,
   API_ROUTES,
   CONTAINERS,
+  PERMISSION_INSTANCES,
 } from "./constants";
 
 export {

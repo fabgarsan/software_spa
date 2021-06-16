@@ -9,11 +9,16 @@ import {
   auth as authInfo,
 } from "@stores/authSlice";
 
+import {
+  fetchPermissionCurrentUserThunk,
+  loadPermissionsFromStorage,
+} from "@stores/permissionSlice";
+
 const useAuth = () => {
   const dispatch = useDispatch();
 
   const logIn = (username: string, password: string) => {
-    return dispatch(logInThunk({ username, password }));
+    dispatch(logInThunk({ username, password }));
   };
 
   const logOut = () => {
@@ -28,6 +33,16 @@ const useAuth = () => {
   useEffect(() => {
     dispatch(loadUserThunk());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (auth.isAuthenticated) {
+      if (localStorage.getItem("permissions")) {
+        dispatch(loadPermissionsFromStorage());
+      } else {
+        dispatch(fetchPermissionCurrentUserThunk());
+      }
+    }
+  }, [auth.isAuthenticated, dispatch]);
 
   return {
     auth,

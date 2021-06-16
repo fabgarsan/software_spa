@@ -155,6 +155,7 @@ export const TABLE_PAGINATOR = {
 
 export const API_ROUTES = {
   PERMISSION_GROUP: "groups/",
+  PERMISSION: "permissions/",
   ESCORT_CATEGORY: "escorts-categories/",
   SIGN_IN_CONTROL: "sign-in-control/",
   ESCORT: "escorts/",
@@ -166,4 +167,21 @@ export const API_ROUTES = {
 export const CONTAINERS = {
   USER_SIGN_IN_TITLE: "Registro de Entrada",
   USER_SIGN_OUT_TITLE: "Registro de Salida",
+};
+
+const getGenericPermissionInstance = (instance: string) => ({
+  LIST: `list_${instance}`,
+  ADD: `add_${instance}`,
+  CHANGE: `change_${instance}`,
+  DELETE: `delete_${instance}`,
+  VIEW: `view_${instance}`,
+});
+
+export const PERMISSION_INSTANCES = {
+  USER: {
+    GENERIC: getGenericPermissionInstance("user"),
+  },
+  ESCORT_CATEGORY: {
+    GENERIC: getGenericPermissionInstance("escortcategory"),
+  },
 };

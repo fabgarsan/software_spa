@@ -13,6 +13,7 @@ import {
   SignInControlSearch,
   SignInOutControlConfirmationDialog,
 } from "@components/index";
+import { trackPromise } from "react-promise-tracker";
 
 const generateQuestion = () => {
   const option: ("first" | "last")[] = ["first", "last"];
@@ -61,7 +62,7 @@ const SignInControlContainer = () => {
       dispatchSignInAction({ type: "setError", errorMessage });
     } else if (signInState.selectedUser) {
       try {
-        await signIn(signInState.selectedUser.id);
+        await trackPromise(signIn(signInState.selectedUser.id));
         createSuccessNotification(
           `${NOTIFICATION_MESSAGES.SIGN_IN_SUCCESSFUL_MESSAGE} ${signInState.selectedUser.fullName}`
         );

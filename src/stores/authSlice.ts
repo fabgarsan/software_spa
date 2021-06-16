@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { loadUser, logIn, logOut } from "@api/authentication";
 import { RootState } from "@stores/store";
 import { createNotification } from "@stores/notificationSlice";
+import { fetchPermissionCurrentUserThunk } from "@stores/permissionSlice";
 import { mainAxiosClientManager } from "@clients/index";
 
 import { trackPromise } from "react-promise-tracker";
@@ -102,14 +103,17 @@ export const authSlice = createSlice({
       state.user = null;
       state.isAuthenticated = false;
       mainAxiosClientManager.removeToken();
+      localStorage.removeItem("permissions");
     });
     builder.addCase(logOutThunk.rejected, (state) => {
       state.user = null;
       state.isAuthenticated = false;
       mainAxiosClientManager.removeToken();
+      localStorage.removeItem("permissions");
     });
     builder.addCase(loadUserThunk.rejected, (state) => {
       mainAxiosClientManager.removeToken();
+      localStorage.removeItem("permissions");
       state.user = null;
       state.isAuthenticated = false;
     });
