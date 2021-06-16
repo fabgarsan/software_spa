@@ -10,6 +10,8 @@ const TableCRUDEscortCategory: React.FunctionComponent<
   onOpenDelete,
   onOpenEdit,
   list,
+  canEdit,
+  canDelete,
 }: CRUDDefaultTableProps<EscortCategory>) => {
   return (
     <TableGenericCRUD<EscortCategory>
@@ -34,6 +36,8 @@ const TableCRUDEscortCategory: React.FunctionComponent<
           styleHeader: { width: "50px", textAlign: "right" },
         },
       ]}
+      canEdit={canEdit}
+      canDelete={canDelete}
       list={list}
       onOpenDelete={onOpenDelete}
       onOpenEdit={onOpenEdit}

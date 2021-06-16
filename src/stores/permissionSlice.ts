@@ -66,6 +66,6 @@ export const permissionSlice = createSlice({
 });
 export const { clearPermissions, loadPermissionsFromStorage } =
   permissionSlice.actions;
-export const permission = (state: RootState): SliceState => state.permission;
+export const permissions = (state: RootState): SliceState => state.permission;
 
 export default permissionSlice;

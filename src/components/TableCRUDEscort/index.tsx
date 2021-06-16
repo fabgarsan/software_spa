@@ -5,7 +5,13 @@ import { TableGenericCRUD } from "@components/index";
 import { TABLE_HEADERS } from "@utils/index";
 
 const TableCRUDEscort: React.FunctionComponent<CRUDDefaultTableProps<Escort>> =
-  ({ onOpenDelete, onOpenEdit, list }: CRUDDefaultTableProps<Escort>) => {
+  ({
+    onOpenDelete,
+    onOpenEdit,
+    list,
+    canEdit,
+    canDelete,
+  }: CRUDDefaultTableProps<Escort>) => {
     return (
       <TableGenericCRUD<Escort>
         idField="id"
@@ -48,6 +54,8 @@ const TableCRUDEscort: React.FunctionComponent<CRUDDefaultTableProps<Escort>> =
             isBoolean: true,
           },
         ]}
+        canEdit={canEdit}
+        canDelete={canDelete}
         list={list}
         onOpenDelete={onOpenDelete}
         onOpenEdit={onOpenEdit}

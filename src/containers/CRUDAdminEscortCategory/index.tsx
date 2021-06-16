@@ -5,7 +5,11 @@ import {
   DialogCreateEditCRUDEscortCategory,
   TableCRUDEscortCategory,
 } from "@components/index";
-import { INSTANCES_NAMES, API_ROUTES } from "@utils/index";
+import {
+  INSTANCES_NAMES,
+  API_ROUTES,
+  PERMISSION_INSTANCES,
+} from "@utils/index";
 
 import { useCRUDGenericApiCall } from "@hooks/index";
 
@@ -16,17 +20,10 @@ const DetailViewHOC = withCRUD<EscortCategory>(
 
 const CRUDAdminEscortCategory: React.FunctionComponent = () => {
   const { fetchAllPagination, create, destroy, fetch, edit } =
-    useCRUDGenericApiCall<EscortCategory>(API_ROUTES.ESCORT_CATEGORY, {
-      methods: [
-        { method: "create" },
-        { method: "fetch" },
-        { method: "fetchAllPagination" },
-        { method: "edit" },
-        { method: "delete" },
-      ],
-    });
+    useCRUDGenericApiCall<EscortCategory>(API_ROUTES.ESCORT_CATEGORY);
   return (
     <DetailViewHOC
+      genericPermission={PERMISSION_INSTANCES.ESCORT_CATEGORY.GENERIC}
       instanceNamePlural={INSTANCES_NAMES.ESCORT_CATEGORIES_PLURAL}
       instanceNameSingular={INSTANCES_NAMES.ESCORT_CATEGORIES_SINGULAR}
       toStringField="name"

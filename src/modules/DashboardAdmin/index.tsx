@@ -8,27 +8,32 @@ import {
   CRUDAdminUser,
   TabManagerAdminEscort,
 } from "@containers/index";
+import { useCheckGenericUserPermissions } from "@hooks/index";
 
 const DashboardAdmin: React.FunctionComponent = () => {
   const { push } = useHistory();
-
-  console.log(PERMISSION_INSTANCES.ESCORT_CATEGORY);
+  const permissionsEscortCategory = useCheckGenericUserPermissions(
+    PERMISSION_INSTANCES.ESCORT_CATEGORY.GENERIC
+  );
 
   const itemsMenu: IconList[] = [
     {
       text: DRAWER.MODULE_ADMIN_MENU_USERS,
       icon: "users",
       onClick: () => push(Paths.moduleAdminUsers),
+      show: true,
     },
     {
       text: DRAWER.MODULE_ADMIN_MENU_ESCORTS,
       icon: "user-nurse",
       onClick: () => push(Paths.moduleAdminEscorts),
+      show: permissionsEscortCategory.HAS_ANY,
     },
     {
       text: DRAWER.MODULE_ADMIN_MENU_EMPLOYEES,
       icon: "user-hard-hat",
       onClick: () => push(Paths.moduleAdminEmployees),
+      show: true,
     },
   ];
 

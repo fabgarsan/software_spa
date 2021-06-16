@@ -10,6 +10,8 @@ const TableCRUDEmployee: React.FunctionComponent<
   onOpenDelete,
   onOpenEdit,
   list,
+  canDelete,
+  canEdit,
 }: CRUDDefaultTableProps<ExtendedUser>) => {
   return (
     <TableGenericCRUD<ExtendedUser>
@@ -47,6 +49,8 @@ const TableCRUDEmployee: React.FunctionComponent<
           isBoolean: true,
         },
       ]}
+      canEdit={canEdit}
+      canDelete={canDelete}
       list={list}
       onOpenDelete={onOpenDelete}
       onOpenEdit={onOpenEdit}

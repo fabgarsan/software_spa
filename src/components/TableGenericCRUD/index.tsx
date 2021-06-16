@@ -7,7 +7,6 @@ import {
   TableRow,
   TableCell,
   Typography,
-  Box,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import { CRUDDefaultTableProps } from "@hoc/index";
@@ -63,6 +62,8 @@ const TableGenericCRUD = <DataTableInterface,>({
   headers,
   idField,
   list,
+  canDelete,
+  canEdit,
   onOpenEdit,
   onOpenDelete,
 }: TableGenericProps<DataTableInterface>) => {
@@ -96,14 +97,14 @@ const TableGenericCRUD = <DataTableInterface,>({
         <TableHead className={classes.tableHeader}>
           <TableRow>
             {renderHeaders()}
-            {onOpenEdit && (
+            {canEdit && (
               <TableCell className={classes.tableCellButtonHeader}>
                 <Typography variant="body2" color="textSecondary">
                   {TABLE_HEADERS.GENERAL.HEADER_EDIT}
                 </Typography>
               </TableCell>
             )}
-            {onOpenDelete && (
+            {canDelete && (
               <TableCell className={classes.tableCellButtonHeader}>
                 <Typography variant="body2" color="textSecondary">
                   {TABLE_HEADERS.GENERAL.HEADER_DELETE}
@@ -143,7 +144,7 @@ const TableGenericCRUD = <DataTableInterface,>({
                   </TableCell>
                 );
               })}
-              {onOpenEdit && (
+              {onOpenEdit && canEdit && (
                 <TableCell
                   component="th"
                   scope="row"
@@ -161,7 +162,7 @@ const TableGenericCRUD = <DataTableInterface,>({
                   </IconButton>
                 </TableCell>
               )}
-              {onOpenDelete && (
+              {onOpenDelete && canDelete && (
                 <TableCell
                   component="th"
                   scope="row"

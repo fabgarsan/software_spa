@@ -99,6 +99,7 @@ export interface IconList {
   text: string;
   icon: IconName;
   onClick: () => void;
+  show?: boolean;
 }
 
 interface MiniDrawerProps {
@@ -117,6 +118,8 @@ const MiniDrawer: React.FunctionComponent<MiniDrawerProps> = ({
   const classes = useStyles();
   const theme = useTheme();
   const { push } = useHistory();
+
+  const itemsToShow = items.filter((item) => item.show);
 
   const open = useSelector(drawerState);
   const dispatch = useDispatch();
@@ -182,7 +185,7 @@ const MiniDrawer: React.FunctionComponent<MiniDrawerProps> = ({
         </div>
         <Divider />
         <List>
-          {items.map((item) => (
+          {itemsToShow.map((item) => (
             <ListItem button key={item.text} onClick={item.onClick}>
               <ListItemIcon>
                 <FontAwesomeIcon

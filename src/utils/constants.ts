@@ -167,9 +167,18 @@ export const API_ROUTES = {
 export const CONTAINERS = {
   USER_SIGN_IN_TITLE: "Registro de Entrada",
   USER_SIGN_OUT_TITLE: "Registro de Salida",
+  WITH_CRUD_WITHOUT_ANY_PERMISSION: "No tienes permisos para ver",
 };
 
-const getGenericPermissionInstance = (instance: string) => ({
+export type GenericPermission = {
+  LIST: string;
+  ADD: string;
+  CHANGE: string;
+  DELETE: string;
+  VIEW: string;
+};
+
+const getGenericPermissionInstance = (instance: string): GenericPermission => ({
   LIST: `list_${instance}`,
   ADD: `add_${instance}`,
   CHANGE: `change_${instance}`,
@@ -183,5 +192,8 @@ export const PERMISSION_INSTANCES = {
   },
   ESCORT_CATEGORY: {
     GENERIC: getGenericPermissionInstance("escortcategory"),
+  },
+  ESCORT: {
+    GENERIC: getGenericPermissionInstance("escort"),
   },
 };

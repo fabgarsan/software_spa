@@ -8,8 +8,9 @@ import {
   Typography,
 } from "@material-ui/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useNotifications } from "@hooks/index";
+import { useCheckGenericUserPermissions, useNotifications } from "@hooks/index";
 import { DialogConfirmation } from "@components/index";
+import { CONTAINERS, GenericPermission } from "@utils/constants";
 import {
   DIALOG_MESSAGES,
   isNumber,
@@ -28,6 +29,8 @@ import {
 
 export interface CRUDDefaultTableProps<E> {
   list: E[];
+  canDelete: boolean;
+  canEdit: boolean;
   onOpenDelete: ((element: E) => void) | undefined;
   onOpenEdit: ((element: E) => void) | undefined;
 }
@@ -40,6 +43,7 @@ export interface CRUDDefaultFormProps<E> {
 }
 
 interface DefaultCRUDProps<E> {
+  genericPermission: GenericPermission;
   instanceNameSingular: string;
   instanceNamePlural: string;
   toStringField: keyof E;
@@ -75,9 +79,11 @@ const index = <ElementInterface,>(
     fetchAllParams,
     hasSearch,
     withTitle,
+    genericPermission,
   }: DefaultCRUDProps<ElementInterface>) => {
     const { createSuccessNotification } = useNotifications();
     const [searchText, setSearchText] = useState<string>("");
+    const permissions = useCheckGenericUserPermissions(genericPermission);
 
     const [paginatorState, dispatchPaginatorAction] = useReducer(
       reducerPagination<ElementInterface>(),
@@ -209,7 +215,17 @@ const index = <ElementInterface,>(
       };
     }, [handleOnFetchAll]);
 
-    const showForm = Form && (createMethod || editMethod) && fetchMethod;
+    const showAddButton = Form && createMethod && permissions.ADD;
+    const showList = Table && fetchAllPaginationMethod && permissions.LIST;
+    if (!permissions.HAS_ANY) {
+      return (
+        <Box marginTop={5}>
+          <Typography variant="h6" gutterBottom>
+            {CONTAINERS.WITH_CRUD_WITHOUT_ANY_PERMISSION} {instanceNamePlural}
+          </Typography>
+        </Box>
+      );
+    }
 
     return (
       <Box>
@@ -230,7 +246,7 @@ const index = <ElementInterface,>(
               }
             />
           )}
-        {Form && showForm && elementActionsState.openSaveEditDialog && (
+        {Form && elementActionsState.openSaveEditDialog && (
           <Form
             instance={elementActionsState.element}
             onSave={handleOnSave}
@@ -249,7 +265,7 @@ const index = <ElementInterface,>(
             )}
           </Grid>
           <Grid container item sm={4} xs={12}>
-            {showForm && (
+            {showAddButton && (
               <Box
                 display="flex"
                 justifyContent="flex-end"
@@ -271,54 +287,64 @@ const index = <ElementInterface,>(
             )}
           </Grid>
         </Grid>
-        {hasSearch && (
-          <Grid container>
-            <Grid item xs={12} sm={4}>
-              <TextField
-                fullWidth
-                onChange={(event) => setSearchText(event.target.value)}
-              />
-            </Grid>
-            <Grid item xs={12} sm={2}>
-              <Button
-                onClick={() =>
-                  dispatchPaginatorAction({
-                    type: "setSearch",
-                    search: searchText,
-                  })
+        {showList && (
+          <>
+            {hasSearch && (
+              <Grid container>
+                <Grid item xs={12} sm={4}>
+                  <TextField
+                    fullWidth
+                    onChange={(event) => setSearchText(event.target.value)}
+                  />
+                </Grid>
+                <Grid item xs={12} sm={2}>
+                  <Button
+                    onClick={() =>
+                      dispatchPaginatorAction({
+                        type: "setSearch",
+                        search: searchText,
+                      })
+                    }
+                    type="button"
+                    color="secondary"
+                  >
+                    {UI.BUTTON_TEXT_SEARCH}
+                  </Button>
+                </Grid>
+              </Grid>
+            )}
+            {Table && (
+              <Table
+                canEdit={
+                  permissions.CHANGE &&
+                  Boolean(editMethod) &&
+                  Boolean(fetchMethod)
                 }
-                type="button"
-                color="secondary"
-              >
-                {UI.BUTTON_TEXT_SEARCH}
-              </Button>
-            </Grid>
-          </Grid>
+                canDelete={permissions.DELETE && Boolean(deleteMethod)}
+                list={paginatorState.list}
+                onOpenDelete={(deleteMethod && handleOnOpenDelete) || undefined}
+                onOpenEdit={(editMethod && handleOnOpenEdit) || undefined}
+              />
+            )}
+            <Box>
+              {paginatorState.count > TABLE_PAGINATOR.LIMIT && (
+                <TablePagination
+                  rowsPerPageOptions={TABLE_PAGINATOR.ROWS_PER_PAGE_OPTIONS}
+                  labelRowsPerPage={TABLE_PAGINATOR.LABEL_ROWS_PER_PAGE}
+                  labelDisplayedRows={TABLE_PAGINATOR.LABEL_DISPLAYED_ROWS}
+                  nextIconButtonText={TABLE_PAGINATOR.NEXT_ICON_BUTTON_TEXT}
+                  backIconButtonText={TABLE_PAGINATOR.BACK_ICON_BUTTON_TEXT}
+                  component="div"
+                  count={paginatorState.count}
+                  page={paginatorState.currentPage}
+                  onChangePage={handleChangePage}
+                  rowsPerPage={paginatorState.limit}
+                  onChangeRowsPerPage={handleChangeRowsPerPage}
+                />
+              )}
+            </Box>
+          </>
         )}
-        {Table && (
-          <Table
-            list={paginatorState.list}
-            onOpenDelete={(deleteMethod && handleOnOpenDelete) || undefined}
-            onOpenEdit={(editMethod && handleOnOpenEdit) || undefined}
-          />
-        )}
-        <Box>
-          {paginatorState.count > TABLE_PAGINATOR.LIMIT && (
-            <TablePagination
-              rowsPerPageOptions={TABLE_PAGINATOR.ROWS_PER_PAGE_OPTIONS}
-              labelRowsPerPage={TABLE_PAGINATOR.LABEL_ROWS_PER_PAGE}
-              labelDisplayedRows={TABLE_PAGINATOR.LABEL_DISPLAYED_ROWS}
-              nextIconButtonText={TABLE_PAGINATOR.NEXT_ICON_BUTTON_TEXT}
-              backIconButtonText={TABLE_PAGINATOR.BACK_ICON_BUTTON_TEXT}
-              component="div"
-              count={paginatorState.count}
-              page={paginatorState.currentPage}
-              onChangePage={handleChangePage}
-              rowsPerPage={paginatorState.limit}
-              onChangeRowsPerPage={handleChangeRowsPerPage}
-            />
-          )}
-        </Box>
       </Box>
     );
   };

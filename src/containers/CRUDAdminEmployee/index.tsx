@@ -5,7 +5,11 @@ import {
   TableCRUDEmployee,
   DialogCreateEditCRUDEmployee,
 } from "@components/index";
-import { INSTANCES_NAMES, API_ROUTES } from "@utils/index";
+import {
+  INSTANCES_NAMES,
+  API_ROUTES,
+  PERMISSION_INSTANCES,
+} from "@utils/index";
 
 import { useCRUDGenericApiCall } from "@hooks/index";
 
@@ -19,6 +23,7 @@ const CRUDAdminEmployee: React.FunctionComponent = () => {
     useCRUDGenericApiCall<ExtendedUser>(API_ROUTES.USER);
   return (
     <DetailViewHOC
+      genericPermission={PERMISSION_INSTANCES.USER.GENERIC}
       instanceNamePlural={INSTANCES_NAMES.EMPLOYEE_PLURAL}
       instanceNameSingular={INSTANCES_NAMES.EMPLOYEE_SINGULAR}
       toStringField="fullName"
