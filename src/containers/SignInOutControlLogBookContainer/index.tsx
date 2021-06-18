@@ -1,6 +1,11 @@
 import React, { useEffect, useReducer, useState } from "react";
 import { useCheckPermissions, useCRUDGenericApiCall } from "@hooks/index";
-import { API_ROUTES, CONTAINERS, PERMISSION_INSTANCES } from "@utils/constants";
+import {
+  API_ROUTES,
+  CONTAINERS,
+  FORMATS,
+  PERMISSION_INSTANCES,
+} from "@utils/constants";
 import { SignInControl } from "@dbTypes/authentication";
 import {
   CommonLayout,
@@ -22,7 +27,7 @@ const SignInOutControlLogBookContainer = () => {
   useEffect(() => {
     const fetchData = async () => {
       const responseData = await fetchAll({
-        date: moment(new Date()).format("YYYY-MM-DD"),
+        date: moment(new Date()).format(FORMATS.DATE_TIME_TO_SEND),
       });
       setData(responseData);
     };

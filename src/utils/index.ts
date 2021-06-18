@@ -14,6 +14,7 @@ export {
   CONTAINERS,
   PERMISSION_INSTANCES,
   PERMISSION_MODULES,
+  FORMATS,
 } from "./constants";
 
 export {
@@ -21,4 +22,7 @@ export {
   isString,
   setIfNotString,
   setIfNotNumber,
+  getFormFieldError,
 } from "./typeGuards";
+
+export { diffDates, setFormError, setFormValue } from "./functions";

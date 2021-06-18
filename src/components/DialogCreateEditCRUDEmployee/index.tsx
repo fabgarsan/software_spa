@@ -11,7 +11,8 @@ import {
   DIALOG_MESSAGES,
   INSTANCES_NAMES,
   UI,
-  setIfNotString,
+  setFormError,
+  setFormValue,
 } from "@utils/index";
 
 import { CRUDDefaultFormProps } from "@hoc/index";
@@ -24,13 +25,6 @@ const useStyles = makeStyles((theme: Theme) =>
       "& > *": {
         padding: theme.spacing(1),
       },
-    },
-    formControl: {
-      margin: theme.spacing(1),
-      width: "100%",
-    },
-    error: {
-      color: theme.palette.error.main,
     },
   })
 );
@@ -55,9 +49,7 @@ const DialogCreateEditEscort: React.FunctionComponent<
 
   useEffect(() => {
     if (instance) {
-      Object.entries(instance).forEach(([key, value]) => {
-        setValue(key as keyof ExtendedUser, value);
-      });
+      setFormValue<ExtendedUser>(setValue, instance);
     }
   }, [instance, setValue]);
   return (
@@ -75,19 +67,12 @@ const DialogCreateEditEscort: React.FunctionComponent<
             await onSave({
               ...data,
               gender: "F",
-              password: `Cc${data.idNumber}`,
               userType: "T",
               firstName: data.firstName.toUpperCase(),
               lastName: data.lastName.toUpperCase(),
-              email: data.email.toUpperCase(),
             });
           } catch (errors) {
-            Object.entries(errors).forEach(([key, value]) => {
-              setError(key as keyof ExtendedUser, {
-                type: "manual",
-                message: setIfNotString(value),
-              });
-            });
+            setFormError<ExtendedUser>(setError, errors);
           }
         })}
       >

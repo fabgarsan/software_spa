@@ -7,7 +7,7 @@ import {
   ListItemText,
   Grid,
 } from "@material-ui/core";
-import { INSTANCES_NAMES } from "@utils/constants";
+import { INSTANCES_NAMES, diffDates } from "@utils/index";
 import moment from "moment";
 
 interface SignInOutControlListProps {
@@ -34,14 +34,13 @@ const SignInOutControlLogBookList = ({ list }: SignInOutControlListProps) => {
               ? moment(signOutDatetime).format("LL, LT")
               : null;
 
-            const hours = moment(signOutDatetime).diff(
-              moment(signInDatetime),
-              "hours"
-            );
+            const hours = signOutDatetime
+              ? diffDates(signOutDatetime, signInDatetime, "hours")
+              : "Presente";
 
             const presentTime = `[${timeIn}${
-              timeOut ? ` - ${timeOut}] ${hours} Horas` : " Presente ]"
-            }`;
+              timeOut ? ` - ${timeOut}` : ""
+            }] ${hours}`;
             return (
               <ListItem key={user.id}>
                 <ListItemText

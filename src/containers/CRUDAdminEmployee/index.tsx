@@ -35,7 +35,6 @@ const CRUDAdminEmployee: React.FunctionComponent = () => {
       editMethod={edit}
       fetchAllParams={{ extended_user__user_type: "T" }}
       hasSearch
-      withTitle={false}
     />
   );
 };

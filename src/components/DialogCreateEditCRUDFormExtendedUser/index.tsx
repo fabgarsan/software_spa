@@ -10,9 +10,10 @@ import {
   TextField,
 } from "@material-ui/core";
 import { Control, Controller, DeepMap, FieldError } from "react-hook-form";
-import { FORM_FIELDS } from "@utils/constants";
+import { FORM_FIELDS, diffDates, FORMATS } from "@utils/index";
 import { ExtendedUser } from "@dbTypes/index";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import { KeyboardDatePicker } from "@material-ui/pickers";
 
 interface DialogCreateEditCRUDFormExtendedUserProps {
   control: Control<ExtendedUser>;
@@ -35,6 +36,11 @@ const useStyles = makeStyles((theme: Theme) =>
     },
   })
 );
+
+const maxDate = new Date();
+maxDate.setFullYear(maxDate.getFullYear() - 18);
+const today = new Date();
+
 const DialogCreateEditCRUDFormExtendedUser = ({
   control,
   formErrors,
@@ -42,7 +48,7 @@ const DialogCreateEditCRUDFormExtendedUser = ({
   const classes = useStyles();
   return (
     <>
-      <Grid item xs={12} sm={6}>
+      <Grid item xs={12} sm={4}>
         <Controller
           name="firstName"
           control={control}
@@ -61,7 +67,7 @@ const DialogCreateEditCRUDFormExtendedUser = ({
           )}
         />
       </Grid>
-      <Grid item xs={12} sm={6}>
+      <Grid item xs={12} sm={5}>
         <Controller
           name="lastName"
           control={control}
@@ -77,6 +83,38 @@ const DialogCreateEditCRUDFormExtendedUser = ({
               autoComplete="off"
               value={field.value}
             />
+          )}
+        />
+      </Grid>
+      <Grid item xs={12} sm={3}>
+        <Controller
+          name="dateOfBirth"
+          control={control}
+          defaultValue={maxDate}
+          render={({ field }) => (
+            <>
+              <KeyboardDatePicker
+                maxDate={maxDate || undefined}
+                margin="normal"
+                id="date-picker-dialog"
+                label={FORM_FIELDS.EXTENDED_USER.LABEL_DATE_OF_BIRTH}
+                format={FORMATS.DATE_TIME_TO_SHOW}
+                value={field.value}
+                onChange={field.onChange}
+                KeyboardButtonProps={{
+                  "aria-label": "change date",
+                }}
+              />
+              {formErrors?.dateOfBirth ? (
+                <FormHelperText className={classes.error}>
+                  {formErrors.dateOfBirth.message}
+                </FormHelperText>
+              ) : (
+                <FormHelperText>
+                  {diffDates(today, field.value, "years")}
+                </FormHelperText>
+              )}
+            </>
           )}
         />
       </Grid>
@@ -149,22 +187,37 @@ const DialogCreateEditCRUDFormExtendedUser = ({
           )}
         />
       </Grid>
-      <Grid item xs={12} sm={9} md={6} lg={5}>
+      <Grid item xs={12} sm={3} md={2} lg={2}>
         <Controller
-          name="email"
+          name="bloodType"
           control={control}
-          defaultValue=""
           render={({ field }) => (
-            <TextField
-              {...field}
-              fullWidth
-              label={FORM_FIELDS.USER.LABEL_EMAIL}
-              variant="outlined"
-              helperText={formErrors?.email?.message}
-              error={Boolean(formErrors?.email)}
-              autoComplete="off"
-              value={field.value}
-            />
+            <FormControl className={classes.formControl}>
+              <InputLabel htmlFor="id-blood-type">
+                {FORM_FIELDS.EXTENDED_USER.LABEL_BLOOD_TYPE}
+              </InputLabel>
+              <Select
+                fullWidth
+                native
+                value={field.value}
+                onChange={field.onChange}
+                inputProps={{
+                  id: "id-blood-type",
+                }}
+              >
+                <option value={undefined}>-----</option>
+                {FORM_FIELDS.EXTENDED_USER.BLOOD_TYPE?.map((type) => (
+                  <option key={type.type} value={type.type}>
+                    {type.text}
+                  </option>
+                ))}
+              </Select>
+              {formErrors?.bloodType && (
+                <FormHelperText className={classes.error}>
+                  {formErrors.bloodType.message}
+                </FormHelperText>
+              )}
+            </FormControl>
           )}
         />
       </Grid>

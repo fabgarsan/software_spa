@@ -1,4 +1,5 @@
 import { useCallback } from "react";
+import chalk from "chalk";
 import {
   createGenericApiCall,
   fetchAllGenericPaginationApiCall,
@@ -82,6 +83,7 @@ const useCRUDGenericApiCall = <T>(url: string, config?: Config) => {
     );
     return response.data;
   };
+
   const fetchAllPagination = useCallback(
     async (limit: number, offset: number, params: any) => {
       const response = await setTrackPromise(

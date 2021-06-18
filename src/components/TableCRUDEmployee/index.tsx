@@ -36,12 +36,6 @@ const TableCRUDEmployee: React.FunctionComponent<
           styleHeader: { maxWidth: "100px" },
         },
         {
-          field: "email",
-          headerName: TABLE_HEADERS.USER.EMAIL,
-          style: { minWidth: "250px" },
-          styleHeader: { minWidth: "250px" },
-        },
-        {
           field: "isActive",
           headerName: TABLE_HEADERS.USER.IS_ACTIVE,
           style: { width: "70px", textAlign: "center" },

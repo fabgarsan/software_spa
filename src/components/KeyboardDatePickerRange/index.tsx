@@ -38,7 +38,7 @@ const KeyboardDatePickerRange = ({
           className={classes.datePicker}
           margin="dense"
           label={FORM_FIELDS.GENERAL.LABEL_DATE_INITIAL}
-          format={FORMATS.DATE_TIME}
+          format={FORMATS.DATE_TIME_TO_SHOW}
           value={fromDate}
           onChange={onDateFromChange}
           KeyboardButtonProps={{
@@ -50,7 +50,7 @@ const KeyboardDatePickerRange = ({
         <KeyboardDatePicker
           margin="dense"
           label={FORM_FIELDS.GENERAL.LABEL_DATE_FINAL}
-          format={FORMATS.DATE_TIME}
+          format={FORMATS.DATE_TIME_TO_SHOW}
           value={toDate}
           onChange={onDateToChange}
           KeyboardButtonProps={{

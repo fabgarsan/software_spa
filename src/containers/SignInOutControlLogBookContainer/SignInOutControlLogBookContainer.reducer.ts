@@ -1,5 +1,6 @@
 import moment from "moment";
 import { DateType } from "@date-io/type";
+import { FORMATS } from "@utils/index";
 
 type MaterialUiPickersDate = DateType | null;
 
@@ -25,9 +26,9 @@ export type FiltertActions =
 export const filterInitial: FilterState = {
   filterType: "date",
   params: {
-    date: moment(new Date()).format("YYYY-MM-DD"),
-    dateFrom: moment(new Date()).format("YYYY-MM-DD"),
-    dateTo: moment(new Date()).format("YYYY-MM-DD"),
+    date: moment(new Date()).format(FORMATS.DATE_TIME_TO_SEND),
+    dateFrom: moment(new Date()).format(FORMATS.DATE_TIME_TO_SEND),
+    dateTo: moment(new Date()).format(FORMATS.DATE_TIME_TO_SEND),
     search: "",
   },
 };
@@ -41,7 +42,9 @@ export const reducerFilter: React.Reducer<FilterState, FiltertActions> = (
       return {
         ...state,
         params: {
-          date: action.date?.format("YYYY-MM-DD") || filterInitial.params.date,
+          date:
+            action.date?.format(FORMATS.DATE_TIME_TO_SEND) ||
+            filterInitial.params.date,
         },
       };
     case "filterRangeFrom":
@@ -50,7 +53,8 @@ export const reducerFilter: React.Reducer<FilterState, FiltertActions> = (
         params: {
           dateTo: state.params.dateTo,
           dateFrom:
-            action.date?.format("YYYY-MM-DD") || filterInitial.params.date,
+            action.date?.format(FORMATS.DATE_TIME_TO_SEND) ||
+            filterInitial.params.date,
         },
       };
     case "filterRangeTo":
@@ -58,7 +62,8 @@ export const reducerFilter: React.Reducer<FilterState, FiltertActions> = (
         ...state,
         params: {
           dateTo:
-            action.date?.format("YYYY-MM-DD") || filterInitial.params.date,
+            action.date?.format(FORMATS.DATE_TIME_TO_SEND) ||
+            filterInitial.params.date,
           dateFrom: state.params.dateFrom,
         },
       };

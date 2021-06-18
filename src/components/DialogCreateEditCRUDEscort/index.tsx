@@ -22,7 +22,8 @@ import {
   UI,
   FORM_FIELDS,
   API_ROUTES,
-  setIfNotString,
+  setFormError,
+  setFormValue,
 } from "@utils/index";
 
 import { CRUDDefaultFormProps } from "@hoc/index";
@@ -63,7 +64,6 @@ const DialogCreateEditEscort: React.FunctionComponent<
     setValue,
     setError,
   } = useForm<Escort>({ resolver });
-
   useEffect(() => {
     const getCategories = async () => {
       const response = await fetchAllPagination(10, 0, {});
@@ -74,9 +74,7 @@ const DialogCreateEditEscort: React.FunctionComponent<
 
   useEffect(() => {
     if (instance) {
-      Object.entries(instance).forEach(([key, value]) => {
-        setValue(key as keyof Escort, value);
-      });
+      setFormValue<Escort>(setValue, instance);
     }
   }, [instance, setValue]);
 
@@ -95,20 +93,13 @@ const DialogCreateEditEscort: React.FunctionComponent<
             await onSave({
               ...data,
               gender: "F",
-              password: `Cc${data.idNumber}`,
               userType: "A",
               alias: data.alias.toUpperCase(),
               firstName: data.firstName.toUpperCase(),
               lastName: data.lastName.toUpperCase(),
-              email: data.email.toUpperCase(),
             });
           } catch (errors) {
-            Object.entries(errors).forEach(([key, value]) => {
-              setError(key as keyof Escort, {
-                type: "manual",
-                message: setIfNotString(value),
-              });
-            });
+            setFormError<Escort>(setError, errors);
           }
         })}
       >

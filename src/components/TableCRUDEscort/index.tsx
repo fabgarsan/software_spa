@@ -35,12 +35,6 @@ const TableCRUDEscort: React.FunctionComponent<CRUDDefaultTableProps<Escort>> =
             styleHeader: { maxWidth: "100px" },
           },
           {
-            field: "email",
-            headerName: TABLE_HEADERS.USER.EMAIL,
-            style: { minWidth: "250px" },
-            styleHeader: { minWidth: "250px" },
-          },
-          {
             field: "categoryName",
             headerName: TABLE_HEADERS.ESCORT_CATEGORIES.CATEGORY,
             style: { minWidth: "100px" },

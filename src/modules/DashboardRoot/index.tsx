@@ -4,6 +4,7 @@ import { IconList } from "@components/Drawer";
 import { Paths, DRAWER, PERMISSION_MODULES } from "@utils/index";
 import { useHistory } from "react-router-dom";
 import { useCheckPermissions } from "@hooks/index";
+import { Box } from "@material-ui/core";
 
 const DashboardRoot: React.FunctionComponent = () => {
   const { push } = useHistory();
@@ -28,7 +29,7 @@ const DashboardRoot: React.FunctionComponent = () => {
       items={itemsMenu}
       withMainIcon={false}
     >
-      <div>This is the root</div>
+      <Box>Bienvenidos</Box>
     </Drawer>
   );
 };

@@ -69,7 +69,7 @@ const SignInOutControlLogBookFilter = ({
             <KeyboardDatePicker
               margin="dense"
               label={FORM_FIELDS.GENERAL.LABEL_DATE}
-              format={FORMATS.DATE_TIME}
+              format={FORMATS.DATE_TIME_TO_SHOW}
               value={date}
               onChange={onDateChange}
               KeyboardButtonProps={{

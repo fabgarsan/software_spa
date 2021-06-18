@@ -9,6 +9,8 @@ import {
   INSTANCES_NAMES,
   UI,
   FORM_FIELDS,
+  setFormError,
+  setFormValue,
 } from "@utils/index";
 
 import { CRUDDefaultFormProps } from "@hoc/index";
@@ -33,8 +35,7 @@ const DialogCreateEditEscortCategory: React.FunctionComponent<
 
   useEffect(() => {
     if (instance) {
-      setValue("name", instance.name?.toUpperCase());
-      setValue("order", instance.order);
+      setFormValue<EscortCategory>(setValue, instance);
     }
   }, [instance, setValue]);
   return (
@@ -51,12 +52,7 @@ const DialogCreateEditEscortCategory: React.FunctionComponent<
           try {
             await onSave({ ...data, name: data.name?.toUpperCase() });
           } catch (errors) {
-            if (errors?.name) {
-              setError("name", {
-                type: "manual",
-                message: errors.name,
-              });
-            }
+            setFormError<EscortCategory>(setError, errors);
           }
         })}
       >

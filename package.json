@@ -13,6 +13,7 @@
     "@material-ui/pickers": "^3.3.10",
     "@reduxjs/toolkit": "^1.5.1",
     "axios": "^0.21.1",
+    "chalk": "^4.1.1",
     "clsx": "^1.1.1",
     "humps": "^2.0.1",
     "lodash.omit": "^4.5.0",

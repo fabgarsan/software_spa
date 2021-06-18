@@ -13,6 +13,13 @@ export const setIfNotString = (text: any, newText = ""): string => {
   return newText;
 };
 
+export const getFormFieldError = (value: any): string => {
+  if (Array.isArray(value)) {
+    return value[0];
+  }
+  return value;
+};
+
 export const setIfNotNumber = (text: any, newText = 0): number => {
   if (isNumber(text)) {
     return text;

@@ -26,6 +26,7 @@ import { useHistory } from "react-router-dom";
 
 import { Paths, DRAWER } from "@utils/index";
 import { NoViewDisplayAllowed } from "@components/index";
+import { Box } from "@material-ui/core";
 
 const drawerWidth = 240;
 
@@ -90,7 +91,6 @@ const useStyles = makeStyles((theme: Theme) =>
       ...theme.mixins.toolbar,
     },
     content: {
-      flexGrow: 1,
       padding: theme.spacing(3),
     },
   })
@@ -220,14 +220,14 @@ const MiniDrawer: React.FunctionComponent<MiniDrawerProps> = ({
           </ListItem>
         </List>
       </Drawer>
-      <main className={classes.content}>
+      <Box className={classes.content} flexGrow={1} overflow="scroll">
         <div className={classes.toolbar} />
         {canShowContent ? (
           children
         ) : (
           <NoViewDisplayAllowed instanceNamePlural={title} />
         )}
-      </main>
+      </Box>
     </div>
   );
 };

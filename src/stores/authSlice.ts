@@ -103,17 +103,13 @@ export const authSlice = createSlice({
       state.user = null;
       state.isAuthenticated = false;
       mainAxiosClientManager.removeToken();
-      localStorage.removeItem("permissions");
     });
     builder.addCase(logOutThunk.rejected, (state) => {
       state.user = null;
       state.isAuthenticated = false;
       mainAxiosClientManager.removeToken();
-      localStorage.removeItem("permissions");
     });
     builder.addCase(loadUserThunk.rejected, (state) => {
-      mainAxiosClientManager.removeToken();
-      localStorage.removeItem("permissions");
       state.user = null;
       state.isAuthenticated = false;
     });

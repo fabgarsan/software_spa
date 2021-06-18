@@ -11,6 +11,17 @@ export interface User {
   isActive: boolean;
 }
 
+export type BloodType =
+  | "NI"
+  | "APOSITIVO"
+  | "ANEGATIVO"
+  | "BPOSITIVO"
+  | "BNEGATIVO"
+  | "OPOSITIVO"
+  | "ONEGATIVO"
+  | "ABPOSITIVO"
+  | "ABNEGATIVO";
+
 export interface ExtendedUser extends User {
   firstThree: string;
   lastThree: string;
@@ -18,5 +29,6 @@ export interface ExtendedUser extends User {
   idNumber: string;
   gender: "F" | "M";
   userType: UserType;
-  dateOfBirth: string;
+  dateOfBirth: Date;
+  bloodType: BloodType;
 }

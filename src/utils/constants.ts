@@ -84,9 +84,9 @@ export const UI = {
 export const FORM_FIELDS = {
   GENERAL: {
     LABEL_FILTER_BY: "Filtrar por",
-    LABEL_DATE: "Fecha",
-    LABEL_DATE_INITIAL: "Fecha Inicial",
-    LABEL_DATE_FINAL: "Fecha Final",
+    LABEL_DATE: "Fecha (Mes/Día/Año)",
+    LABEL_DATE_INITIAL: "Fec. Ini. (M/D/A)",
+    LABEL_DATE_FINAL: "Fec. Fin. (M/D/A)",
   },
   SIGN_IN_OUT_FORM: {
     LABEL_ANSWER: "Respuesta",
@@ -96,7 +96,7 @@ export const FORM_FIELDS = {
     LABEL_ORDER: "Orden",
   },
   ESCORT: {
-    LABEL_ALIAS: `Nombre Artístico ${INSTANCES_NAMES.ESCORT_SINGULAR}`,
+    LABEL_ALIAS: "Nombre Artístico",
     LABEL_CATEGORY: "Categoría",
   },
   USER: {
@@ -106,8 +106,21 @@ export const FORM_FIELDS = {
     LABEL_IS_ACTIVE: "Activo",
   },
   EXTENDED_USER: {
+    BLOOD_TYPE: [
+      { type: "NI", text: "Indefinido" },
+      { type: "APOSITIVO", text: "A+" },
+      { type: "ANEGATIVO", text: "A-" },
+      { type: "BPOSITIVO", text: "B+" },
+      { type: "BNEGATIVO", text: "B-" },
+      { type: "OPOSITIVO", text: "O+" },
+      { type: "ONEGATIVO", text: "O-" },
+      { type: "ABPOSITIVO", text: "AB+" },
+      { type: "ABNEGATIVO", text: "AB-" },
+    ],
     LABEL_ID_NUMBER: "Número Documento",
+    LABEL_BLOOD_TYPE: "Tipo de Sangre",
     LABEL_ID_TYPE: "Tipo de Documento",
+    LABEL_DATE_OF_BIRTH: "Fec. Nacimiento (Mes/Día/Año)",
     LABEL_ID_TYPE_OPTIONS: {
       CC: {
         TYPE: "CC",
@@ -220,5 +233,6 @@ export const PERMISSION_MODULES = {
 };
 
 export const FORMATS = {
-  DATE_TIME: "MM/DD/yyyy",
+  DATE_TIME_TO_SEND: "YYYY-MM-DD",
+  DATE_TIME_TO_SHOW: "MM/DD/YYYY",
 };

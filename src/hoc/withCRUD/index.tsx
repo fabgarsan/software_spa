@@ -10,7 +10,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useCheckGenericUserPermissions, useNotifications } from "@hooks/index";
 import { DialogConfirmation } from "@components/index";
-import { CONTAINERS, GenericPermission } from "@utils/constants";
+import { GenericPermission } from "@utils/constants";
 import {
   DIALOG_MESSAGES,
   isNumber,

@@ -22,6 +22,7 @@ class AxiosClientManager {
 
   removeToken(): void {
     localStorage.removeItem(this.tokenName);
+    localStorage.removeItem("permissions");
     delete this.client.defaults.headers.common.Authorization;
   }
 
