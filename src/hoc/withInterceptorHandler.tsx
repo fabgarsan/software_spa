@@ -21,39 +21,45 @@ const withInterceptorHandler = <P extends WithInterceptorHandlerProps>(
     const { auth, logIn, setIsNotAuthenticated } = useAuth();
     const handleResponseError = useCallback(
       (error: AxiosError) => {
-        switch (error.response?.status) {
-          case 400:
-            createErrorNotification(error.response.data.detail);
-            break;
-          case 401:
-            setIsNotAuthenticated();
-            createErrorNotification(error.response.data.detail);
-            mainAxiosClientManager.removeToken();
-            break;
-          case 403:
-            createErrorNotification(error.response.data.detail);
-            break;
-          case 500:
-            createErrorNotification(error.response.data.detail);
-            console.log(error.config.method, "EL METODO");
-            console.log(error.config.url, "EL URL");
-            console.log(error.message, "EL MENSAGE");
-            console.log(error.name, "EL NAME");
-            console.log(error.response);
-            console.log(error.response.status);
-            break;
-          default:
-            console.log(
-              `ERROR ${error.response?.status}`,
-              error.response?.data.detail
-            );
-            break;
+        const { response, message } = error;
+        if (response) {
+          switch (response.status) {
+            case 400:
+              if (response.data.detail) {
+                createErrorNotification(response.data.detail);
+              }
+              break;
+            case 401:
+              setIsNotAuthenticated();
+              createErrorNotification(response.data.detail);
+              mainAxiosClientManager.removeToken();
+              break;
+            case 403:
+              createErrorNotification(response.data.detail);
+              break;
+            case 500:
+              if (message) alert(message);
+              break;
+            default:
+              if (response.data.detail) {
+                createErrorNotification(response.data.detail);
+              }
+              console.log(
+                `ERROR ${response?.status}`,
+                error.response?.data.detail
+              );
+              break;
+          }
+        } else if (message) {
+          alert(message);
+        } else {
+          console.log("FUE OTRO ERROR", error);
         }
       },
       [createErrorNotification, setIsNotAuthenticated]
     );
 
-    const handleRequestError = useCallback((error: any) => {
+    const handleRequestError = useCallback((error: AxiosError) => {
       switch (error.request.status) {
         case 500:
           break;
@@ -78,7 +84,8 @@ const withInterceptorHandler = <P extends WithInterceptorHandlerProps>(
         },
         async (error) => {
           await handleRequestError(error);
-          throw error;
+          // eslint-disable-next-line @typescript-eslint/no-throw-literal
+          throw camelizeKeys(error);
         }
       );
       mainAxiosClientManager.client.interceptors.response.use(
@@ -93,7 +100,8 @@ const withInterceptorHandler = <P extends WithInterceptorHandlerProps>(
         },
         async (error: any) => {
           await handleResponseError(error);
-          throw error;
+          // eslint-disable-next-line @typescript-eslint/no-throw-literal
+          throw camelizeKeys(error);
         }
       );
     }, [handleResponseError, handleRequestError]);
