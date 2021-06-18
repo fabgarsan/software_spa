@@ -290,6 +290,7 @@ const index = <ElementInterface,>(
               <Grid container>
                 <Grid item xs={12} sm={4}>
                   <TextField
+                    value={searchText}
                     fullWidth
                     onChange={(event) => setSearchText(event.target.value)}
                   />

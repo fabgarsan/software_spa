@@ -8,11 +8,14 @@ export { default as DialogCreateEditCRUDEscortCategory } from "./DialogCreateEdi
 export { default as DialogCreateEditCRUDFormExtendedUser } from "./DialogCreateEditCRUDFormExtendedUser";
 export { default as Drawer } from "./Drawer";
 export { default as FormSignIn } from "./FormSignIn";
+export { default as KeyboardDatePickerRange } from "./KeyboardDatePickerRange";
 export { default as LoadingOverlay } from "./LoadingOverlay";
 export { default as Notify } from "./Notify";
 export { default as NoViewDisplayAllowed } from "./NoViewDisplayAllowed";
 export { default as SignInOutControlConfirmationDialog } from "./SignInOutControlConfirmationDialog";
 export { default as SignInOutControlList } from "./SignInOutControlList";
+export { default as SignInOutControlLogBookFilter } from "./SignInOutControlLogBookFilter/index";
+export { default as SignInOutControlLogBookList } from "./SignInOutControlLogBookList";
 export { default as SignInControlSearch } from "./SignInControlSearch";
 export { default as TableCRUDEmployee } from "./TableCRUDEmployee";
 export { default as TableCRUDEscort } from "./TableCRUDEscort";

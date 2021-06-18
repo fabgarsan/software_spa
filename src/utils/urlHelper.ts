@@ -5,6 +5,7 @@ export const Paths = {
   moduleReception: ROOT_RECEPTION,
   moduleReceptionSingOut: `${ROOT_RECEPTION}sign-out/`,
   moduleReceptionSingIn: `${ROOT_RECEPTION}sign-in/`,
+  moduleReceptionSingOutInLogBook: `${ROOT_RECEPTION}sign-out-in-log-book/`,
   moduleAdmin: ROOT_ADMIN,
   moduleAdminUsers: `${ROOT_ADMIN}usuarios/`,
   moduleAdminEscorts: `${ROOT_ADMIN}acompanantes/`,

@@ -48,6 +48,7 @@ export const DRAWER = {
   MODULE_RECEPTION_TITLE: "Recepción",
   MODULE_RECEPTION_MENU_SIGN_IN: "Entrada",
   MODULE_RECEPTION_MENU_SIGN_OUT: "Salida",
+  MODULE_RECEPTION_MENU_LOG_BOOK: "Bitacora Entradas",
   MODULE_ADMIN_TITLE: "Admin",
   MODULE_ADMIN_MENU_ESCORTS: "Acompañantes",
   MODULE_ADMIN_MENU_EMPLOYEES: "Colaboradores",
@@ -81,6 +82,12 @@ export const UI = {
 };
 
 export const FORM_FIELDS = {
+  GENERAL: {
+    LABEL_FILTER_BY: "Filtrar por",
+    LABEL_DATE: "Fecha",
+    LABEL_DATE_INITIAL: "Fecha Inicial",
+    LABEL_DATE_FINAL: "Fecha Final",
+  },
   SIGN_IN_OUT_FORM: {
     LABEL_ANSWER: "Respuesta",
   },
@@ -167,6 +174,7 @@ export const API_ROUTES = {
 export const CONTAINERS = {
   USER_SIGN_IN_TITLE: "Registro de Entrada",
   USER_SIGN_OUT_TITLE: "Registro de Salida",
+  SIGN_IN_OUT_LOG_BOOK_TITLE: "Bitacora",
   WITHOUT_ANY_PERMISSION_TO_DISPLAY: "No tienes permisos para ver",
 };
 
@@ -202,10 +210,15 @@ export const PERMISSION_INSTANCES = {
   SIGN_IN_CONTROL: {
     MADE_SIGN_IN_OTHERS: "made_sign_in_others_signincontrol",
     MADE_SIGN_OUT_OTHERS: "made_sign_out_others_signincontrol",
+    FILTER_LOG_BOOK: "filter_log_book_signincontrol",
   },
 };
 
 export const PERMISSION_MODULES = {
   ADMIN: "module_admin",
   RECEPTION: "module_reception",
+};
+
+export const FORMATS = {
+  DATE_TIME: "MM/DD/yyyy",
 };

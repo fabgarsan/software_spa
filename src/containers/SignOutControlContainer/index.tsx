@@ -16,7 +16,6 @@ import {
   SignInOutControlConfirmationDialog,
   SignInOutControlList,
 } from "@components/index";
-import { Box, Typography } from "@material-ui/core";
 
 import {
   reducerSignInOut,
@@ -37,6 +36,10 @@ const SignOutControlContainer = () => {
   );
   const { createSuccessNotification, createErrorNotification } =
     useNotifications();
+
+  const canView = useCheckPermissions([
+    PERMISSION_INSTANCES.SIGN_IN_CONTROL.MADE_SIGN_OUT_OTHERS,
+  ]);
   const { fetchAll } = useCRUDGenericApiCall<Escort>(
     API_ROUTES.USER_SIGN_IN_OUT
   );
@@ -48,9 +51,9 @@ const SignOutControlContainer = () => {
       });
       dispatchSignOutAction({ type: "setUserList", fetchedList: data });
     };
-    handleOnFetch();
+    if (canView) handleOnFetch();
     return () => {};
-  }, [fetchAll]);
+  }, [fetchAll, canView]);
 
   const onSelectUser = (user: Escort) => {
     const selectedOption = generateQuestion();
@@ -91,12 +94,7 @@ const SignOutControlContainer = () => {
   };
 
   return (
-    <CommonLayout
-      title={CONTAINERS.USER_SIGN_OUT_TITLE}
-      canView={useCheckPermissions([
-        PERMISSION_INSTANCES.SIGN_IN_CONTROL.MADE_SIGN_OUT_OTHERS,
-      ])}
-    >
+    <CommonLayout title={CONTAINERS.USER_SIGN_OUT_TITLE} canView={canView}>
       {signOutState.selectedUser && (
         <SignInOutControlConfirmationDialog
           title={CONTAINERS.USER_SIGN_OUT_TITLE}

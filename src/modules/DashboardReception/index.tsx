@@ -3,6 +3,7 @@ import { Drawer } from "@components/index";
 import {
   SignInControlContainer,
   SignOutControlContainer,
+  SignInOutControlLogBookContainer,
 } from "@containers/index";
 import { IconList } from "@components/Drawer";
 import {
@@ -33,6 +34,12 @@ const DashboardReception: React.FunctionComponent = () => {
         PERMISSION_INSTANCES.SIGN_IN_CONTROL.MADE_SIGN_OUT_OTHERS,
       ]),
     },
+    {
+      text: DRAWER.MODULE_RECEPTION_MENU_LOG_BOOK,
+      icon: "address-book",
+      onClick: () => push(Paths.moduleReceptionSingOutInLogBook),
+      show: true,
+    },
   ];
   const hasPermission = useCheckPermissions(
     [PERMISSION_MODULES.RECEPTION],
@@ -54,6 +61,11 @@ const DashboardReception: React.FunctionComponent = () => {
           exact
           path={Paths.moduleReceptionSingOut}
           component={SignOutControlContainer}
+        />
+        <Route
+          exact
+          path={Paths.moduleReceptionSingOutInLogBook}
+          component={SignInOutControlLogBookContainer}
         />
       </Switch>
     </Drawer>

@@ -1,3 +1,5 @@
+export type UserType = "T" | "C" | "A";
+
 export interface User {
   id: number;
   firstName: string;
@@ -15,6 +17,6 @@ export interface ExtendedUser extends User {
   idType: "CC" | "CE" | "PS" | "NI" | string;
   idNumber: string;
   gender: "F" | "M";
-  userType: "T" | "C" | "A";
+  userType: UserType;
   dateOfBirth: string;
 }

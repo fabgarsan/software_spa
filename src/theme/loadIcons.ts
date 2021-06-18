@@ -17,6 +17,7 @@ import {
   faCheckCircle,
   faTimesCircle,
   faUserHardHat,
+  faAddressBook,
 } from "@fortawesome/pro-light-svg-icons";
 
 const loadIcons = (): void => {
@@ -37,6 +38,7 @@ const loadIcons = (): void => {
   library.add(faCheckCircle);
   library.add(faTimesCircle);
   library.add(faUserHardHat);
+  library.add(faAddressBook);
 };
 
 export default loadIcons;

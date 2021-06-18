@@ -24,8 +24,7 @@ import { IconName } from "@fortawesome/pro-light-svg-icons";
 import { logOutThunk } from "@stores/authSlice";
 import { useHistory } from "react-router-dom";
 
-import { Paths, DRAWER, CONTAINERS } from "@utils/index";
-import { Box } from "@material-ui/core";
+import { Paths, DRAWER } from "@utils/index";
 import { NoViewDisplayAllowed } from "@components/index";
 
 const drawerWidth = 240;
