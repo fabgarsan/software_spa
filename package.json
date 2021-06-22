@@ -32,13 +32,15 @@
   },
   "scripts": {
     "start": "react-app-rewired start",
-    "build": "react-app-rewired build",
+    "build": "rm -rf build && react-app-rewired build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "tsc --noEmit && eslint src",
     "postinstall-pretier": "npx install-peerdeps --dev eslint-config-airbnb",
     "postinstall-husky": "husky install",
-    "postinstall": "npm run postuninstall-pretier && npm run postinstall-husky"
+    "postinstall": "npm run postuninstall-pretier && npm run postinstall-husky",
+    "setcache": "aws s3 cp s3://production-spa-software/ s3://production-spa-software/ --exclude '*.html' --cache-control 'max-age=31104000' --recursive",
+    "deploy": "npm run build && aws s3 sync build/ s3://production-spa-software --delete && npm run setcache"
   },
   "lint-staged": {
     "src/**/*.{ts,tsx,json,md}": [

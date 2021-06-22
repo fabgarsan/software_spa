@@ -1,4 +1,5 @@
 export { default as AlertTimer } from "./AlertTimer";
+export { default as BackdropLoading } from "./BackdropLoading";
 export { default as CommonLayout } from "./CommonLayout";
 export { default as DialogConfirmation } from "./DialogConfirmation";
 export { default as DialogCreateEditBase } from "./DialogCreateEditBase";
