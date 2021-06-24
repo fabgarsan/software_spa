@@ -9,6 +9,7 @@ import {
   PERMISSION_MODULES,
 } from "@utils/index";
 import {
+  CRUDAdminCompany,
   CRUDAdminEmployee,
   CRUDAdminUser,
   TabManagerAdminEscort,
@@ -45,6 +46,13 @@ const DashboardAdmin: React.FunctionComponent = () => {
         PERMISSION_INSTANCES.EMPLOYEE.GENERIC
       ).HAS_ANY,
     },
+    {
+      text: DRAWER.MODULE_ADMIN_MENU_COMPANIES,
+      icon: "building",
+      onClick: () => push(Paths.moduleAdminCompanies),
+      show: useCheckGenericUserPermissions(PERMISSION_INSTANCES.COMPANY.GENERIC)
+        .HAS_ANY,
+    },
   ];
 
   const hasPermission = useCheckPermissions([PERMISSION_MODULES.ADMIN], "all");
@@ -65,6 +73,11 @@ const DashboardAdmin: React.FunctionComponent = () => {
           exact
           path={Paths.moduleAdminEscorts}
           component={TabManagerAdminEscort}
+        />
+        <Route
+          exact
+          path={Paths.moduleAdminCompanies}
+          component={CRUDAdminCompany}
         />
       </Switch>
     </Drawer>

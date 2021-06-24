@@ -20,6 +20,7 @@ import {
   faAddressBook,
   faScanner,
   faKeyboard,
+  faBuilding,
 } from "@fortawesome/pro-light-svg-icons";
 
 const loadIcons = (): void => {
@@ -43,6 +44,7 @@ const loadIcons = (): void => {
   library.add(faAddressBook);
   library.add(faScanner);
   library.add(faKeyboard);
+  library.add(faBuilding);
 };
 
 export default loadIcons;

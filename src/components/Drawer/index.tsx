@@ -21,7 +21,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSelector, useDispatch } from "react-redux";
 import { drawerState, changeOpenState } from "@stores/drawerSlices";
 import { IconName } from "@fortawesome/pro-light-svg-icons";
-import { logOutThunk } from "@stores/authSlice";
+import { logOutThunk, auth } from "@stores/authSlice";
 import { useHistory } from "react-router-dom";
 
 import { Paths, DRAWER } from "@utils/index";
@@ -53,6 +53,7 @@ const useStyles = makeStyles((theme: Theme) =>
     menuButton: {
       marginRight: 36,
     },
+    sessionInfo: {},
     icon: {
       color: theme.palette.primary.main,
     },
@@ -125,6 +126,7 @@ const MiniDrawer: React.FunctionComponent<MiniDrawerProps> = ({
   const itemsToShow = items.filter((item) => item.show);
 
   const open = useSelector(drawerState);
+  const authUser = useSelector(auth);
   const dispatch = useDispatch();
 
   const handleDrawerOpen = () => {
@@ -159,9 +161,18 @@ const MiniDrawer: React.FunctionComponent<MiniDrawerProps> = ({
           >
             <FontAwesomeIcon icon={["fal", "bars"]} />
           </IconButton>
-          <Typography variant="h6" noWrap>
-            {title}
-          </Typography>
+          <Box>
+            <Typography variant="h6" noWrap>
+              {title}
+            </Typography>
+          </Box>
+          {authUser.user && (
+            <Box position="absolute" right="20px">
+              <Typography className={classes.sessionInfo}>
+                {authUser.user?.username}
+              </Typography>
+            </Box>
+          )}
         </Toolbar>
       </AppBar>
       <Drawer

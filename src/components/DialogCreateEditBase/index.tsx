@@ -1,5 +1,6 @@
 import React from "react";
 import { Dialog, DialogContent, DialogTitle } from "@material-ui/core";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 
 interface DialogCreateEditBaseProps {
   open: boolean;
@@ -7,8 +8,22 @@ interface DialogCreateEditBaseProps {
   title: string;
 }
 
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    root: {
+      "& > * > * > *": {
+        padding: theme.spacing(1),
+      },
+      "& > * > * > * > * > *": {
+        padding: theme.spacing(1),
+      },
+    },
+  })
+);
+
 const DialogCreateEditBase: React.FunctionComponent<DialogCreateEditBaseProps> =
   ({ children, open, title }: DialogCreateEditBaseProps) => {
+    const classes = useStyles();
     if (!open) {
       return <></>;
     }
@@ -20,7 +35,7 @@ const DialogCreateEditBase: React.FunctionComponent<DialogCreateEditBaseProps> =
         fullWidth
       >
         <DialogTitle id="form-dialog-title">{title}</DialogTitle>
-        <DialogContent>{children}</DialogContent>
+        <DialogContent className={classes.root}>{children}</DialogContent>
       </Dialog>
     );
   };

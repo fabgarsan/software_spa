@@ -10,6 +10,7 @@ export const Paths = {
   moduleAdminUsers: `${ROOT_ADMIN}usuarios/`,
   moduleAdminEscorts: `${ROOT_ADMIN}acompanantes/`,
   moduleAdminEmployees: `${ROOT_ADMIN}colaboradores/`,
+  moduleAdminCompanies: `${ROOT_ADMIN}empresas/`,
 };
 
 export default Paths;

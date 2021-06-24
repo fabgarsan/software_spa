@@ -17,18 +17,7 @@ import {
 } from "@utils/index";
 
 import { CRUDDefaultFormProps } from "@hoc/index";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import useValidation from "./DialogCreateEditCRUDEmployee.hooks";
-
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
-    root: {
-      "& > *": {
-        padding: theme.spacing(1),
-      },
-    },
-  })
-);
 
 const DialogCreateEditEscort: React.FunctionComponent<
   CRUDDefaultFormProps<ExtendedUser>
@@ -39,7 +28,6 @@ const DialogCreateEditEscort: React.FunctionComponent<
   instance,
 }: CRUDDefaultFormProps<ExtendedUser>) => {
   const resolver = useValidation();
-  const classes = useStyles();
   const {
     handleSubmit,
     control,
@@ -95,7 +83,7 @@ const DialogCreateEditEscort: React.FunctionComponent<
         })}
       >
         <IDScanner onBlur={handleOnBlur}>
-          <Grid container className={classes.root}>
+          <Grid container>
             <DialogCreateEditCRUDFormExtendedUser
               formErrors={formErrors}
               control={control}

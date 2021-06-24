@@ -52,6 +52,7 @@ export const DRAWER = {
   MODULE_ADMIN_TITLE: "Admin",
   MODULE_ADMIN_MENU_ESCORTS: "Acompañantes",
   MODULE_ADMIN_MENU_EMPLOYEES: "Colaboradores",
+  MODULE_ADMIN_MENU_COMPANIES: "Empresas",
   MODULE_ADMIN_MENU_USERS: "Usuarios",
   MENU_SIGN_OUT: "Cerrar Sessión",
   MENU_HOME: "Principal",
@@ -64,6 +65,8 @@ export const INSTANCES_NAMES = {
   ESCORT_PLURAL: "Acompañantes",
   EMPLOYEE_SINGULAR: "Colaborador",
   EMPLOYEE_PLURAL: "Colaboradores",
+  COMPANY_PLURAL: "Empresas",
+  COMPANY_SINGULAR: "Empresa",
 };
 
 export const FORM_VALIDATIONS = {
@@ -94,6 +97,10 @@ export const FORM_FIELDS = {
   ESCORT_CATEGORIES: {
     LABEL_NAME: `Nombre ${INSTANCES_NAMES.ESCORT_CATEGORIES_SINGULAR}`,
     LABEL_ORDER: "Orden",
+  },
+  COMPANY: {
+    LABEL_NAME: "Nombre",
+    LABEL_NIT: "Nit",
   },
   ESCORT: {
     LABEL_ALIAS: "Nombre Artístico",
@@ -153,6 +160,10 @@ export const TABLE_HEADERS = {
     HEADER_DELETE: "Eliminar",
     HEADER_EDIT: "Editar",
   },
+  COMPANY: {
+    NAME: "Nombre",
+    NIT: "Nit",
+  },
   ESCORT_CATEGORIES: {
     NAME: "Nombre",
     ORDER: "Orden",
@@ -179,6 +190,7 @@ export const TABLE_PAGINATOR = {
 };
 
 export const API_ROUTES = {
+  COMPANIES: "companies/",
   PERMISSION_GROUP: "groups/",
   PERMISSION: "permissions/",
   ESCORT_CATEGORY: "escorts-categories/",
@@ -213,6 +225,9 @@ const getGenericPermissionInstance = (instance: string): GenericPermission => ({
 });
 
 export const PERMISSION_INSTANCES = {
+  COMPANY: {
+    GENERIC: getGenericPermissionInstance("company"),
+  },
   USER: {
     GENERIC: getGenericPermissionInstance("user"),
   },

@@ -23,11 +23,6 @@ interface DialogCreateEditCRUDFormExtendedUserProps {
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
-      "& > *": {
-        padding: theme.spacing(1),
-      },
-    },
     formControl: {
       margin: theme.spacing(1),
       width: "100%",
@@ -264,6 +259,7 @@ const DialogCreateEditCRUDFormExtendedUser = ({
           control={
             <Controller
               name="isActive"
+              defaultValue
               control={control}
               render={({ field }) => (
                 <Checkbox

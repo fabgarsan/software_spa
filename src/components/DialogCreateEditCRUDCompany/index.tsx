@@ -1,48 +1,49 @@
 import React, { useEffect } from "react";
 import Button from "@material-ui/core/Button";
-import { TextField, DialogActions, Box, Grid } from "@material-ui/core";
-import { useForm, Controller } from "react-hook-form";
-import { EscortCategory } from "@dbTypes/escorts";
+import { DialogActions, Box, Grid, TextField } from "@material-ui/core";
+import { Controller, useForm } from "react-hook-form";
+import { Company } from "@dbTypes/index";
 import { DialogCreateEditBase } from "@components/index";
 import {
   DIALOG_MESSAGES,
   INSTANCES_NAMES,
   UI,
-  FORM_FIELDS,
   setFormError,
   setFormValue,
+  FORM_FIELDS,
 } from "@utils/index";
 
 import { CRUDDefaultFormProps } from "@hoc/index";
-import useDialogCreateEditCRUDEscortCategoryValidation from "./DialogCreateEditCRUDEscortCategory.validation";
+import useValidation from "./DialogCreateEditCRUDCompany.hooks";
 
-const DialogCreateEditEscortCategory: React.FunctionComponent<
-  CRUDDefaultFormProps<EscortCategory>
+const DialogCreateEditCRUDCompany: React.FunctionComponent<
+  CRUDDefaultFormProps<Company>
 > = ({
   open,
   handleClose,
   onSave,
   instance,
-}: CRUDDefaultFormProps<EscortCategory>) => {
-  const resolver = useDialogCreateEditCRUDEscortCategoryValidation();
+}: CRUDDefaultFormProps<Company>) => {
+  const resolver = useValidation();
   const {
     handleSubmit,
     control,
     formState: { errors: formErrors },
     setValue,
     setError,
-  } = useForm<EscortCategory>({ resolver });
+  } = useForm<Company>({ resolver });
 
   useEffect(() => {
     if (instance) {
-      setFormValue<EscortCategory>(setValue, instance);
+      setFormValue<Company>(setValue, instance);
     }
   }, [instance, setValue]);
+
   return (
     <DialogCreateEditBase
       open={open}
       title={DIALOG_MESSAGES.CRUD_CREATE_EDIT_DIALOG_TITLE(
-        INSTANCES_NAMES.ESCORT_CATEGORIES_SINGULAR,
+        INSTANCES_NAMES.COMPANY_PLURAL,
         Boolean(instance)
       )}
     >
@@ -50,13 +51,32 @@ const DialogCreateEditEscortCategory: React.FunctionComponent<
         component="form"
         onSubmit={handleSubmit(async (data) => {
           try {
-            await onSave({ ...data, name: data.name?.toUpperCase() });
+            await onSave(data);
           } catch (errors) {
-            setFormError<EscortCategory>(setError, errors);
+            setFormError<Company>(setError, errors);
           }
         })}
       >
         <Grid container>
+          <Grid item xs={12}>
+            <Controller
+              name="nit"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <TextField
+                  {...field}
+                  fullWidth
+                  label={FORM_FIELDS.COMPANY.LABEL_NIT}
+                  variant="outlined"
+                  helperText={formErrors?.nit?.message}
+                  error={Boolean(formErrors?.nit)}
+                  autoComplete="off"
+                  value={field.value?.toUpperCase()}
+                />
+              )}
+            />
+          </Grid>
           <Grid item xs={12}>
             <Controller
               name="name"
@@ -66,30 +86,12 @@ const DialogCreateEditEscortCategory: React.FunctionComponent<
                 <TextField
                   {...field}
                   fullWidth
-                  label={FORM_FIELDS.ESCORT_CATEGORIES.LABEL_NAME}
+                  label={FORM_FIELDS.COMPANY.LABEL_NAME}
                   variant="outlined"
                   helperText={formErrors?.name?.message}
                   error={Boolean(formErrors?.name)}
                   autoComplete="off"
                   value={field.value?.toUpperCase()}
-                />
-              )}
-            />
-          </Grid>
-          <Grid item xs={12}>
-            <Controller
-              name="order"
-              control={control}
-              defaultValue={0}
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  fullWidth
-                  label={FORM_FIELDS.ESCORT_CATEGORIES.LABEL_ORDER}
-                  variant="outlined"
-                  helperText={formErrors?.order?.message}
-                  error={Boolean(formErrors?.order)}
-                  autoComplete="off"
                 />
               )}
             />
@@ -108,4 +110,4 @@ const DialogCreateEditEscortCategory: React.FunctionComponent<
   );
 };
 
-export default DialogCreateEditEscortCategory;
+export default DialogCreateEditCRUDCompany;

@@ -34,11 +34,6 @@ import useValidation from "./DialogCreateEditCRUDEscort.hooks";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
-      "& > *": {
-        padding: theme.spacing(1),
-      },
-    },
     formControl: {
       margin: theme.spacing(1),
       width: "100%",
@@ -122,7 +117,7 @@ const DialogCreateEditEscort: React.FunctionComponent<
         })}
       >
         <IDScanner onBlur={handleOnBlur}>
-          <Grid container className={classes.root}>
+          <Grid container>
             <DialogCreateEditCRUDFormExtendedUser
               showGender={false}
               formErrors={formErrors}

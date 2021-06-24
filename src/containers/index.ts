@@ -1,3 +1,4 @@
+export { default as CRUDAdminCompany } from "./CRUDAdminCompany";
 export { default as CRUDAdminEmployee } from "./CRUDAdminEmployee";
 export { default as CRUDAdminEscort } from "./CRUDAdminEscort";
 export { default as CRUDAdminEscortCategory } from "./CRUDAdminEscortCategory";
