@@ -11,6 +11,8 @@ export interface User {
   isActive: boolean;
 }
 
+export type GenderType = "M" | "F";
+
 export type BloodType =
   | "NI"
   | "APOSITIVO"
@@ -27,7 +29,7 @@ export interface ExtendedUser extends User {
   lastThree: string;
   idType: "CC" | "CE" | "PS" | "NI" | string;
   idNumber: string;
-  gender: "F" | "M";
+  gender: GenderType;
   userType: UserType;
   dateOfBirth: Date;
   bloodType: BloodType;

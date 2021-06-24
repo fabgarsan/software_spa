@@ -11,10 +11,11 @@ import {
   FormHelperText,
 } from "@material-ui/core";
 import { useForm, Controller } from "react-hook-form";
-import { Escort, EscortCategory } from "@dbTypes/index";
+import { BloodType, Escort, EscortCategory, GenderType } from "@dbTypes/index";
 import {
   DialogCreateEditBase,
   DialogCreateEditCRUDFormExtendedUser,
+  IDScanner,
 } from "@components/index";
 import {
   DIALOG_MESSAGES,
@@ -78,6 +79,23 @@ const DialogCreateEditEscort: React.FunctionComponent<
     }
   }, [instance, setValue]);
 
+  const handleOnBlur = (
+    dateOfBirth: Date,
+    bloodType: BloodType,
+    firstName: string,
+    lastName: string,
+    idNumber: string,
+    gender: GenderType,
+    idType: string
+  ) => {
+    setValue("dateOfBirth", dateOfBirth);
+    setValue("idNumber", idNumber);
+    setValue("firstName", firstName);
+    setValue("lastName", lastName);
+    setValue("idType", idType);
+    setValue("bloodType", bloodType);
+  };
+
   return (
     <DialogCreateEditBase
       open={open}
@@ -103,74 +121,77 @@ const DialogCreateEditEscort: React.FunctionComponent<
           }
         })}
       >
-        <Grid container className={classes.root}>
-          <DialogCreateEditCRUDFormExtendedUser
-            formErrors={formErrors}
-            // @ts-ignore
-            control={control}
-          />
-          <Grid item xs={12} sm={5} md={3} lg={3}>
-            <Controller
-              name="alias"
+        <IDScanner onBlur={handleOnBlur}>
+          <Grid container className={classes.root}>
+            <DialogCreateEditCRUDFormExtendedUser
+              showGender={false}
+              formErrors={formErrors}
+              // @ts-ignore
               control={control}
-              defaultValue=""
-              render={({ field }) => (
-                <TextField
-                  {...field}
-                  fullWidth
-                  label={FORM_FIELDS.ESCORT.LABEL_ALIAS}
-                  variant="outlined"
-                  helperText={formErrors?.alias?.message}
-                  error={Boolean(formErrors?.alias)}
-                  autoComplete="off"
-                  value={field.value}
-                />
-              )}
             />
-          </Grid>
-          <Grid item xs={12} sm={3} md={2} lg={2}>
-            <Controller
-              name="category"
-              control={control}
-              render={({ field }) => (
-                <FormControl className={classes.formControl}>
-                  <InputLabel htmlFor="id-category-select">
-                    {FORM_FIELDS.ESCORT.LABEL_CATEGORY}
-                  </InputLabel>
-                  <Select
+            <Grid item xs={12} sm={5} md={3} lg={3}>
+              <Controller
+                name="alias"
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <TextField
+                    {...field}
                     fullWidth
-                    native
+                    label={FORM_FIELDS.ESCORT.LABEL_ALIAS}
+                    variant="outlined"
+                    helperText={formErrors?.alias?.message}
+                    error={Boolean(formErrors?.alias)}
+                    autoComplete="off"
                     value={field.value}
-                    onChange={field.onChange}
-                    inputProps={{
-                      id: "id-category-select",
-                    }}
-                  >
-                    <option value={undefined}>-----</option>
-                    {categories?.map((category) => (
-                      <option key={category.id} value={category.id}>
-                        {category.name}
-                      </option>
-                    ))}
-                  </Select>
-                  {formErrors?.category && (
-                    <FormHelperText className={classes.error}>
-                      {formErrors.category.message}
-                    </FormHelperText>
-                  )}
-                </FormControl>
-              )}
-            />
+                  />
+                )}
+              />
+            </Grid>
+            <Grid item xs={12} sm={3} md={2} lg={2}>
+              <Controller
+                name="category"
+                control={control}
+                render={({ field }) => (
+                  <FormControl className={classes.formControl}>
+                    <InputLabel htmlFor="id-category-select">
+                      {FORM_FIELDS.ESCORT.LABEL_CATEGORY}
+                    </InputLabel>
+                    <Select
+                      fullWidth
+                      native
+                      value={field.value}
+                      onChange={field.onChange}
+                      inputProps={{
+                        id: "id-category-select",
+                      }}
+                    >
+                      <option value={undefined}>-----</option>
+                      {categories?.map((category) => (
+                        <option key={category.id} value={category.id}>
+                          {category.name}
+                        </option>
+                      ))}
+                    </Select>
+                    {formErrors?.category && (
+                      <FormHelperText className={classes.error}>
+                        {formErrors.category.message}
+                      </FormHelperText>
+                    )}
+                  </FormControl>
+                )}
+              />
+            </Grid>
           </Grid>
-        </Grid>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            {UI.BUTTON_TEXT_CANCEL}
-          </Button>
-          <Button color="secondary" type="submit">
-            {UI.BUTTON_TEXT_SAVE}
-          </Button>
-        </DialogActions>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary">
+              {UI.BUTTON_TEXT_CANCEL}
+            </Button>
+            <Button color="secondary" type="submit">
+              {UI.BUTTON_TEXT_SAVE}
+            </Button>
+          </DialogActions>
+        </IDScanner>
       </Box>
     </DialogCreateEditBase>
   );

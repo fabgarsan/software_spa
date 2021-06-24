@@ -12,15 +12,15 @@ const DashboardRoot = React.lazy(() => import("@modules/DashboardRoot"));
 
 const MainRouter: React.FunctionComponent = () => {
   return (
-    <Suspense fallback={<BackdropLoading isOpen />}>
-      <Router>
+    <Router>
+      <Suspense fallback={<BackdropLoading isOpen />}>
         <Switch>
           <Route path={Paths.moduleAdmin} component={DashboardAdmin} />
           <Route path={Paths.moduleReception} component={DashboardReception} />
           <Route path={Paths.moduleRoot} component={DashboardRoot} />
         </Switch>
-      </Router>
-    </Suspense>
+      </Suspense>
+    </Router>
   );
 };
 

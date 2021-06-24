@@ -117,8 +117,13 @@ export const FORM_FIELDS = {
       { type: "ABPOSITIVO", text: "AB+" },
       { type: "ABNEGATIVO", text: "AB-" },
     ],
+    GENDER_TYPE: [
+      { type: "M", text: "Hombre" },
+      { type: "F", text: "Mujer" },
+    ],
     LABEL_ID_NUMBER: "Número Documento",
     LABEL_BLOOD_TYPE: "Tipo de Sangre",
+    LABEL_GENDER_TYPE: "Género",
     LABEL_ID_TYPE: "Tipo de Documento",
     LABEL_DATE_OF_BIRTH: "Fec. Nacimiento (Mes/Día/Año)",
     LABEL_ID_TYPE_OPTIONS: {

@@ -2,10 +2,11 @@ import React, { useEffect } from "react";
 import Button from "@material-ui/core/Button";
 import { DialogActions, Box, Grid } from "@material-ui/core";
 import { useForm } from "react-hook-form";
-import { ExtendedUser } from "@dbTypes/index";
+import { BloodType, ExtendedUser, GenderType } from "@dbTypes/index";
 import {
   DialogCreateEditBase,
   DialogCreateEditCRUDFormExtendedUser,
+  IDScanner,
 } from "@components/index";
 import {
   DIALOG_MESSAGES,
@@ -52,6 +53,24 @@ const DialogCreateEditEscort: React.FunctionComponent<
       setFormValue<ExtendedUser>(setValue, instance);
     }
   }, [instance, setValue]);
+
+  const handleOnBlur = (
+    dateOfBirth: Date,
+    bloodType: BloodType,
+    firstName: string,
+    lastName: string,
+    idNumber: string,
+    gender: GenderType,
+    idType: string
+  ) => {
+    setValue("dateOfBirth", dateOfBirth);
+    setValue("idNumber", idNumber);
+    setValue("firstName", firstName);
+    setValue("lastName", lastName);
+    setValue("gender", gender);
+    setValue("idType", idType);
+    setValue("bloodType", bloodType);
+  };
   return (
     <DialogCreateEditBase
       open={open}
@@ -66,7 +85,6 @@ const DialogCreateEditEscort: React.FunctionComponent<
           try {
             await onSave({
               ...data,
-              gender: "F",
               userType: "T",
               firstName: data.firstName.toUpperCase(),
               lastName: data.lastName.toUpperCase(),
@@ -76,20 +94,22 @@ const DialogCreateEditEscort: React.FunctionComponent<
           }
         })}
       >
-        <Grid container className={classes.root}>
-          <DialogCreateEditCRUDFormExtendedUser
-            formErrors={formErrors}
-            control={control}
-          />
-        </Grid>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            {UI.BUTTON_TEXT_CANCEL}
-          </Button>
-          <Button color="secondary" type="submit">
-            {UI.BUTTON_TEXT_SAVE}
-          </Button>
-        </DialogActions>
+        <IDScanner onBlur={handleOnBlur}>
+          <Grid container className={classes.root}>
+            <DialogCreateEditCRUDFormExtendedUser
+              formErrors={formErrors}
+              control={control}
+            />
+          </Grid>
+          <DialogActions>
+            <Button onClick={handleClose} color="primary">
+              {UI.BUTTON_TEXT_CANCEL}
+            </Button>
+            <Button color="secondary" type="submit">
+              {UI.BUTTON_TEXT_SAVE}
+            </Button>
+          </DialogActions>
+        </IDScanner>
       </Box>
     </DialogCreateEditBase>
   );

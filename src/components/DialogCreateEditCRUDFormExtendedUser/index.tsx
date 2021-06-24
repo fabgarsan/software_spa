@@ -18,6 +18,7 @@ import { KeyboardDatePicker } from "@material-ui/pickers";
 interface DialogCreateEditCRUDFormExtendedUserProps {
   control: Control<ExtendedUser>;
   formErrors: DeepMap<ExtendedUser, FieldError>;
+  showGender?: boolean;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -44,6 +45,7 @@ const today = new Date();
 const DialogCreateEditCRUDFormExtendedUser = ({
   control,
   formErrors,
+  showGender,
 }: DialogCreateEditCRUDFormExtendedUserProps) => {
   const classes = useStyles();
   return (
@@ -221,6 +223,42 @@ const DialogCreateEditCRUDFormExtendedUser = ({
           )}
         />
       </Grid>
+      {showGender && (
+        <Grid item xs={12} sm={3} md={2} lg={2}>
+          <Controller
+            name="gender"
+            control={control}
+            render={({ field }) => (
+              <FormControl className={classes.formControl}>
+                <InputLabel htmlFor="id-gender-type">
+                  {FORM_FIELDS.EXTENDED_USER.LABEL_GENDER_TYPE}
+                </InputLabel>
+                <Select
+                  fullWidth
+                  native
+                  value={field.value}
+                  onChange={field.onChange}
+                  inputProps={{
+                    id: "id-gender-type",
+                  }}
+                >
+                  <option value={undefined}>-----</option>
+                  {FORM_FIELDS.EXTENDED_USER.GENDER_TYPE?.map((type) => (
+                    <option key={type.type} value={type.type}>
+                      {type.text}
+                    </option>
+                  ))}
+                </Select>
+                {formErrors?.bloodType && (
+                  <FormHelperText className={classes.error}>
+                    {formErrors.bloodType.message}
+                  </FormHelperText>
+                )}
+              </FormControl>
+            )}
+          />
+        </Grid>
+      )}
       <Grid item xs={12} sm={3} md={2} lg={2}>
         <FormControlLabel
           control={
@@ -242,5 +280,7 @@ const DialogCreateEditCRUDFormExtendedUser = ({
     </>
   );
 };
-
+DialogCreateEditCRUDFormExtendedUser.defaultProps = {
+  showGender: true,
+};
 export default DialogCreateEditCRUDFormExtendedUser;

@@ -9,6 +9,7 @@ export { default as DialogCreateEditCRUDEscortCategory } from "./DialogCreateEdi
 export { default as DialogCreateEditCRUDFormExtendedUser } from "./DialogCreateEditCRUDFormExtendedUser";
 export { default as Drawer } from "./Drawer";
 export { default as FormSignIn } from "./FormSignIn";
+export { default as IDScanner } from "./IDScanner";
 export { default as KeyboardDatePickerRange } from "./KeyboardDatePickerRange";
 export { default as LoadingOverlay } from "./LoadingOverlay";
 export { default as Notify } from "./Notify";
