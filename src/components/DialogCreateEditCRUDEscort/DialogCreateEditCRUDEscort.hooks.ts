@@ -11,6 +11,7 @@ const useValidation = () => {
         lastName: yup.string().required(FORM_VALIDATIONS.REQUIRED_FIELD),
         idNumber: yup.string().required(FORM_VALIDATIONS.REQUIRED_FIELD),
         idType: yup.string().required(FORM_VALIDATIONS.REQUIRED_FIELD),
+        city: yup.string().required(FORM_VALIDATIONS.REQUIRED_FIELD),
         bloodType: yup.string().required(FORM_VALIDATIONS.REQUIRED_FIELD),
         dateOfBirth: yup.date().required(FORM_VALIDATIONS.REQUIRED_FIELD),
         alias: yup.string().required(FORM_VALIDATIONS.REQUIRED_FIELD),

@@ -131,6 +131,7 @@ export const FORM_FIELDS = {
     LABEL_ID_NUMBER: "Número Documento",
     LABEL_BLOOD_TYPE: "Tipo de Sangre",
     LABEL_GENDER_TYPE: "Género",
+    LABEL_CITY: "Ciudad",
     LABEL_ID_TYPE: "Tipo de Documento",
     LABEL_DATE_OF_BIRTH: "Fec. Nacimiento (Mes/Día/Año)",
     LABEL_ID_TYPE_OPTIONS: {
@@ -190,6 +191,7 @@ export const TABLE_PAGINATOR = {
 };
 
 export const API_ROUTES = {
+  GEOGRAPHY_CITIES: "geography-cities/",
   COMPANIES: "companies/",
   PERMISSION_GROUP: "groups/",
   PERMISSION: "permissions/",

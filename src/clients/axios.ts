@@ -37,6 +37,8 @@ class AxiosClientManager {
 }
 
 export const mainAxiosClientManager = new AxiosClientManager(
-  process.env?.REACT_APP_API_URL || "",
+  process.env.NODE_ENV === "development"
+    ? "http://127.0.0.1:8000/interaluse2021"
+    : process.env?.REACT_APP_API_URL || "",
   "main_token"
 );

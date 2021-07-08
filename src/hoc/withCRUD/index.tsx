@@ -332,12 +332,11 @@ const index = <ElementInterface,>(
                   labelDisplayedRows={TABLE_PAGINATOR.LABEL_DISPLAYED_ROWS}
                   nextIconButtonText={TABLE_PAGINATOR.NEXT_ICON_BUTTON_TEXT}
                   backIconButtonText={TABLE_PAGINATOR.BACK_ICON_BUTTON_TEXT}
-                  component="div"
                   count={paginatorState.count}
                   page={paginatorState.currentPage}
-                  onChangePage={handleChangePage}
                   rowsPerPage={paginatorState.limit}
                   onChangeRowsPerPage={handleChangeRowsPerPage}
+                  onPageChange={handleChangePage}
                 />
               )}
             </Box>

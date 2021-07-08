@@ -15,6 +15,7 @@ import { BloodType, Escort, EscortCategory, GenderType } from "@dbTypes/index";
 import {
   DialogCreateEditBase,
   DialogCreateEditCRUDFormExtendedUser,
+  AutocompleteCities,
   IDScanner,
 } from "@components/index";
 import {
@@ -176,6 +177,34 @@ const DialogCreateEditEscort: React.FunctionComponent<
                   </FormControl>
                 )}
               />
+            </Grid>
+            <Grid item xs={12}>
+              <Controller
+                name="city"
+                control={control}
+                render={() => (
+                  <AutocompleteCities
+                    initialValue={
+                      instance &&
+                      instance.city &&
+                      instance.cityName &&
+                      instance.departmentName &&
+                      instance.countryName
+                        ? {
+                            name: `${instance.cityName} - ${instance.departmentName} - ${instance.countryName}`,
+                            id: instance.city,
+                          }
+                        : undefined
+                    }
+                    onChange={(city) => setValue("city", city)}
+                  />
+                )}
+              />
+              {formErrors?.city && (
+                <FormHelperText className={classes.error}>
+                  {formErrors.city.message}
+                </FormHelperText>
+              )}
             </Grid>
           </Grid>
           <DialogActions>

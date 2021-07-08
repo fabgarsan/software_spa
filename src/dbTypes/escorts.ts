@@ -9,5 +9,9 @@ export interface EscortCategory {
 export interface Escort extends ExtendedUser {
   categoryName: string;
   alias: string;
+  city: number | undefined;
+  cityName: string | undefined;
+  departmentName: string | undefined;
+  countryName: string | undefined;
   category: number | undefined;
 }
