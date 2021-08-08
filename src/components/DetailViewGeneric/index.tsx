@@ -1,6 +1,7 @@
 import React from "react";
 import { CommonLayout } from "@components/index";
-import { Box, Typography } from "@material-ui/core";
+import { Box, Typography, Button } from "@material-ui/core";
+import { useHistory } from "react-router-dom";
 
 type Attribute = {
   label: string;
@@ -10,6 +11,7 @@ type Attribute = {
 interface DetailViewGenericProps {
   title: string;
   canView: boolean;
+  goBackButton?: boolean;
   children: React.ReactNode;
   attributes?: Attribute[];
 }
@@ -19,7 +21,9 @@ const DetailViewGeneric: React.FunctionComponent<DetailViewGenericProps> = ({
   children,
   canView,
   attributes,
+  goBackButton,
 }: DetailViewGenericProps) => {
+  const history = useHistory();
   return (
     <CommonLayout title={title} canView={canView}>
       {attributes && attributes?.length > 0 && (
@@ -38,11 +42,24 @@ const DetailViewGeneric: React.FunctionComponent<DetailViewGenericProps> = ({
         </Box>
       )}
       {children}
+      {goBackButton && (
+        <Box textAlign="right">
+          <Button
+            type="button"
+            variant="outlined"
+            color="primary"
+            onClick={() => history.goBack()}
+          >
+            Regresar
+          </Button>
+        </Box>
+      )}
     </CommonLayout>
   );
 };
 DetailViewGeneric.defaultProps = {
   attributes: [],
+  goBackButton: true,
 };
 
 export default DetailViewGeneric;
