@@ -31,6 +31,8 @@ import {
 export interface CRUDDefaultTableProps<E> {
   list: E[];
   canDelete: boolean;
+  canView?: boolean;
+  viewUrl?: string;
   canEdit: boolean;
   onOpenDelete: ((element: E) => void) | undefined;
   onOpenEdit: ((element: E) => void) | undefined;
@@ -44,6 +46,7 @@ export interface CRUDDefaultFormProps<E> {
 }
 
 interface DefaultCRUDProps<E> {
+  viewUrl?: string;
   genericPermission: GenericPermission;
   instanceNameSingular: string;
   instanceNamePlural: string;
@@ -73,6 +76,7 @@ const index = <ElementInterface,>(
     deleteMethod,
     createMethod,
     editMethod,
+    viewUrl,
     fetchMethod,
     fetchAllPaginationMethod,
     idField,
@@ -318,6 +322,8 @@ const index = <ElementInterface,>(
                   Boolean(editMethod) &&
                   Boolean(fetchMethod)
                 }
+                viewUrl={viewUrl}
+                canView={permissions.VIEW && Boolean(viewUrl)}
                 canDelete={permissions.DELETE && Boolean(deleteMethod)}
                 list={paginatorState.list}
                 onOpenDelete={(deleteMethod && handleOnOpenDelete) || undefined}
@@ -354,6 +360,7 @@ const index = <ElementInterface,>(
     editMethod: undefined,
     fetchAllParams: {},
     hasSearch: false,
+    viewUrl: undefined,
   };
   return CRUD;
 };

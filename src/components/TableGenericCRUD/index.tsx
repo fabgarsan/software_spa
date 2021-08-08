@@ -1,4 +1,5 @@
 import React, { CSSProperties } from "react";
+import { useHistory } from "react-router-dom";
 import {
   TableContainer,
   Table,
@@ -22,6 +23,7 @@ interface TableHeader<DataTableInterface> {
   styleHeader?: CSSProperties;
   style?: CSSProperties;
   isBoolean?: boolean;
+  openViewUrl?: string | null;
 }
 
 interface TableGenericProps<DataTableInterface>
@@ -64,10 +66,13 @@ const TableGenericCRUD = <DataTableInterface,>({
   list,
   canDelete,
   canEdit,
+  canView,
+  viewUrl,
   onOpenEdit,
   onOpenDelete,
 }: TableGenericProps<DataTableInterface>) => {
   const classes = useStyles();
+  const history = useHistory();
   const configMap: { [name: string]: TableHeader<DataTableInterface> } =
     headers.reduce((a, b) => {
       return { ...a, [b.field]: b };
@@ -108,6 +113,13 @@ const TableGenericCRUD = <DataTableInterface,>({
               <TableCell className={classes.tableCellButtonHeader}>
                 <Typography variant="body2" color="textSecondary">
                   {TABLE_HEADERS.GENERAL.HEADER_DELETE}
+                </Typography>
+              </TableCell>
+            )}
+            {canView && (
+              <TableCell className={classes.tableCellButtonHeader}>
+                <Typography variant="body2" color="textSecondary">
+                  {TABLE_HEADERS.GENERAL.HEADER_VIEW}
                 </Typography>
               </TableCell>
             )}
@@ -177,6 +189,24 @@ const TableGenericCRUD = <DataTableInterface,>({
                     edge="start"
                   >
                     <FontAwesomeIcon icon={["fal", "trash"]} size="xs" />
+                  </IconButton>
+                </TableCell>
+              )}
+              {canView && (
+                <TableCell
+                  component="th"
+                  scope="row"
+                  padding="none"
+                  className={classes.tableCellButton}
+                >
+                  <IconButton
+                    color="inherit"
+                    aria-label="view"
+                    className={classes.tableCellIcon}
+                    onClick={() => history.push(`${viewUrl}${row[idField]}`)}
+                    edge="start"
+                  >
+                    <FontAwesomeIcon icon={["fal", "eye"]} size="xs" />
                   </IconButton>
                 </TableCell>
               )}

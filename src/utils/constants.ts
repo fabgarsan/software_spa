@@ -166,6 +166,7 @@ export const TABLE_HEADERS = {
     HEADER_ID: "Id",
     HEADER_DELETE: "Eliminar",
     HEADER_EDIT: "Editar",
+    HEADER_VIEW: "Ver",
   },
   COMPANY: {
     NAME: "Nombre",
