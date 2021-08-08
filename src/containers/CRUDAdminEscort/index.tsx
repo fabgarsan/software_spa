@@ -6,6 +6,7 @@ import {
   INSTANCES_NAMES,
   API_ROUTES,
   PERMISSION_INSTANCES,
+  Paths,
 } from "@utils/index";
 
 import { useCRUDGenericApiCall } from "@hooks/index";
@@ -31,6 +32,7 @@ const CRUDAdminEscort: React.FunctionComponent = () => {
       createMethod={create}
       editMethod={edit}
       fetchAllParams={{ extended_user__user_type: "A" }}
+      viewUrl={Paths.moduleAdminEscorts}
       hasSearch
       withTitle={false}
     />

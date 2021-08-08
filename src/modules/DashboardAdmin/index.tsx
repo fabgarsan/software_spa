@@ -13,6 +13,7 @@ import {
   CRUDAdminEmployee,
   CRUDAdminUser,
   TabManagerAdminEscort,
+  DetailViewEscort,
 } from "@containers/index";
 import {
   useCheckGenericUserPermissions,
@@ -73,6 +74,11 @@ const DashboardAdmin: React.FunctionComponent = () => {
           exact
           path={Paths.moduleAdminEscorts}
           component={TabManagerAdminEscort}
+        />
+        <Route
+          exact
+          path={`${Paths.moduleAdminEscorts}:id`}
+          component={DetailViewEscort}
         />
         <Route
           exact

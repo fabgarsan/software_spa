@@ -11,6 +11,8 @@ const TableCRUDEscort: React.FunctionComponent<CRUDDefaultTableProps<Escort>> =
     list,
     canEdit,
     canDelete,
+    canView,
+    viewUrl,
   }: CRUDDefaultTableProps<Escort>) => {
     return (
       <TableGenericCRUD<Escort>
@@ -53,6 +55,8 @@ const TableCRUDEscort: React.FunctionComponent<CRUDDefaultTableProps<Escort>> =
         list={list}
         onOpenDelete={onOpenDelete}
         onOpenEdit={onOpenEdit}
+        canView={canView}
+        viewUrl={viewUrl}
       />
     );
   };

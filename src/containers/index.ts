@@ -4,6 +4,7 @@ export { default as CRUDAdminEscort } from "./CRUDAdminEscort";
 export { default as CRUDAdminEscortCategory } from "./CRUDAdminEscortCategory";
 export { default as CRUDAdminEscortServices } from "./CRUDAdminEscortServices";
 export { default as CRUDAdminUser } from "./CRUDAdminUser";
+export { default as DetailViewEscort } from "./DetailViewEscort";
 export { default as MainRouter } from "./MainRouter";
 export { default as SignInControlContainer } from "./SignInControlContainer";
 export { default as SignInOutControlLogBookContainer } from "./SignInOutControlLogBookContainer";
