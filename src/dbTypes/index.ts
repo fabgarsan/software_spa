@@ -5,7 +5,7 @@ export type {
   BloodType,
   GenderType,
 } from "./users";
-export type { EscortCategory, Escort } from "./escorts";
+export type { EscortCategory, Escort, EscortService } from "./escorts";
 export type { Company } from "./companies";
 export type { CitySearch } from "./geography";
 export type { SignInControl } from "./authentication";

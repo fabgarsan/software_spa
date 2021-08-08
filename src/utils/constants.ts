@@ -59,6 +59,8 @@ export const DRAWER = {
 };
 
 export const INSTANCES_NAMES = {
+  ESCORT_SERVICE_SINGULAR: "Servicio Acompañante",
+  ESCORT_SERVICE_PLURAL: "Servicios Acompañantes",
   ESCORT_CATEGORIES_SINGULAR: "Categoría Acompañante",
   ESCORT_CATEGORIES_PLURAL: "Categorías Acompañantes",
   ESCORT_SINGULAR: "Acompañante",
@@ -97,6 +99,10 @@ export const FORM_FIELDS = {
   ESCORT_CATEGORIES: {
     LABEL_NAME: `Nombre ${INSTANCES_NAMES.ESCORT_CATEGORIES_SINGULAR}`,
     LABEL_ORDER: "Orden",
+  },
+  ESCORT_SERVICES: {
+    LABEL_NAME: `Nombre ${INSTANCES_NAMES.ESCORT_SERVICE_SINGULAR}`,
+    LABEL_NAME_EN: `Nombre ${INSTANCES_NAMES.ESCORT_SERVICE_SINGULAR} en Ingles`,
   },
   COMPANY: {
     LABEL_NAME: "Nombre",
@@ -170,6 +176,10 @@ export const TABLE_HEADERS = {
     ORDER: "Orden",
     CATEGORY: "Categoría",
   },
+  ESCORT_SERVICE: {
+    NAME: "Nombre",
+    NAME_EN: "Nombre en Ingles",
+  },
   EXTENDED_USER: {
     ALIAS: "Nombre Artístico",
   },
@@ -196,6 +206,7 @@ export const API_ROUTES = {
   PERMISSION_GROUP: "groups/",
   PERMISSION: "permissions/",
   ESCORT_CATEGORY: "escorts-categories/",
+  ESCORT_SERVICES: "escorts-services/",
   SIGN_IN_CONTROL: "sign-in-control/",
   ESCORT: "escorts/",
   AUTHENTICATION: "auth/",
@@ -235,6 +246,9 @@ export const PERMISSION_INSTANCES = {
   },
   ESCORT_CATEGORY: {
     GENERIC: getGenericPermissionInstance("escortcategory"),
+  },
+  ESCORT_SERVICE: {
+    GENERIC: getGenericPermissionInstance("escortservice"),
   },
   EMPLOYEE: {
     GENERIC: getGenericPermissionInstance("employee"),

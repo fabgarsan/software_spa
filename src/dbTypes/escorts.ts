@@ -1,5 +1,11 @@
 import { ExtendedUser } from "@dbTypes/index";
 
+export interface EscortService {
+  id: number;
+  name: string;
+  nameEn: string;
+}
+
 export interface EscortCategory {
   id: number;
   name: string;

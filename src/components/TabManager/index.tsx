@@ -23,6 +23,8 @@ const TabManager = ({ labels, title, children }: TabManagerProps) => {
         onChange={handleTabChange}
         indicatorColor="primary"
         textColor="primary"
+        variant="scrollable"
+        scrollButtons="auto"
       >
         {labels.map((label) => (
           <Tab key={label} label={label} />

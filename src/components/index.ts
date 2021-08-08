@@ -8,6 +8,7 @@ export { default as DialogCreateEditCRUDCompany } from "./DialogCreateEditCRUDCo
 export { default as DialogCreateEditCRUDEmployee } from "./DialogCreateEditCRUDEmployee";
 export { default as DialogCreateEditCRUDEscort } from "./DialogCreateEditCRUDEscort";
 export { default as DialogCreateEditCRUDEscortCategory } from "./DialogCreateEditCRUDEscortCategory";
+export { default as DialogCreateEditCRUDEscortService } from "./DialogCreateEditCRUDEscortService";
 export { default as DialogCreateEditCRUDFormExtendedUser } from "./DialogCreateEditCRUDFormExtendedUser";
 export { default as Drawer } from "./Drawer";
 export { default as FormSignIn } from "./FormSignIn";
@@ -25,5 +26,6 @@ export { default as TableCRUDCompany } from "./TableCRUDCompany";
 export { default as TableCRUDEmployee } from "./TableCRUDEmployee";
 export { default as TableCRUDEscort } from "./TableCRUDEscort";
 export { default as TableCRUDEscortCategory } from "./TableCRUDEscortCategory";
+export { default as TableCRUDEscortService } from "./TableCRUDEscortService";
 export { default as TableGenericCRUD } from "./TableGenericCRUD";
 export { default as TabManager } from "./TabManager";
