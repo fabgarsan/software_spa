@@ -6,20 +6,36 @@ interface CommonLayoutProps {
   title: string;
   canView: boolean;
   children: React.ReactNode;
+  color?:
+    | "initial"
+    | "inherit"
+    | "primary"
+    | "secondary"
+    | "textPrimary"
+    | "textSecondary"
+    | "error";
 }
 
-const CommonLayout = ({ title, canView, children }: CommonLayoutProps) => {
+const CommonLayout = ({
+  title,
+  canView,
+  children,
+  color,
+}: CommonLayoutProps) => {
   if (!canView) {
     return <NoViewDisplayAllowed instanceNamePlural={title} />;
   }
   return (
     <Box>
-      <Typography variant="h6" gutterBottom>
+      <Typography variant="h6" gutterBottom color={color}>
         {title}
       </Typography>
       {children}
     </Box>
   );
+};
+CommonLayout.defaultProps = {
+  color: "primary",
 };
 
 export default CommonLayout;
