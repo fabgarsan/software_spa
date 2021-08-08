@@ -15,6 +15,7 @@ export interface EscortCategory {
 export interface Escort extends ExtendedUser {
   categoryName: string;
   alias: string;
+  services: number[];
   city: number | undefined;
   cityName: string | undefined;
   departmentName: string | undefined;

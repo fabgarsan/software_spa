@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { API_ROUTES, INSTANCES_NAMES, diffDates } from "@utils/index";
 import { useCRUDGenericApiCall } from "@hooks/index";
-import { Escort } from "@dbTypes/escorts";
-import { useParams, useHistory } from "react-router-dom";
-import { DetailViewGeneric } from "@components/index";
+import { DetailViewGeneric, DetailViewEscortServices } from "@components/index";
+import { Escort, EscortService } from "@dbTypes/escorts";
+import { useParams } from "react-router-dom";
+import { addEscortService, removeEscortService } from "@api/index";
 
 const DetailViewEscort: React.FunctionComponent = () => {
   const { id } = useParams<{ id: string }>();
-  const history = useHistory();
   const [instanceData, setInstanceData] = useState<Escort | null>(null);
+  const [servicesData, setServicesData] = useState<EscortService[]>([]);
   const { fetch } = useCRUDGenericApiCall<Escort>(API_ROUTES.USER);
+  const { fetchAll: fetchAllServices } = useCRUDGenericApiCall<EscortService>(
+    API_ROUTES.ESCORT_SERVICES
+  );
   const attributes = instanceData
     ? [
         { label: "Usuario", value: instanceData.username },
@@ -37,22 +41,36 @@ const DetailViewEscort: React.FunctionComponent = () => {
       ]
     : [];
   useEffect(() => {
-    const fetchInstance = async () => {
-      const data = await fetch(id);
-      setInstanceData(data);
+    const fetchData = async () => {
+      const [escort, services] = await Promise.all([
+        fetch(id),
+        fetchAllServices(),
+      ]);
+      setServicesData(services);
+      setInstanceData(escort);
     };
-    fetchInstance();
+    fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
+  const onCheckService = async (serviceId: number, checked: boolean) => {
+    if (checked) await addEscortService(id, { serviceId });
+    if (!checked) await removeEscortService(id, { serviceId });
+    const data = await fetch(id);
+    setInstanceData(data);
+  };
   return (
     <DetailViewGeneric
       canView
       title={`${INSTANCES_NAMES.ESCORT_SINGULAR} ${instanceData?.alias}`}
       attributes={attributes}
     >
-      <button type="button" onClick={() => history.goBack()}>
-        Atras
-      </button>
+      {instanceData && servicesData?.length > 0 && (
+        <DetailViewEscortServices
+          currentServices={instanceData?.services}
+          services={servicesData}
+          onCheckService={onCheckService}
+        />
+      )}
     </DetailViewGeneric>
   );
 };

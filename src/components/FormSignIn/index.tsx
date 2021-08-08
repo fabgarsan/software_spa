@@ -33,7 +33,7 @@ const FormSignIn: React.FunctionComponent<FormSignInProps> = ({
           component="form"
           onSubmit={handleSubmit((data) => logIn(data.username, data.password))}
         >
-          <Grid container spacing={3} justify="flex-end">
+          <Grid container spacing={3} justifyContent="flex-end">
             <Grid item xs={12}>
               <Typography color="textSecondary" variant="h5" paragraph>
                 Login
