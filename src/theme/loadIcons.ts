@@ -3,12 +3,14 @@ import {
   faBars,
   faAngleRight,
   faAngleLeft,
+  faAngleUp,
   faUsers,
   faCogs,
   faSignOut,
   faSignIn,
   faHome,
   faUserNurse,
+  faGlobeAmericas,
   faSpinner,
   faPlus,
   faTrash,
@@ -29,6 +31,8 @@ const loadIcons = (): void => {
   library.add(faBars);
   library.add(faAngleRight);
   library.add(faAngleLeft);
+  library.add(faAngleUp);
+  library.add(faGlobeAmericas);
   library.add(faUsers);
   library.add(faCogs);
   library.add(faSignOut);

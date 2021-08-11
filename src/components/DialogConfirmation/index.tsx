@@ -11,7 +11,10 @@ import {
 interface ConfirmationDialogProps {
   title: string;
   message: string;
+  children?: React.ReactNode;
   open: boolean;
+  fullWidth?: boolean;
+  fullScreen?: boolean;
   onAccept: () => void;
   onCancel: () => void;
 }
@@ -22,9 +25,14 @@ const DialogConfirmation: React.FunctionComponent<ConfirmationDialogProps> = ({
   message,
   onAccept,
   onCancel,
+  children,
+  fullWidth,
+  fullScreen,
 }: ConfirmationDialogProps) => {
   return (
     <Dialog
+      fullWidth={fullWidth}
+      fullScreen={fullScreen}
       open={open}
       onClose={onCancel}
       aria-labelledby="alert-dialog-title"
@@ -35,6 +43,7 @@ const DialogConfirmation: React.FunctionComponent<ConfirmationDialogProps> = ({
         <DialogContentText id="alert-dialog-description">
           {message}
         </DialogContentText>
+        {children}
       </DialogContent>
       <DialogActions>
         <Button onClick={onCancel} color="primary">
@@ -46,6 +55,11 @@ const DialogConfirmation: React.FunctionComponent<ConfirmationDialogProps> = ({
       </DialogActions>
     </Dialog>
   );
+};
+DialogConfirmation.defaultProps = {
+  children: null,
+  fullWidth: false,
+  fullScreen: false,
 };
 
 export default DialogConfirmation;

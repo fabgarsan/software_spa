@@ -16,6 +16,8 @@ export const DIALOG_MESSAGES = {
     toString: string
   ): string =>
     `Realmente desea eliminar ${instanceNameSingular} ${toString}`.trim(),
+  DELETE_DIALOG_TEXT: (toString: string): string =>
+    `Realmente desea eliminar ${toString}`.trim(),
 };
 
 export const NOTIFICATION_MESSAGES = {
@@ -210,6 +212,7 @@ export const API_ROUTES = {
   ESCORT_SERVICES: "escorts-services/",
   SIGN_IN_CONTROL: "sign-in-control/",
   ESCORT: "escorts/",
+  ESCORT_IMAGES: "escorts-images/",
   AUTHENTICATION: "auth/",
   USER: "users/",
   USER_SIGN_IN_OUT: "users-sign-in-out/",

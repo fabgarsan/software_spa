@@ -6,6 +6,15 @@ export interface EscortService {
   nameEn: string;
 }
 
+export interface EscortImage {
+  id: number;
+  image: string;
+  altText: string;
+  altTextEng: string;
+  created: Date;
+  publishedWeb: boolean;
+}
+
 export interface EscortCategory {
   id: number;
   name: string;

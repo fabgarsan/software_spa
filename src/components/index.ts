@@ -2,6 +2,8 @@ export { default as AlertTimer } from "./AlertTimer";
 export { default as AutocompleteCities } from "./AutocompleteCities";
 export { default as BackdropLoading } from "./BackdropLoading";
 export { default as CommonLayout } from "./CommonLayout";
+export { default as DetailViewEscortImageList } from "./DetailViewEscortImageList";
+export { default as DetailViewEscortImageListItem } from "./DetailViewEscortImageListItem";
 export { default as DetailViewEscortServices } from "./DetailViewEscortServices";
 export { default as DetailViewGeneric } from "./DetailViewGeneric";
 export { default as DialogConfirmation } from "./DialogConfirmation";
@@ -15,6 +17,7 @@ export { default as DialogCreateEditCRUDFormExtendedUser } from "./DialogCreateE
 export { default as Drawer } from "./Drawer";
 export { default as FormSignIn } from "./FormSignIn";
 export { default as IDScanner } from "./IDScanner";
+export { default as ImageCropper } from "./ImageCropper";
 export { default as KeyboardDatePickerRange } from "./KeyboardDatePickerRange";
 export { default as LoadingOverlay } from "./LoadingOverlay";
 export { default as Notify } from "./Notify";

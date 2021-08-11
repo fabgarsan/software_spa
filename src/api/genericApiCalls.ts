@@ -38,6 +38,6 @@ export const fetchGenericApiCall = <T>(
 export const editGenericApiCall = <T>(
   url: string,
   id: number | string,
-  data: T
+  data: Partial<T>
 ): Promise<AxiosResponse<T>> =>
   mainAxiosClientManager.client.patch(`${url}${id}/`, data);

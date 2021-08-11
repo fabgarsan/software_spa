@@ -77,7 +77,7 @@ const useCRUDGenericApiCall = <T>(url: string, config?: Config) => {
     return response.data;
   };
 
-  const edit = async (id: number | string, dataCreate: T) => {
+  const edit = async (id: number | string, dataCreate: Partial<T>) => {
     const response = await setTrackPromise(
       editGenericApiCall<T>(url, id, dataCreate)
     );
