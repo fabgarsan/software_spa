@@ -25,7 +25,8 @@ export const uploadEscortImage = (
   file: Blob
 ): Promise<AxiosResponse> => {
   const data = new FormData();
-  data.append("image", file, "prueba.png");
+  const extension = file.type.split("/").slice(-1);
+  data.append("image", file, `prueba.${extension}`);
   return mainAxiosClientManager.client.post(
     `${API_ROUTES.USER}${userId}/upload-escort-image/`,
     data,

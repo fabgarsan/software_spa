@@ -1,12 +1,13 @@
 import React, { useCallback, useRef, useState } from "react";
 import ReactCrop from "react-image-crop";
+import Compressor from "compressorjs";
+import { trackPromise } from "react-promise-tracker";
 import {
   Box,
   Button,
   Dialog,
   DialogActions,
   DialogContent,
-  DialogTitle,
   Typography,
 } from "@material-ui/core";
 
@@ -47,9 +48,17 @@ const savePhoto = async (
       );
       await outputImage.toBlob(
         async (blob: Blob | null) => {
-          if (blob) await onSavePhoto(blob);
+          if (blob) {
+            /* eslint-disable no-new */
+            new Compressor(blob, {
+              quality: 0.9,
+              success: async (compressedResult) => {
+                await onSavePhoto(compressedResult);
+              },
+            });
+          }
         },
-        "image/png",
+        "image/jpeg",
         1
       );
     }
@@ -196,12 +205,14 @@ const ImageCropper = ({ aspectRatios, saveMethod }: ImageCropperProps) => {
             }
             onClick={async () => {
               try {
-                await savePhoto(
-                  imgRef.current,
-                  completedCrop,
-                  saveMethod,
-                  minHeight,
-                  minWidth
+                await trackPromise(
+                  savePhoto(
+                    imgRef.current,
+                    completedCrop,
+                    saveMethod,
+                    minHeight,
+                    minWidth
+                  )
                 );
                 setUpImg(null);
                 setCrop({
