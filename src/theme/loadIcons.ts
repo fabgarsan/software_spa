@@ -3,7 +3,7 @@ import {
   faBars,
   faAngleRight,
   faAngleLeft,
-  faAngleUp,
+  faAngleDown,
   faUsers,
   faCogs,
   faSignOut,
@@ -31,7 +31,7 @@ const loadIcons = (): void => {
   library.add(faBars);
   library.add(faAngleRight);
   library.add(faAngleLeft);
-  library.add(faAngleUp);
+  library.add(faAngleDown);
   library.add(faGlobeAmericas);
   library.add(faUsers);
   library.add(faCogs);

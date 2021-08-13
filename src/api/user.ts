@@ -22,11 +22,13 @@ export const removeEscortService = (
 
 export const uploadEscortImage = (
   userId: string,
-  file: Blob
+  file: Blob,
+  type: "I" | "P"
 ): Promise<AxiosResponse> => {
   const data = new FormData();
   const extension = file.type.split("/").slice(-1);
   data.append("image", file, `prueba.${extension}`);
+  data.append("type", type);
   return mainAxiosClientManager.client.post(
     `${API_ROUTES.USER}${userId}/upload-escort-image/`,
     data,

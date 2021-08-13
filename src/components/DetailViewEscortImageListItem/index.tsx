@@ -140,7 +140,7 @@ const DetailViewEscortImageListItem = ({
             aria-expanded={expanded}
             aria-label="show more"
           >
-            <FontAwesomeIcon icon={["fal", "angle-up"]} size="xs" />
+            <FontAwesomeIcon icon={["fal", "angle-down"]} size="xs" />
           </IconButton>
         </CardActions>
         <Collapse in={expanded} timeout="auto" unmountOnExit>

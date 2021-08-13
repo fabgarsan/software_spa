@@ -20,7 +20,7 @@ const DetailViewEscortServices = ({
   currentServices,
 }: DetailViewEscortServicesProps) => (
   <Box paddingLeft={2}>
-    <Typography variant="h6">Servicios</Typography>
+    <Typography variant="h5">Servicios</Typography>
     <FormGroup row>
       {services.map((service) => (
         <FormControlLabel

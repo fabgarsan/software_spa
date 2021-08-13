@@ -78,8 +78,8 @@ const DetailViewEscort: React.FunctionComponent = () => {
     const data = await fetch(id);
     setInstanceData(data);
   };
-  const onUploadImage = async (file: Blob) => {
-    await uploadEscortImage(id, file);
+  const onUploadImage = async (file: Blob, imageType: "P" | "I") => {
+    await uploadEscortImage(id, file, imageType);
     await fetchImages();
   };
   const onDeleteImage = async (imageId: number) => {
