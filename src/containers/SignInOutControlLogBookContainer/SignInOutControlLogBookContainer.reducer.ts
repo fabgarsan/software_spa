@@ -16,7 +16,7 @@ export interface FilterState {
   params: FilterParams;
 }
 
-export type FiltertActions =
+export type FilterActions =
   | { type: "filterDate"; date: MaterialUiPickersDate }
   | { type: "filterRangeFrom"; date: MaterialUiPickersDate }
   | { type: "filterRangeTo"; date: MaterialUiPickersDate }
@@ -33,7 +33,7 @@ export const filterInitial: FilterState = {
   },
 };
 
-export const reducerFilter: React.Reducer<FilterState, FiltertActions> = (
+export const reducerFilter: React.Reducer<FilterState, FilterActions> = (
   state,
   action
 ): FilterState => {

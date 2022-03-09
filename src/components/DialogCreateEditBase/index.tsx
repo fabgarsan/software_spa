@@ -21,23 +21,24 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const DialogCreateEditBase: React.FunctionComponent<DialogCreateEditBaseProps> =
-  ({ children, open, title }: DialogCreateEditBaseProps) => {
-    const classes = useStyles();
-    if (!open) {
-      return <></>;
-    }
-    return (
-      <Dialog
-        open={open}
-        aria-labelledby="form-dialog-title"
-        maxWidth="lg"
-        fullWidth
-      >
-        <DialogTitle id="form-dialog-title">{title}</DialogTitle>
-        <DialogContent className={classes.root}>{children}</DialogContent>
-      </Dialog>
-    );
-  };
+const DialogCreateEditBase: React.FunctionComponent<
+  DialogCreateEditBaseProps
+> = ({ children, open, title }: DialogCreateEditBaseProps) => {
+  const classes = useStyles();
+  if (!open) {
+    return <></>;
+  }
+  return (
+    <Dialog
+      open={open}
+      aria-labelledby="form-dialog-title"
+      maxWidth="lg"
+      fullWidth
+    >
+      <DialogTitle id="form-dialog-title">{title}</DialogTitle>
+      <DialogContent className={classes.root}>{children}</DialogContent>
+    </Dialog>
+  );
+};
 
 export default DialogCreateEditBase;

@@ -35,7 +35,9 @@ const SignInOutControlLogBookContainer = () => {
   }, [fetchAll]);
 
   const handleOnSearch = async () => {
-    const responseData = await fetchAll(state.params);
+    const responseData = await fetchAll(
+      state.params as Record<string, unknown>
+    );
     setData(responseData);
   };
 

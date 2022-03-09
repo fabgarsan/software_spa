@@ -23,8 +23,9 @@ const AutocompleteCities = ({
 }: AutocompleteCitiesProps) => {
   const [cities, setCities] = useState<CitySearch[]>([]);
   const [search, setSearch] = useState("");
-  const [selectedOption, setSelectedOption] =
-    useState<CityOption | undefined>(initialValue);
+  const [selectedOption, setSelectedOption] = useState<CityOption | undefined>(
+    initialValue
+  );
   const debouncedSearchTerm = useDebounce(search, 1000);
   useEffect(() => {
     const getCities = async () => {

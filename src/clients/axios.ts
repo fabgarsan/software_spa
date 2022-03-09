@@ -1,14 +1,15 @@
 import axios, { AxiosInstance } from "axios";
 
+const { REACT_APP_API_URL = "http://127.0.0.1:8000/interaluse2021" } =
+  process.env;
+
 class AxiosClientManager {
   client: AxiosInstance;
 
   tokenName: string;
 
-  constructor(baseUrl: string, tokenName: string) {
-    this.client = axios.create({
-      baseURL: baseUrl,
-    });
+  constructor(baseURL: string, tokenName: string) {
+    this.client = axios.create({ baseURL });
     this.tokenName = tokenName;
     this.loadToken();
   }
@@ -37,8 +38,6 @@ class AxiosClientManager {
 }
 
 export const mainAxiosClientManager = new AxiosClientManager(
-  process.env.NODE_ENV === "development"
-    ? "http://127.0.0.1:8000/interaluse2021"
-    : process.env?.REACT_APP_API_URL || "",
+  REACT_APP_API_URL,
   "main_token"
 );

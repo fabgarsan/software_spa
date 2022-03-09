@@ -13,41 +13,50 @@ type WithInterceptorHandlerProps = {
   loading?: boolean;
 };
 
+type DjangoResponseDataError = {
+  detail: string;
+};
+
 const withInterceptorHandler = <P extends WithInterceptorHandlerProps>(
   WrappedComponent: React.ComponentType<P>
 ) => {
   return (props: Omit<P, keyof WithInterceptorHandlerProps>) => {
     const { createErrorNotification } = useNotifications();
-    const { auth, logIn, setIsNotAuthenticated } = useAuth();
+    const {
+      auth: { isAuthenticated, error: authError },
+      logIn,
+      setIsNotAuthenticated,
+    } = useAuth();
     const handleResponseError = useCallback(
-      (error: AxiosError) => {
+      (error: AxiosError<DjangoResponseDataError>) => {
         const { response, message } = error;
         if (response) {
-          switch (response.status) {
+          const {
+            status,
+            data: { detail: errorDetail },
+          } = response;
+          switch (status) {
             case 400:
-              if (response.data.detail) {
-                createErrorNotification(response.data.detail);
+              if (errorDetail) {
+                createErrorNotification(errorDetail);
               }
               break;
             case 401:
               setIsNotAuthenticated();
-              createErrorNotification(response.data.detail);
+              createErrorNotification(errorDetail);
               mainAxiosClientManager.removeToken();
               break;
             case 403:
-              createErrorNotification(response.data.detail);
+              createErrorNotification(errorDetail);
               break;
             case 500:
               if (message) alert(message);
               break;
             default:
-              if (response.data.detail) {
-                createErrorNotification(response.data.detail);
+              if (errorDetail) {
+                createErrorNotification(errorDetail);
               }
-              console.log(
-                `ERROR ${response?.status}`,
-                error.response?.data.detail
-              );
+              console.log(`ERROR ${status}`, errorDetail);
               break;
           }
         } else if (message) {
@@ -72,15 +81,16 @@ const withInterceptorHandler = <P extends WithInterceptorHandlerProps>(
       mainAxiosClientManager.client.defaults.params = {};
       mainAxiosClientManager.client.interceptors.request.use(
         (request) => {
+          const { params, data } = request;
+          let newRequest = { ...request };
           if (request.headers["Content-Type"] === "multipart/form-data")
             return request;
-          if (request.params) {
-            request.params = decamelizeKeys(request.params);
-          }
-          if (request.data) {
-            request.data = decamelizeKeys(request.data);
-          }
-          return request;
+          if (params)
+            newRequest = { ...newRequest, params: decamelizeKeys(params) };
+
+          if (data) newRequest = { ...newRequest, data: decamelizeKeys(data) };
+
+          return newRequest;
         },
         async (error) => {
           await handleRequestError(error);
@@ -90,29 +100,27 @@ const withInterceptorHandler = <P extends WithInterceptorHandlerProps>(
       );
       mainAxiosClientManager.client.interceptors.response.use(
         (response) => {
-          if (
-            response.data &&
-            response.headers["content-type"] === "application/json"
-          ) {
-            response.data = camelizeKeys(response.data);
+          const { data, headers } = response;
+          let newResponse = { ...response };
+          if (data && headers["content-type"] === "application/json") {
+            newResponse = { ...newResponse, data: camelizeKeys(data) };
           }
-          return response;
+          return newResponse;
         },
-        async (error: any) => {
+        async (error: AxiosError<DjangoResponseDataError>) => {
           await handleResponseError(error);
           // eslint-disable-next-line @typescript-eslint/no-throw-literal
           throw camelizeKeys(error);
         }
       );
     }, [handleResponseError, handleRequestError]);
-    // }
 
     return (
       <ThemeProvider theme={theme}>
         <LoadingOverlay />
         <Notify />
-        {!auth.isAuthenticated ? (
-          <FormSignIn logIn={logIn} errors={auth.error} />
+        {!isAuthenticated ? (
+          <FormSignIn logIn={logIn} errors={authError} />
         ) : (
           <WrappedComponent {...(props as P)} />
         )}

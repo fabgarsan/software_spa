@@ -1,5 +1,4 @@
 import { useCallback } from "react";
-import chalk from "chalk";
 import {
   createGenericApiCall,
   fetchAllGenericPaginationApiCall,
@@ -40,13 +39,7 @@ interface Config {
 const setTrackPromise = <T>(
   promise: Promise<T>,
   hasTracking = true
-): Promise<T> => {
-  if (hasTracking) {
-    return trackPromise(promise);
-  }
-  return promise;
-};
-
+): Promise<T> => (hasTracking && trackPromise(promise)) || promise;
 // const hasConfig = (method: AllowedMethods, config: Config): boolean =>
 //   config.methods.map((m) => m.method).includes(method);
 
@@ -85,7 +78,7 @@ const useCRUDGenericApiCall = <T>(url: string, config?: Config) => {
   };
 
   const fetchAllPagination = useCallback(
-    async (limit: number, offset: number, params: any) => {
+    async (limit: number, offset: number, params: Record<string, unknown>) => {
       const response = await setTrackPromise(
         fetchAllGenericPaginationApiCall<T>(url, limit, offset, params)
       );
@@ -95,7 +88,7 @@ const useCRUDGenericApiCall = <T>(url: string, config?: Config) => {
     [url]
   );
   const fetchAll = useCallback(
-    async (params?: any) => {
+    async (params?: Record<string, unknown>) => {
       const response = await setTrackPromise(
         fetchAllGenericApiCall<T>(url, params)
       );
