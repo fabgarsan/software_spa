@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch, useHistory } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import { Drawer } from "@components/index";
 import { IconList } from "@components/Drawer";
 import {
@@ -21,20 +21,20 @@ import {
 } from "@hooks/index";
 
 const DashboardAdmin: React.FunctionComponent = () => {
-  const { push } = useHistory();
+  const navigate = useNavigate();
 
   const itemsMenu: IconList[] = [
     {
       text: DRAWER.MODULE_ADMIN_MENU_USERS,
       icon: "users",
-      onClick: () => push(Paths.moduleAdminUsers),
+      onClick: () => navigate(Paths.moduleAdminUsers),
       show: useCheckGenericUserPermissions(PERMISSION_INSTANCES.USER.GENERIC)
         .HAS_ANY,
     },
     {
       text: DRAWER.MODULE_ADMIN_MENU_ESCORTS,
       icon: "user-nurse",
-      onClick: () => push(Paths.moduleAdminEscorts),
+      onClick: () => navigate(Paths.moduleAdminEscorts),
       show: useCheckGenericUserPermissions(
         PERMISSION_INSTANCES.ESCORT_CATEGORY.GENERIC
       ).HAS_ANY,
@@ -42,7 +42,7 @@ const DashboardAdmin: React.FunctionComponent = () => {
     {
       text: DRAWER.MODULE_ADMIN_MENU_EMPLOYEES,
       icon: "user-hard-hat",
-      onClick: () => push(Paths.moduleAdminEmployees),
+      onClick: () => navigate(Paths.moduleAdminEmployees),
       show: useCheckGenericUserPermissions(
         PERMISSION_INSTANCES.EMPLOYEE.GENERIC
       ).HAS_ANY,
@@ -50,7 +50,7 @@ const DashboardAdmin: React.FunctionComponent = () => {
     {
       text: DRAWER.MODULE_ADMIN_MENU_COMPANIES,
       icon: "building",
-      onClick: () => push(Paths.moduleAdminCompanies),
+      onClick: () => navigate(Paths.moduleAdminCompanies),
       show: useCheckGenericUserPermissions(PERMISSION_INSTANCES.COMPANY.GENERIC)
         .HAS_ANY,
     },
@@ -63,29 +63,19 @@ const DashboardAdmin: React.FunctionComponent = () => {
       items={itemsMenu}
       canShowContent={hasPermission}
     >
-      <Switch>
-        <Route exact path={Paths.moduleAdminUsers} component={CRUDAdminUser} />
+      <Routes>
+        <Route path={Paths.moduleAdminUsers} element={CRUDAdminUser} />
+        <Route path={Paths.moduleAdminEmployees} element={CRUDAdminEmployee} />
         <Route
-          exact
-          path={Paths.moduleAdminEmployees}
-          component={CRUDAdminEmployee}
-        />
-        <Route
-          exact
           path={Paths.moduleAdminEscorts}
-          component={TabManagerAdminEscort}
+          element={TabManagerAdminEscort}
         />
         <Route
-          exact
           path={`${Paths.moduleAdminEscorts}:id`}
-          component={DetailViewEscort}
+          element={DetailViewEscort}
         />
-        <Route
-          exact
-          path={Paths.moduleAdminCompanies}
-          component={CRUDAdminCompany}
-        />
-      </Switch>
+        <Route path={Paths.moduleAdminCompanies} element={CRUDAdminCompany} />
+      </Routes>
     </Drawer>
   );
 };

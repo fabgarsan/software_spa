@@ -12,16 +12,16 @@ import {
   PERMISSION_INSTANCES,
   PERMISSION_MODULES,
 } from "@utils/index";
-import { Route, Switch, useHistory } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
 import { useCheckPermissions } from "@hooks/index";
 
 const DashboardReception: React.FunctionComponent = () => {
-  const { push } = useHistory();
+  const navigate = useNavigate();
   const itemsMenu: IconList[] = [
     {
       text: DRAWER.MODULE_RECEPTION_MENU_SIGN_IN,
       icon: "sign-in",
-      onClick: () => push(Paths.moduleReceptionSingIn),
+      onClick: () => navigate(Paths.moduleReceptionSingIn),
       show: useCheckPermissions([
         PERMISSION_INSTANCES.SIGN_IN_CONTROL.MADE_SIGN_IN_OTHERS,
       ]),
@@ -29,7 +29,7 @@ const DashboardReception: React.FunctionComponent = () => {
     {
       text: DRAWER.MODULE_RECEPTION_MENU_SIGN_OUT,
       icon: "sign-out",
-      onClick: () => push(Paths.moduleReceptionSingOut),
+      onClick: () => navigate(Paths.moduleReceptionSingOut),
       show: useCheckPermissions([
         PERMISSION_INSTANCES.SIGN_IN_CONTROL.MADE_SIGN_OUT_OTHERS,
       ]),
@@ -37,7 +37,7 @@ const DashboardReception: React.FunctionComponent = () => {
     {
       text: DRAWER.MODULE_RECEPTION_MENU_LOG_BOOK,
       icon: "address-book",
-      onClick: () => push(Paths.moduleReceptionSingOutInLogBook),
+      onClick: () => navigate(Paths.moduleReceptionSingOutInLogBook),
       show: true,
     },
   ];
@@ -51,23 +51,20 @@ const DashboardReception: React.FunctionComponent = () => {
       items={itemsMenu}
       canShowContent={hasPermission}
     >
-      <Switch>
+      <Routes>
         <Route
-          exact
           path={Paths.moduleReceptionSingIn}
-          component={SignInControlContainer}
+          element={SignInControlContainer}
         />
         <Route
-          exact
           path={Paths.moduleReceptionSingOut}
-          component={SignOutControlContainer}
+          element={SignOutControlContainer}
         />
         <Route
-          exact
           path={Paths.moduleReceptionSingOutInLogBook}
-          component={SignInOutControlLogBookContainer}
+          element={SignInOutControlLogBookContainer}
         />
-      </Switch>
+      </Routes>
     </Drawer>
   );
 };

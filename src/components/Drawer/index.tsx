@@ -22,7 +22,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { drawerState, changeOpenState } from "@stores/drawerSlices";
 import { IconName } from "@fortawesome/pro-light-svg-icons";
 import { logOutThunk, auth } from "@stores/authSlice";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import { Paths, DRAWER } from "@utils/index";
 import { NoViewDisplayAllowed } from "@components/index";
@@ -121,7 +121,7 @@ const MiniDrawer: React.FunctionComponent<MiniDrawerProps> = ({
 }: MiniDrawerProps) => {
   const classes = useStyles();
   const theme = useTheme();
-  const { push } = useHistory();
+  const navigate = useNavigate();
 
   const itemsToShow = items.filter((item) => item.show);
 
@@ -138,7 +138,7 @@ const MiniDrawer: React.FunctionComponent<MiniDrawerProps> = ({
   };
 
   const goLogOut = () => dispatch(logOutThunk());
-  const goHome = () => push(Paths.moduleRoot);
+  const goHome = () => navigate(Paths.moduleRoot);
 
   return (
     <div className={classes.root}>

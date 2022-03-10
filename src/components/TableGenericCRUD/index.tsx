@@ -1,5 +1,5 @@
 import React, { CSSProperties } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   TableContainer,
   Table,
@@ -72,7 +72,7 @@ const TableGenericCRUD = <DataTableInterface,>({
   onOpenDelete,
 }: TableGenericProps<DataTableInterface>) => {
   const classes = useStyles();
-  const history = useHistory();
+  const navigate = useNavigate();
   const configMap: { [name: string]: TableHeader<DataTableInterface> } =
     headers.reduce((a, b) => {
       return { ...a, [b.field]: b };
@@ -203,7 +203,7 @@ const TableGenericCRUD = <DataTableInterface,>({
                     color="inherit"
                     aria-label="view"
                     className={classes.tableCellIcon}
-                    onClick={() => history.push(`${viewUrl}${row[idField]}`)}
+                    onClick={() => navigate(`${viewUrl}${row[idField]}`)}
                     edge="start"
                   >
                     <FontAwesomeIcon icon={["fal", "eye"]} size="xs" />

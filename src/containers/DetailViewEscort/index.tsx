@@ -12,7 +12,7 @@ import { uploadEscortImage } from "@api/user";
 import { addEscortService, removeEscortService } from "@api/index";
 
 const DetailViewEscort: React.FunctionComponent = () => {
-  const { id } = useParams<{ id: string }>();
+  const { id } = useParams();
   const [instanceData, setInstanceData] = useState<Escort | null>(null);
   const [servicesData, setServicesData] = useState<EscortService[]>([]);
   const [imagesData, setImagesData] = useState<EscortImage[]>([]);
@@ -60,26 +60,30 @@ const DetailViewEscort: React.FunctionComponent = () => {
   };
   useEffect(() => {
     const fetchData = async () => {
-      const [escort, services, images] = await Promise.all([
-        fetch(id),
-        fetchAllServices(),
-        fetchAllImages({ extended_user__user_id: id, ordering: "-created" }),
-      ]);
-      setServicesData(services);
-      setInstanceData(escort);
-      setImagesData(images);
+      if (id) {
+        const [escort, services, images] = await Promise.all([
+          fetch(id),
+          fetchAllServices(),
+          fetchAllImages({ extended_user__user_id: id, ordering: "-created" }),
+        ]);
+        setServicesData(services);
+        setInstanceData(escort);
+        setImagesData(images);
+      }
     };
     fetchData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
   const onCheckService = async (serviceId: number, checked: boolean) => {
-    if (checked) await addEscortService(id, { serviceId });
-    if (!checked) await removeEscortService(id, { serviceId });
-    const data = await fetch(id);
-    setInstanceData(data);
+    if (id) {
+      if (checked) await addEscortService(id, { serviceId });
+      if (!checked) await removeEscortService(id, { serviceId });
+      const data = await fetch(id);
+      setInstanceData(data);
+    }
   };
   const onUploadImage = async (file: Blob, imageType: "P" | "I") => {
-    await uploadEscortImage(id, file, imageType);
+    if (id) await uploadEscortImage(id, file, imageType);
     await fetchImages();
   };
   const onDeleteImage = async (imageId: number) => {

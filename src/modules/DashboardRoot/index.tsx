@@ -2,14 +2,14 @@ import React from "react";
 import { Drawer } from "@components/index";
 import { IconList } from "@components/Drawer";
 import { Paths, DRAWER, PERMISSION_MODULES } from "@utils/index";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useCheckPermissions } from "@hooks/index";
 import { Box } from "@material-ui/core";
 import printJS from "print-js";
 import axios from "axios";
 
 const DashboardRoot: React.FunctionComponent = () => {
-  const { push } = useHistory();
+  const navigate = useNavigate();
 
   const downloadPDF = (pdf: string) => {
     const linkSource = `data:application/pdf;base64,${pdf}`;
@@ -40,13 +40,13 @@ const DashboardRoot: React.FunctionComponent = () => {
     {
       text: DRAWER.MAIN_DASHBOARD_MENU_ADMIN,
       icon: "cogs",
-      onClick: () => push(Paths.moduleAdmin),
+      onClick: () => navigate(Paths.moduleAdmin),
       show: useCheckPermissions([PERMISSION_MODULES.ADMIN], "all"),
     },
     {
       text: DRAWER.MODULE_RECEPTION_TITLE,
       icon: "door-open",
-      onClick: () => push(Paths.moduleReception),
+      onClick: () => navigate(Paths.moduleReception),
       show: useCheckPermissions([PERMISSION_MODULES.RECEPTION], "all"),
     },
   ];

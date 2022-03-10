@@ -1,7 +1,7 @@
 import React from "react";
 import { CommonLayout } from "@components/index";
 import { Box, Typography, Button } from "@material-ui/core";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 type Attribute = {
   label: string;
@@ -23,7 +23,7 @@ const DetailViewGeneric: React.FunctionComponent<DetailViewGenericProps> = ({
   attributes,
   goBackButton,
 }: DetailViewGenericProps) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   return (
     <CommonLayout title={title} canView={canView}>
       {attributes && attributes?.length > 0 && (
@@ -48,7 +48,7 @@ const DetailViewGeneric: React.FunctionComponent<DetailViewGenericProps> = ({
             type="button"
             variant="outlined"
             color="primary"
-            onClick={() => history.goBack()}
+            onClick={() => navigate(-1)}
           >
             Regresar
           </Button>
