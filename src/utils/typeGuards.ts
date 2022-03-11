@@ -1,28 +1,14 @@
-export const isNumber = (idField: any): idField is number => {
-  return typeof idField === "number";
-};
+export const isNumber = (idField: unknown): idField is number =>
+  typeof idField === "number";
 
-export const isString = (text: any): text is string => {
-  return typeof text === "string";
-};
+export const isString = (text: unknown): text is string =>
+  typeof text === "string";
 
-export const setIfNotString = (text: any, newText = ""): string => {
-  if (isString(text)) {
-    return text;
-  }
-  return newText;
-};
+export const setIfNotString = (text: unknown, newText = ""): string =>
+  (isString(text) && text) || newText;
 
-export const getFormFieldError = (value: any): string => {
-  if (Array.isArray(value)) {
-    return value[0];
-  }
-  return value;
-};
+export const getFormFieldError = (value: unknown): string =>
+  (Array.isArray(value) && value[0]) || value;
 
-export const setIfNotNumber = (text: any, newText = 0): number => {
-  if (isNumber(text)) {
-    return text;
-  }
-  return newText;
-};
+export const setIfNotNumber = (text: unknown, newText = 0): number =>
+  (isNumber(text) && text) || newText;

@@ -64,17 +64,19 @@ const DashboardAdmin: React.FunctionComponent = () => {
       canShowContent={hasPermission}
     >
       <Routes>
-        <Route path={Paths.moduleAdminUsers} element={CRUDAdminUser} />
-        <Route path={Paths.moduleAdminEmployees} element={CRUDAdminEmployee} />
+        <Route path={Paths.moduleAdminUsers} element={<CRUDAdminUser />} />
         <Route
-          path={Paths.moduleAdminEscorts}
-          element={TabManagerAdminEscort}
+          path={Paths.moduleAdminEmployees}
+          element={<CRUDAdminEmployee />}
         />
+        <Route path={Paths.moduleAdminEscorts}>
+          <Route path={":id"} element={<DetailViewEscort />} />
+          <Route index element={<TabManagerAdminEscort />} />
+        </Route>
         <Route
-          path={`${Paths.moduleAdminEscorts}:id`}
-          element={DetailViewEscort}
+          path={Paths.moduleAdminCompanies}
+          element={<CRUDAdminCompany />}
         />
-        <Route path={Paths.moduleAdminCompanies} element={CRUDAdminCompany} />
       </Routes>
     </Drawer>
   );

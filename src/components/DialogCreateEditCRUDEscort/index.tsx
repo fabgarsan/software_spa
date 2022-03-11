@@ -11,7 +11,7 @@ import {
   FormHelperText,
 } from "@material-ui/core";
 import { useForm, Controller } from "react-hook-form";
-import { BloodType, Escort, EscortCategory, GenderType } from "@dbTypes/index";
+import { BloodType, Escort, EscortCategory, GenderType } from "../../dto/index";
 import {
   DialogCreateEditBase,
   DialogCreateEditCRUDFormExtendedUser,

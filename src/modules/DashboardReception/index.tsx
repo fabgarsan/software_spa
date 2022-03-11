@@ -54,15 +54,15 @@ const DashboardReception: React.FunctionComponent = () => {
       <Routes>
         <Route
           path={Paths.moduleReceptionSingIn}
-          element={SignInControlContainer}
+          element={<SignInControlContainer />}
         />
         <Route
           path={Paths.moduleReceptionSingOut}
-          element={SignOutControlContainer}
+          element={<SignOutControlContainer />}
         />
         <Route
           path={Paths.moduleReceptionSingOutInLogBook}
-          element={SignInOutControlLogBookContainer}
+          element={<SignInOutControlLogBookContainer />}
         />
       </Routes>
     </Drawer>

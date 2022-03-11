@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Box, TextField } from "@material-ui/core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
-import { BloodType, GenderType } from "@dbTypes/index";
+import { BloodType, GenderType } from "../../dto/index";
 
 interface IDScannerProp {
   children: React.ReactNode;

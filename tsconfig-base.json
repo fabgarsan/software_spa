@@ -39,9 +39,9 @@
         "src/clients/*",
         "src/clients/*/index"
       ],
-      "@dbTypes/*": [
-        "src/dbTypes/*",
-        "src/dbTypes/*/index"
+      "@dto/*": [
+        "src/dto/*",
+        "src/dto/*/index"
       ],
       "@hoc/*": [
         "src/hoc/*",

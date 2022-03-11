@@ -11,7 +11,7 @@ import {
 } from "@material-ui/core";
 import { Control, Controller, DeepMap, FieldError } from "react-hook-form";
 import { FORM_FIELDS, diffDates, FORMATS } from "@utils/index";
-import { ExtendedUser } from "@dbTypes/index";
+import { ExtendedUser } from "../../dto/index";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
 import { KeyboardDatePicker } from "@material-ui/pickers";
 

@@ -1,4 +1,4 @@
-import { ExtendedUser } from "@dbTypes/index";
+import { ExtendedUser } from ".//index";
 
 export interface EscortService {
   id: number;

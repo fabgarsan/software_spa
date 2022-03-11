@@ -6,7 +6,7 @@ import {
   FormGroup,
   Typography,
 } from "@material-ui/core";
-import { EscortService } from "@dbTypes/index";
+import { EscortService } from "../../dto/index";
 
 interface DetailViewEscortServicesProps {
   services: EscortService[];

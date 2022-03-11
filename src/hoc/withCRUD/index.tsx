@@ -19,7 +19,7 @@ import {
   UI,
   TABLE_PAGINATOR,
 } from "@utils/index";
-import { AxiosResponseListPaginationData } from "@dbTypes/common";
+import { AxiosResponseListPaginationData } from "../../dto/common";
 import NoViewDisplayAllowed from "@components/NoViewDisplayAllowed";
 import {
   reducerPagination,
@@ -323,7 +323,7 @@ const index = <ElementInterface,>(
                   Boolean(fetchMethod)
                 }
                 viewUrl={viewUrl}
-                canView={permissions.VIEW && Boolean(viewUrl)}
+                canView={permissions.VIEW}
                 canDelete={permissions.DELETE && Boolean(deleteMethod)}
                 list={paginatorState.list}
                 onOpenDelete={(deleteMethod && handleOnOpenDelete) || undefined}

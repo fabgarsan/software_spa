@@ -67,9 +67,9 @@ const TableGenericCRUD = <DataTableInterface,>({
   canDelete,
   canEdit,
   canView,
-  viewUrl,
   onOpenEdit,
   onOpenDelete,
+  viewUrl,
 }: TableGenericProps<DataTableInterface>) => {
   const classes = useStyles();
   const navigate = useNavigate();
@@ -78,7 +78,6 @@ const TableGenericCRUD = <DataTableInterface,>({
       return { ...a, [b.field]: b };
     }, {});
   const headerFields = headers.map((header) => header.field);
-
   const renderHeaders = () => {
     return headers.map((header) => {
       const fieldName = setIfNotString(header.field);
@@ -203,7 +202,10 @@ const TableGenericCRUD = <DataTableInterface,>({
                     color="inherit"
                     aria-label="view"
                     className={classes.tableCellIcon}
-                    onClick={() => navigate(`${viewUrl}${row[idField]}`)}
+                    onClick={() =>
+                      (viewUrl && navigate(`${viewUrl}${row[idField]}`)) ||
+                      navigate(`${row[idField]}`)
+                    }
                     edge="start"
                   >
                     <FontAwesomeIcon icon={["fal", "eye"]} size="xs" />

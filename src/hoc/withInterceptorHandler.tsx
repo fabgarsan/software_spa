@@ -1,13 +1,19 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect, useCallback, Suspense } from "react";
 import { AxiosError } from "axios";
 import { mainAxiosClientManager } from "@clients/axios";
 import { useAuth, useNotifications } from "@hooks/index";
-import { Notify, FormSignIn, LoadingOverlay } from "@components/index";
+import {
+  Notify,
+  FormSignIn,
+  LoadingOverlay,
+  BackdropLoading,
+} from "@components/index";
 import { theme } from "@theme/index";
 import { ThemeProvider } from "@material-ui/core/styles";
 import { camelizeKeys, decamelizeKeys } from "humps";
+import { BrowserRouter } from "react-router-dom";
 
-// https://morioh.com/p/8e8b33c25ea1 for camelize humps
+const { client, removeToken } = mainAxiosClientManager;
 
 type WithInterceptorHandlerProps = {
   loading?: boolean;
@@ -22,48 +28,59 @@ const withInterceptorHandler = <P extends WithInterceptorHandlerProps>(
 ) => {
   return (props: Omit<P, keyof WithInterceptorHandlerProps>) => {
     const { createErrorNotification } = useNotifications();
+
     const {
       auth: { isAuthenticated, error: authError },
       logIn,
       setIsNotAuthenticated,
     } = useAuth();
+
     const handleResponseError = useCallback(
       (error: AxiosError<DjangoResponseDataError>) => {
         const { response, message } = error;
-        if (response) {
-          const {
-            status,
-            data: { detail: errorDetail },
-          } = response;
-          switch (status) {
-            case 400:
-              if (errorDetail) {
-                createErrorNotification(errorDetail);
-              }
-              break;
-            case 401:
-              setIsNotAuthenticated();
-              createErrorNotification(errorDetail);
-              mainAxiosClientManager.removeToken();
-              break;
-            case 403:
-              createErrorNotification(errorDetail);
-              break;
-            case 500:
-              if (message) alert(message);
-              break;
-            default:
-              if (errorDetail) {
-                createErrorNotification(errorDetail);
-              }
-              console.log(`ERROR ${status}`, errorDetail);
-              break;
-          }
-        } else if (message) {
-          alert(message);
-        } else {
-          console.log("FUE OTRO ERROR", error);
+
+        if (!response) {
+          return (
+            (message && alert(message)) || console.log("ANOTHER ERROR", error)
+          );
         }
+
+        const errorResponseMapper: Record<
+          number,
+          (error: string, status?: number) => void
+        > = {
+          400: (errorDetail: string) => createErrorNotification(errorDetail),
+          401: (errorDetail: string) => {
+            setIsNotAuthenticated();
+            createErrorNotification(errorDetail);
+            removeToken();
+          },
+          403: (errorDetail: string) => {
+            createErrorNotification(errorDetail);
+          },
+          404: (errorDetail: string) => {
+            createErrorNotification(errorDetail);
+          },
+          500: (errorDetail: string) => {
+            createErrorNotification(errorDetail);
+          },
+          0: (errorDetail: string, status) => {
+            if (errorDetail) createErrorNotification(errorDetail);
+            console.log(`Error ${status}`, errorDetail);
+          },
+        };
+
+        const {
+          status,
+          data: { detail: errorDetail },
+        } = response;
+
+        let errorResponseFunction = errorResponseMapper[status];
+
+        if (errorResponseFunction)
+          errorResponseFunction = errorResponseMapper[0];
+
+        return errorResponseFunction && errorResponseFunction(errorDetail);
       },
       [createErrorNotification, setIsNotAuthenticated]
     );
@@ -78,8 +95,8 @@ const withInterceptorHandler = <P extends WithInterceptorHandlerProps>(
     }, []);
 
     useEffect(() => {
-      mainAxiosClientManager.client.defaults.params = {};
-      mainAxiosClientManager.client.interceptors.request.use(
+      client.defaults.params = {};
+      client.interceptors.request.use(
         (request) => {
           const { params, data } = request;
           let newRequest = { ...request };
@@ -98,14 +115,12 @@ const withInterceptorHandler = <P extends WithInterceptorHandlerProps>(
           throw camelizeKeys(error);
         }
       );
-      mainAxiosClientManager.client.interceptors.response.use(
+      client.interceptors.response.use(
         (response) => {
           const { data, headers } = response;
-          let newResponse = { ...response };
-          if (data && headers["content-type"] === "application/json") {
-            newResponse = { ...newResponse, data: camelizeKeys(data) };
-          }
-          return newResponse;
+          if (data && headers["content-type"] === "application/json")
+            return { ...response, data: camelizeKeys(data) };
+          return response;
         },
         async (error: AxiosError<DjangoResponseDataError>) => {
           await handleResponseError(error);
@@ -119,11 +134,13 @@ const withInterceptorHandler = <P extends WithInterceptorHandlerProps>(
       <ThemeProvider theme={theme}>
         <LoadingOverlay />
         <Notify />
-        {!isAuthenticated ? (
-          <FormSignIn logIn={logIn} errors={authError} />
-        ) : (
-          <WrappedComponent {...(props as P)} />
-        )}
+        <BrowserRouter>
+          <Suspense fallback={<BackdropLoading isOpen />}>
+            {(!isAuthenticated && (
+              <FormSignIn logIn={logIn} errors={authError} />
+            )) || <WrappedComponent {...(props as P)} />}
+          </Suspense>
+        </BrowserRouter>
       </ThemeProvider>
     );
   };

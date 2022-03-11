@@ -2,7 +2,6 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { loadUser, logIn, logOut } from "@api/authentication";
 import { RootState } from "@stores/store";
 import { createNotification } from "@stores/notificationSlice";
-import { fetchPermissionCurrentUserThunk } from "@stores/permissionSlice";
 import { mainAxiosClientManager } from "@clients/index";
 
 import { trackPromise } from "react-promise-tracker";

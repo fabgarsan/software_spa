@@ -4,6 +4,13 @@ import { UseFormSetError, UseFormSetValue } from "react-hook-form";
 
 type UnitOfTime = "years" | "months" | "hours" | "minutes";
 
+const unitOfTimeMapper: Record<UnitOfTime, string> = {
+  hours: "Horas",
+  years: "Años",
+  months: "Meses",
+  minutes: "Minutos",
+};
+
 export const diffDates = (
   latestDate: Date,
   oldestDate: Date,
@@ -12,24 +19,7 @@ export const diffDates = (
   const momentLatest = moment(latestDate);
   const momentOldest = moment(oldestDate);
   const diff = moment(momentLatest).diff(moment(momentOldest), unitOfTime);
-  let unitOfTimeText = "";
-  switch (unitOfTime) {
-    case "years":
-      unitOfTimeText = "Años";
-      break;
-    case "months":
-      unitOfTimeText = "Meses";
-      break;
-    case "hours":
-      unitOfTimeText = "Horas";
-      break;
-    case "minutes":
-      unitOfTimeText = "Minutos";
-      break;
-    default:
-      unitOfTimeText = "Horas";
-  }
-  return `${diff} ${unitOfTimeText}`;
+  return `${diff} ${unitOfTimeMapper[unitOfTime]}`;
 };
 
 export const setFormError = <T>(

@@ -9,22 +9,22 @@ import {
 } from "@api/index";
 import { trackPromise } from "react-promise-tracker";
 
-type AllowedMethods =
-  | "create"
-  | "delete"
-  | "fetchAll"
-  | "fetchAllPagination"
-  | "edit"
-  | "fetch";
+// type AllowedMethods =
+//   | "create"
+//   | "delete"
+//   | "fetchAll"
+//   | "fetchAllPagination"
+//   | "edit"
+//   | "fetch";
 
-interface Method {
-  method: AllowedMethods;
-  trackPromise?: boolean;
-}
-
-interface Config {
-  methods: Method[];
-}
+// interface Method {
+//   method: AllowedMethods;
+//   trackPromise?: boolean;
+// }
+//
+// interface Config {
+//   methods: Method[];
+// }
 
 // const getConfiguration = (
 //   lookedMethod: AllowedMethods,
@@ -43,7 +43,7 @@ const setTrackPromise = <T>(
 // const hasConfig = (method: AllowedMethods, config: Config): boolean =>
 //   config.methods.map((m) => m.method).includes(method);
 
-const useCRUDGenericApiCall = <T>(url: string, config?: Config) => {
+const useCRUDGenericApiCall = <T>(url: string) => {
   // const deleteConfig = getConfiguration("delete", config);
   // const fetchConfig = getConfiguration("fetch", config);
   // const createConfig = getConfiguration("create", config);

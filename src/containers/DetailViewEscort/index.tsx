@@ -6,10 +6,13 @@ import {
   DetailViewEscortServices,
   DetailViewEscortImageList,
 } from "@components/index";
-import { Escort, EscortService, EscortImage } from "@dbTypes/escorts";
+import { Escort, EscortService, EscortImage } from "../../dto/escorts";
 import { useParams } from "react-router-dom";
-import { uploadEscortImage } from "@api/user";
-import { addEscortService, removeEscortService } from "@api/index";
+import {
+  uploadEscortImage,
+  addEscortService,
+  removeEscortService,
+} from "@api/user";
 
 const DetailViewEscort: React.FunctionComponent = () => {
   const { id } = useParams();
@@ -94,6 +97,7 @@ const DetailViewEscort: React.FunctionComponent = () => {
     await editImage(imageId, { publishedWeb });
     await fetchImages();
   };
+  if (!instanceData) return <></>;
   return (
     <DetailViewGeneric
       canView
