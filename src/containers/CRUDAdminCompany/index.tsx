@@ -1,6 +1,6 @@
 import React from "react";
 import { withCRUD } from "@hoc/index";
-import { Company } from "@dbTypes/index";
+import { Company } from "../../dto/index";
 import {
   TableCRUDCompany,
   DialogCreateEditCRUDCompany,

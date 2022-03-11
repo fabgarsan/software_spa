@@ -1,6 +1,6 @@
 import React from "react";
 import { withCRUD } from "@hoc/index";
-import { ExtendedUser } from "@dbTypes/index";
+import { ExtendedUser } from "../../dto/index";
 import {
   TableCRUDEmployee,
   DialogCreateEditCRUDEmployee,

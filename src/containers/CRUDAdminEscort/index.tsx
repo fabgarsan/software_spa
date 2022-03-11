@@ -1,12 +1,11 @@
 import React from "react";
 import { withCRUD } from "@hoc/index";
-import { Escort } from "@dbTypes/escorts";
+import { Escort } from "../../dto/escorts";
 import { TableCRUDEscort, DialogCreateEditCRUDEscort } from "@components/index";
 import {
   INSTANCES_NAMES,
   API_ROUTES,
   PERMISSION_INSTANCES,
-  Paths,
 } from "@utils/index";
 
 import { useCRUDGenericApiCall } from "@hooks/index";
@@ -32,7 +31,6 @@ const CRUDAdminEscort: React.FunctionComponent = () => {
       createMethod={create}
       editMethod={edit}
       fetchAllParams={{ extended_user__user_type: "A" }}
-      viewUrl={Paths.moduleAdminEscorts}
       hasSearch
       withTitle={false}
     />

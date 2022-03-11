@@ -26,7 +26,7 @@ const plugins = [
         "@api": "./src/api",
         "@components": "./src/components",
         "@containers": "./src/containers",
-        "@dbTypes": "./src/dbTypes",
+        "@dto": "./src/dto",
         "@hooks": "./src/hooks",
         "@stores": "./src/stores",
         "@theme": "./src/theme",

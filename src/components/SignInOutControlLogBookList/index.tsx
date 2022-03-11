@@ -1,5 +1,5 @@
 import React from "react";
-import { SignInControl } from "@dbTypes/index";
+import { SignInControl } from "../../dto/index";
 import {
   Typography,
   List,

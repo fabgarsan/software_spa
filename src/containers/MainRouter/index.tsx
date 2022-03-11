@@ -1,8 +1,7 @@
-import React, { Suspense } from "react";
+import React from "react";
 import { Paths } from "@utils/index";
 
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import { BackdropLoading } from "@components/index";
+import { Routes, Route } from "react-router-dom";
 
 const DashboardAdmin = React.lazy(() => import("@modules/DashboardAdmin"));
 const DashboardReception = React.lazy(
@@ -12,15 +11,11 @@ const DashboardRoot = React.lazy(() => import("@modules/DashboardRoot"));
 
 const MainRouter: React.FunctionComponent = () => {
   return (
-    <Router>
-      <Suspense fallback={<BackdropLoading isOpen />}>
-        <Switch>
-          <Route path={Paths.moduleAdmin} component={DashboardAdmin} />
-          <Route path={Paths.moduleReception} component={DashboardReception} />
-          <Route path={Paths.moduleRoot} component={DashboardRoot} />
-        </Switch>
-      </Suspense>
-    </Router>
+    <Routes>
+      <Route path={Paths.moduleAdmin} element={<DashboardAdmin />} />
+      <Route path={Paths.moduleReception} element={<DashboardReception />} />
+      <Route path={Paths.moduleRoot} element={<DashboardRoot />} />
+    </Routes>
   );
 };
 

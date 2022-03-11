@@ -1,16 +1,26 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect, useCallback, Suspense } from "react";
 import { AxiosError } from "axios";
 import { mainAxiosClientManager } from "@clients/axios";
 import { useAuth, useNotifications } from "@hooks/index";
-import { Notify, FormSignIn, LoadingOverlay } from "@components/index";
+import {
+  Notify,
+  FormSignIn,
+  LoadingOverlay,
+  BackdropLoading,
+} from "@components/index";
 import { theme } from "@theme/index";
 import { ThemeProvider } from "@material-ui/core/styles";
 import { camelizeKeys, decamelizeKeys } from "humps";
+import { BrowserRouter } from "react-router-dom";
 
-// https://morioh.com/p/8e8b33c25ea1 for camelize humps
+const { client, removeToken } = mainAxiosClientManager;
 
 type WithInterceptorHandlerProps = {
   loading?: boolean;
+};
+
+type DjangoResponseDataError = {
+  detail: string;
 };
 
 const withInterceptorHandler = <P extends WithInterceptorHandlerProps>(
@@ -18,43 +28,59 @@ const withInterceptorHandler = <P extends WithInterceptorHandlerProps>(
 ) => {
   return (props: Omit<P, keyof WithInterceptorHandlerProps>) => {
     const { createErrorNotification } = useNotifications();
-    const { auth, logIn, setIsNotAuthenticated } = useAuth();
+
+    const {
+      auth: { isAuthenticated, error: authError },
+      logIn,
+      setIsNotAuthenticated,
+    } = useAuth();
+
     const handleResponseError = useCallback(
-      (error: AxiosError) => {
+      (error: AxiosError<DjangoResponseDataError>) => {
         const { response, message } = error;
-        if (response) {
-          switch (response.status) {
-            case 400:
-              if (response.data.detail) {
-                createErrorNotification(response.data.detail);
-              }
-              break;
-            case 401:
-              setIsNotAuthenticated();
-              createErrorNotification(response.data.detail);
-              mainAxiosClientManager.removeToken();
-              break;
-            case 403:
-              createErrorNotification(response.data.detail);
-              break;
-            case 500:
-              if (message) alert(message);
-              break;
-            default:
-              if (response.data.detail) {
-                createErrorNotification(response.data.detail);
-              }
-              console.log(
-                `ERROR ${response?.status}`,
-                error.response?.data.detail
-              );
-              break;
-          }
-        } else if (message) {
-          alert(message);
-        } else {
-          console.log("FUE OTRO ERROR", error);
+
+        if (!response) {
+          return (
+            (message && alert(message)) || console.log("ANOTHER ERROR", error)
+          );
         }
+
+        const errorResponseMapper: Record<
+          number,
+          (error: string, status?: number) => void
+        > = {
+          400: (errorDetail: string) => createErrorNotification(errorDetail),
+          401: (errorDetail: string) => {
+            setIsNotAuthenticated();
+            createErrorNotification(errorDetail);
+            removeToken();
+          },
+          403: (errorDetail: string) => {
+            createErrorNotification(errorDetail);
+          },
+          404: (errorDetail: string) => {
+            createErrorNotification(errorDetail);
+          },
+          500: (errorDetail: string) => {
+            createErrorNotification(errorDetail);
+          },
+          0: (errorDetail: string, status) => {
+            if (errorDetail) createErrorNotification(errorDetail);
+            console.log(`Error ${status}`, errorDetail);
+          },
+        };
+
+        const {
+          status,
+          data: { detail: errorDetail },
+        } = response;
+
+        let errorResponseFunction = errorResponseMapper[status];
+
+        if (errorResponseFunction)
+          errorResponseFunction = errorResponseMapper[0];
+
+        return errorResponseFunction && errorResponseFunction(errorDetail);
       },
       [createErrorNotification, setIsNotAuthenticated]
     );
@@ -69,18 +95,19 @@ const withInterceptorHandler = <P extends WithInterceptorHandlerProps>(
     }, []);
 
     useEffect(() => {
-      mainAxiosClientManager.client.defaults.params = {};
-      mainAxiosClientManager.client.interceptors.request.use(
+      client.defaults.params = {};
+      client.interceptors.request.use(
         (request) => {
+          const { params, data } = request;
+          let newRequest = { ...request };
           if (request.headers["Content-Type"] === "multipart/form-data")
             return request;
-          if (request.params) {
-            request.params = decamelizeKeys(request.params);
-          }
-          if (request.data) {
-            request.data = decamelizeKeys(request.data);
-          }
-          return request;
+          if (params)
+            newRequest = { ...newRequest, params: decamelizeKeys(params) };
+
+          if (data) newRequest = { ...newRequest, data: decamelizeKeys(data) };
+
+          return newRequest;
         },
         async (error) => {
           await handleRequestError(error);
@@ -88,34 +115,32 @@ const withInterceptorHandler = <P extends WithInterceptorHandlerProps>(
           throw camelizeKeys(error);
         }
       );
-      mainAxiosClientManager.client.interceptors.response.use(
+      client.interceptors.response.use(
         (response) => {
-          if (
-            response.data &&
-            response.headers["content-type"] === "application/json"
-          ) {
-            response.data = camelizeKeys(response.data);
-          }
+          const { data, headers } = response;
+          if (data && headers["content-type"] === "application/json")
+            return { ...response, data: camelizeKeys(data) };
           return response;
         },
-        async (error: any) => {
+        async (error: AxiosError<DjangoResponseDataError>) => {
           await handleResponseError(error);
           // eslint-disable-next-line @typescript-eslint/no-throw-literal
           throw camelizeKeys(error);
         }
       );
     }, [handleResponseError, handleRequestError]);
-    // }
 
     return (
       <ThemeProvider theme={theme}>
         <LoadingOverlay />
         <Notify />
-        {!auth.isAuthenticated ? (
-          <FormSignIn logIn={logIn} errors={auth.error} />
-        ) : (
-          <WrappedComponent {...(props as P)} />
-        )}
+        <BrowserRouter>
+          <Suspense fallback={<BackdropLoading isOpen />}>
+            {(!isAuthenticated && (
+              <FormSignIn logIn={logIn} errors={authError} />
+            )) || <WrappedComponent {...(props as P)} />}
+          </Suspense>
+        </BrowserRouter>
       </ThemeProvider>
     );
   };

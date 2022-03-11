@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { fetchCities } from "@api/index";
-import { CitySearch } from "@dbTypes/geography";
+import { CitySearch } from "../../dto/geography";
 import { useDebounce } from "@hooks/index";
 import { Box, CircularProgress } from "@material-ui/core";
 import { FORM_FIELDS } from "@utils/constants";
@@ -23,8 +23,9 @@ const AutocompleteCities = ({
 }: AutocompleteCitiesProps) => {
   const [cities, setCities] = useState<CitySearch[]>([]);
   const [search, setSearch] = useState("");
-  const [selectedOption, setSelectedOption] =
-    useState<CityOption | undefined>(initialValue);
+  const [selectedOption, setSelectedOption] = useState<CityOption | undefined>(
+    initialValue
+  );
   const debouncedSearchTerm = useDebounce(search, 1000);
   useEffect(() => {
     const getCities = async () => {

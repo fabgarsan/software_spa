@@ -1,4 +1,4 @@
-import { UserType } from "@dbTypes/users";
+import { UserType } from ".//users";
 
 export interface SignInControl {
   id: number;

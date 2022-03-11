@@ -6,7 +6,7 @@ import {
   FORMATS,
   PERMISSION_INSTANCES,
 } from "@utils/constants";
-import { SignInControl } from "@dbTypes/authentication";
+import { SignInControl } from "../../dto/authentication";
 import {
   CommonLayout,
   SignInOutControlLogBookFilter,
@@ -35,7 +35,9 @@ const SignInOutControlLogBookContainer = () => {
   }, [fetchAll]);
 
   const handleOnSearch = async () => {
-    const responseData = await fetchAll(state.params);
+    const responseData = await fetchAll(
+      state.params as Record<string, unknown>
+    );
     setData(responseData);
   };
 

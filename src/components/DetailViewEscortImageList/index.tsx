@@ -1,7 +1,7 @@
 import React from "react";
 import "react-image-crop/dist/ReactCrop.css";
 import { Box, Typography } from "@material-ui/core";
-import { EscortImage } from "@dbTypes/index";
+import { EscortImage } from "../../dto/index";
 import { Ratio } from "@components/ImageCropper";
 import { ImageCropper, DetailViewEscortImageListItem } from "@components/index";
 

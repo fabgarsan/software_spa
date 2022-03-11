@@ -39,9 +39,9 @@
         "src/clients/*",
         "src/clients/*/index"
       ],
-      "@dbTypes/*": [
-        "src/dbTypes/*",
-        "src/dbTypes/*/index"
+      "@dto/*": [
+        "src/dto/*",
+        "src/dto/*/index"
       ],
       "@hoc/*": [
         "src/hoc/*",
@@ -59,6 +59,7 @@
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noFallthroughCasesInSwitch": true,
+    "useUnknownInCatchVariables": false,
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,

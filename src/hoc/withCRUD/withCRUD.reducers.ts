@@ -9,7 +9,7 @@ export interface PaginatorState<L> {
   currentPage: number;
   next: string | null;
   previous: string | null;
-  params: { [name: string]: any };
+  params: Record<string, unknown>;
 }
 
 export type PaginationActions<L> =
