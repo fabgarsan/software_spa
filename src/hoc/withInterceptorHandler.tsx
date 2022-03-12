@@ -98,13 +98,12 @@ const withInterceptorHandler = <P extends WithInterceptorHandlerProps>(
       client.defaults.params = {};
       client.interceptors.request.use(
         (request) => {
-          const { params, data } = request;
+          const { params, data, headers = {} } = request;
+          if (headers["Content-Type"] === "multipart/form-data") return request;
+
           let newRequest = { ...request };
-          if (request.headers["Content-Type"] === "multipart/form-data")
-            return request;
           if (params)
             newRequest = { ...newRequest, params: decamelizeKeys(params) };
-
           if (data) newRequest = { ...newRequest, data: decamelizeKeys(data) };
 
           return newRequest;
