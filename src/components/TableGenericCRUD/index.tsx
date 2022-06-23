@@ -141,17 +141,19 @@ const TableGenericCRUD = <DataTableInterface,>({
                     scope="row"
                     style={cellConfig.style || {}}
                   >
-                    {cellConfig.isBoolean ? (
-                      <FontAwesomeIcon
-                        icon={[
-                          "fal",
-                          row[fieldName] ? "check-circle" : "times-circle",
-                        ]}
-                        size="lg"
-                      />
-                    ) : (
-                      row[fieldName]
-                    )}
+                    <>
+                      {cellConfig.isBoolean ? (
+                        <FontAwesomeIcon
+                          icon={[
+                            "fal",
+                            row[fieldName] ? "check-circle" : "times-circle",
+                          ]}
+                          size="lg"
+                        />
+                      ) : (
+                        row[fieldName]
+                      )}
+                    </>
                   </TableCell>
                 );
               })}

@@ -1,7 +1,6 @@
 import axios, { AxiosInstance } from "axios";
 
-const { REACT_APP_API_URL = "http://127.0.0.1:8000/interaluse2021" } =
-  process.env;
+import { API_URL } from "../enviromentalConstants.js";
 
 class AxiosClientManager {
   private static instance: AxiosClientManager;
@@ -67,6 +66,6 @@ class AxiosClientManager {
 }
 
 export const mainAxiosClientManager = AxiosClientManager.getInstance({
-  baseURL: REACT_APP_API_URL,
+  baseURL: API_URL,
   tokenName: "main_token",
 });

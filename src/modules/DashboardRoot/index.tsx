@@ -11,15 +11,15 @@ import axios from "axios";
 const DashboardRoot: React.FunctionComponent = () => {
   const navigate = useNavigate();
 
-  const downloadPDF = (pdf: string) => {
-    const linkSource = `data:application/pdf;base64,${pdf}`;
-    const downloadLink = document.createElement("a");
-    const fileName = "vct_illustration.pdf";
-
-    downloadLink.href = linkSource;
-    downloadLink.download = fileName;
-    downloadLink.click();
-  };
+  // const downloadPDF = (pdf: string) => {
+  //   const linkSource = `data:application/pdf;base64,${pdf}`;
+  //   const downloadLink = document.createElement("a");
+  //   const fileName = "vct_illustration.pdf";
+  //
+  //   downloadLink.href = linkSource;
+  //   downloadLink.download = fileName;
+  //   downloadLink.click();
+  // };
 
   const printPDF = (base64: string) => {
     printJS({ printable: base64, type: "pdf", base64: true });

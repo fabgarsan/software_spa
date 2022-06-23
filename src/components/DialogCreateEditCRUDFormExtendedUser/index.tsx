@@ -9,7 +9,7 @@ import {
   Select,
   TextField,
 } from "@material-ui/core";
-import { Control, Controller, DeepMap, FieldError } from "react-hook-form";
+import { Control, Controller, FieldErrors } from "react-hook-form";
 import { FORM_FIELDS, diffDates, FORMATS } from "@utils/index";
 import { ExtendedUser } from "../../dto/index";
 import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
@@ -17,7 +17,7 @@ import { KeyboardDatePicker } from "@material-ui/pickers";
 
 interface DialogCreateEditCRUDFormExtendedUserProps {
   control: Control<ExtendedUser>;
-  formErrors: DeepMap<ExtendedUser, FieldError>;
+  formErrors: FieldErrors<ExtendedUser>;
   showGender?: boolean;
 }
 

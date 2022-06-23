@@ -3,6 +3,7 @@ import { useCallback } from "react";
 // @ts-ignore
 const useYupValidationResolver = (validationSchema) =>
   useCallback(
+    // @ts-ignore
     async (data) => {
       try {
         const values = await validationSchema.validate(data, {

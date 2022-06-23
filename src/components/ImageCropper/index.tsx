@@ -79,7 +79,7 @@ const ImageCropper = ({ aspectRatios, saveMethod }: ImageCropperProps) => {
   const [selectedAspectRatio, setSelectedAspectRatio] = useState(
     Object.keys(aspectRatios)[0]
   );
-  const [upImg, setUpImg] = useState<ArrayBuffer | string | null>(null);
+  const [upImg, setUpImg] = useState<string | null>(null);
   const imgRef = useRef<HTMLImageElement | null>(null);
   const scaleX =
     (imgRef.current?.naturalWidth || 0) / (imgRef.current?.width || 1);
@@ -96,7 +96,9 @@ const ImageCropper = ({ aspectRatios, saveMethod }: ImageCropperProps) => {
     if (e.target.files && e.target.files.length > 0) {
       const reader = new FileReader();
       const file = e.target.files[0];
-      reader.addEventListener("load", () => setUpImg(reader.result));
+      reader.addEventListener("load", () =>
+        setUpImg(reader.result?.toString() || null)
+      );
       reader.readAsDataURL(file);
     }
   };
@@ -156,7 +158,6 @@ const ImageCropper = ({ aspectRatios, saveMethod }: ImageCropperProps) => {
             onImageLoaded={onLoad}
             onChange={(c) => setCrop(c)}
             onComplete={(c) => setCompletedCrop(c)}
-            // @ts-ignore
             src={upImg}
           />
           <Box display="flex" flexWrap="wrap">

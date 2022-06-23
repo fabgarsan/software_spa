@@ -36,7 +36,6 @@ export const setFormError = <T>(
 
 export const setFormValue = <T>(setValue: UseFormSetValue<T>, instance: T) => {
   Object.entries(instance).forEach(([key, value]) => {
-    // @ts-ignore
     setValue(key as keyof UseFormSetValue<T>, value);
   });
 };
