@@ -2,8 +2,8 @@ const plugins = [
   [
     "babel-plugin-import",
     {
-      libraryName: "@material-ui/core",
-      libraryDirectory: "esm",
+      libraryName: "@mui/material",
+      libraryDirectory: "",
       camel2DashComponentName: false,
     },
     "core",
@@ -11,8 +11,8 @@ const plugins = [
   [
     "babel-plugin-import",
     {
-      libraryName: "@material-ui/icons",
-      libraryDirectory: "esm",
+      libraryName: "@mui/icons-material",
+      libraryDirectory: "",
       camel2DashComponentName: false,
     },
     "icons",

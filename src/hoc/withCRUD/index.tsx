@@ -341,12 +341,12 @@ const index = <ElementInterface,>(
                   rowsPerPage={paginatorState.limit}
                   onRowsPerPageChange={handleChangeRowsPerPage}
                   onPageChange={handleChangePage}
-                  // nextIconButtonText={{
-                  //   text: TABLE_PAGINATOR.NEXT_ICON_BUTTON_TEXT,
-                  // }}
-                  // backIconButtonText={{
-                  //   text: TABLE_PAGINATOR.BACK_ICON_BUTTON_TEXT,
-                  // }}
+                  nextIconButtonProps={{
+                    title: TABLE_PAGINATOR.NEXT_ICON_BUTTON_TEXT,
+                  }}
+                  backIconButtonProps={{
+                    title: TABLE_PAGINATOR.BACK_ICON_BUTTON_TEXT,
+                  }}
                 />
               )}
             </Box>

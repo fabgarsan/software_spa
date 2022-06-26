@@ -14,9 +14,9 @@ loadIcons();
 const App: React.FunctionComponent = () => {
   return (
     <MuiPickersUtilsProvider utils={MomentUtils}>
-      {/*<React.StrictMode>*/}
-      <MainRouter />
-      {/*</React.StrictMode>*/}
+      <React.StrictMode>
+        <MainRouter />
+      </React.StrictMode>
     </MuiPickersUtilsProvider>
   );
 };
