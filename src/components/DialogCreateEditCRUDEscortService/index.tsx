@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Button from "@mui/material/Button";
 import { TextField, DialogActions, Box, Grid } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
-import { EscortService } from "../../dto/index";
+import { EscortService } from "@dto/escorts";
 import { DialogCreateEditBase } from "@components/index";
 import {
   DIALOG_MESSAGES,

@@ -1,5 +1,5 @@
 import React, { useReducer } from "react";
-import { Escort } from "../../dto/index";
+import { Escort } from "@dto/escorts";
 import {
   API_ROUTES,
   CONTAINERS,

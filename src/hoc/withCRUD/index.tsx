@@ -19,7 +19,7 @@ import {
   UI,
   TABLE_PAGINATOR,
 } from "@utils/index";
-import { AxiosResponseListPaginationData } from "../../dto/common";
+import { AxiosResponseListPaginationData } from "@dto/common";
 import NoViewDisplayAllowed from "@components/NoViewDisplayAllowed";
 import {
   reducerPagination,

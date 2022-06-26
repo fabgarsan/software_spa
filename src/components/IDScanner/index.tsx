@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Theme } from "@mui/material/styles";
 import createStyles from "@mui/styles/createStyles";
 import makeStyles from "@mui/styles/makeStyles";
-import { BloodType, GenderType } from "../../dto/index";
+import { BloodType, GenderType } from "@dto/users";
 
 interface IDScannerProp {
   children: React.ReactNode;

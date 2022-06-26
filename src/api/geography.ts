@@ -1,7 +1,7 @@
 import { AxiosResponse } from "axios";
 import { mainAxiosClientManager } from "@clients/axios";
 import { API_ROUTES } from "@utils/constants";
-import { CitySearch } from "../dto/index";
+import { CitySearch } from "@dto/geography";
 
 const { client } = mainAxiosClientManager;
 

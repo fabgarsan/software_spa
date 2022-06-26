@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import TextField from "@mui/material/TextField";
 import { fetchCities } from "@api/index";
-import { CitySearch } from "../../dto/geography";
+import { CitySearch } from "@dto/geography";
 import { useDebounce } from "@hooks/index";
 import { CircularProgress, Autocomplete } from "@mui/material";
 import { FORM_FIELDS } from "@utils/constants";

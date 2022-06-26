@@ -1,5 +1,5 @@
 import React from "react";
-import { Escort } from "../../dto/escorts";
+import { Escort } from "@dto/escorts";
 import { Grid, Typography, Box } from "@mui/material";
 import { INSTANCES_NAMES } from "@utils/constants";
 

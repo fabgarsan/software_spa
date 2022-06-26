@@ -1,6 +1,6 @@
 import React from "react";
 import { withCRUD } from "@hoc/index";
-import { Escort } from "../../dto/escorts";
+import { Escort } from "@dto/escorts";
 import { TableCRUDEscort, DialogCreateEditCRUDEscort } from "@components/index";
 import {
   INSTANCES_NAMES,

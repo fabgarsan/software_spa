@@ -4,7 +4,7 @@ import {
   useCRUDGenericApiCall,
   useNotifications,
 } from "@hooks/index";
-import { Escort } from "../../dto/escorts";
+import { Escort } from "@dto/escorts";
 import {
   API_ROUTES,
   CONTAINERS,

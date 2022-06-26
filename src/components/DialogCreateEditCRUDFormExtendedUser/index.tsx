@@ -11,7 +11,7 @@ import {
 } from "@mui/material";
 import { Control, Controller, FieldErrors } from "react-hook-form";
 import { FORM_FIELDS, diffDates, FORMATS } from "@utils/index";
-import { ExtendedUser } from "../../dto/index";
+import { ExtendedUser } from "@dto/users";
 import { Theme } from "@mui/material/styles";
 import createStyles from "@mui/styles/createStyles";
 import makeStyles from "@mui/styles/makeStyles";

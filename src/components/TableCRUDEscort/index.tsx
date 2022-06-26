@@ -1,6 +1,6 @@
 import React from "react";
 import { CRUDDefaultTableProps } from "@hoc/index";
-import { Escort } from "../../dto/index";
+import { Escort } from "@dto/escorts";
 import { TableGenericCRUD } from "@components/index";
 import { TABLE_HEADERS } from "@utils/index";
 

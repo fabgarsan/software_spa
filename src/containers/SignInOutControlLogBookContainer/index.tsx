@@ -6,7 +6,7 @@ import {
   FORMATS,
   PERMISSION_INSTANCES,
 } from "@utils/constants";
-import { SignInControl } from "../../dto/authentication";
+import { SignInControl } from "@dto/authentication";
 import {
   CommonLayout,
   SignInOutControlLogBookFilter,

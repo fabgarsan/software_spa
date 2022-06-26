@@ -6,7 +6,7 @@ import {
   DetailViewEscortServices,
   DetailViewEscortImageList,
 } from "@components/index";
-import { Escort, EscortService, EscortImage } from "../../dto/escorts";
+import { Escort, EscortService, EscortImage } from "@dto/escorts";
 import { useParams } from "react-router-dom";
 import {
   uploadEscortImage,

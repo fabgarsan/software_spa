@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Button from "@mui/material/Button";
 import { DialogActions, Box, Grid } from "@mui/material";
 import { useForm } from "react-hook-form";
-import { BloodType, ExtendedUser, GenderType } from "../../dto/index";
+import { BloodType, ExtendedUser, GenderType } from "@dto/users";
 import {
   DialogCreateEditBase,
   DialogCreateEditCRUDFormExtendedUser,

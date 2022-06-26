@@ -1,6 +1,6 @@
 import React from "react";
 import { withCRUD } from "@hoc/index";
-import { EscortCategory } from "../../dto/escorts";
+import { EscortCategory } from "@dto/escorts";
 import {
   DialogCreateEditCRUDEscortCategory,
   TableCRUDEscortCategory,

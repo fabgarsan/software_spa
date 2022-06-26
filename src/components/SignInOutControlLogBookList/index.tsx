@@ -1,5 +1,5 @@
 import React from "react";
-import { SignInControl } from "../../dto/index";
+import { SignInControl } from "@dto/authentication";
 import { Typography, List, ListItem, ListItemText, Grid } from "@mui/material";
 import { INSTANCES_NAMES, diffDates } from "@utils/index";
 import moment from "moment";
