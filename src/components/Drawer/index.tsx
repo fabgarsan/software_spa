@@ -1,19 +1,21 @@
 import React from "react";
-import clsx from "clsx";
-import { useTheme, Theme } from "@mui/material/styles";
-import createStyles from "@mui/styles/createStyles";
-import makeStyles from "@mui/styles/makeStyles";
-import Drawer from "@mui/material/Drawer";
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import List from "@mui/material/List";
-import CssBaseline from "@mui/material/CssBaseline";
-import Typography from "@mui/material/Typography";
-import Divider from "@mui/material/Divider";
-import IconButton from "@mui/material/IconButton";
-import ListItem from "@mui/material/ListItem";
-import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
+import { Theme, styled } from "@mui/material/styles";
+import {
+  IconButton,
+  ListItemIcon,
+  ListItem,
+  ListItemText,
+  Toolbar,
+  List,
+  Typography,
+  Divider,
+  ListItemButton,
+  CSSObject,
+  Drawer as MuiDrawer,
+  Box,
+  CssBaseline,
+} from "@mui/material";
+import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSelector, useDispatch } from "react-redux";
 import { drawerState, changeOpenState } from "@stores/drawerSlices";
@@ -23,73 +25,83 @@ import { useNavigate } from "react-router-dom";
 
 import { Paths, DRAWER } from "@utils/index";
 import { NoViewDisplayAllowed } from "@components/index";
-import { Box } from "@mui/material";
+import { createStyles, makeStyles } from "@mui/styles";
 
 const drawerWidth = 240;
 
+const openedMixin = (theme: Theme): CSSObject => ({
+  width: drawerWidth,
+  transition: theme.transitions.create("width", {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.enteringScreen,
+  }),
+  overflowX: "hidden",
+});
+
+const closedMixin = (theme: Theme): CSSObject => ({
+  transition: theme.transitions.create("width", {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  overflowX: "hidden",
+  width: `calc(${theme.spacing(7)} + 1px)`,
+  [theme.breakpoints.up("sm")]: {
+    width: `calc(${theme.spacing(8)} + 1px)`,
+  },
+});
+
+// @ts-ignore
+const DrawerHeader = styled("div")(({ theme }) => ({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "flex-end",
+  padding: theme.spacing(0, 1),
+  ...theme.mixins.toolbar,
+}));
+
+interface AppBarProps extends MuiAppBarProps {
+  open?: boolean;
+}
+
+const AppBar = styled(MuiAppBar, {
+  shouldForwardProp: (prop) => prop !== "open",
+})<AppBarProps>(({ theme, open }) => ({
+  zIndex: theme.zIndex.drawer + 1,
+  transition: theme.transitions.create(["width", "margin"], {
+    easing: theme.transitions.easing.sharp,
+    duration: theme.transitions.duration.leavingScreen,
+  }),
+  ...(open && {
+    marginLeft: drawerWidth,
+    width: `calc(100% - ${drawerWidth}px)`,
+    transition: theme.transitions.create(["width", "margin"], {
+      easing: theme.transitions.easing.sharp,
+      duration: theme.transitions.duration.enteringScreen,
+    }),
+  }),
+}));
+
+const Drawer = styled(MuiDrawer, {
+  shouldForwardProp: (prop) => prop !== "open",
+})(({ theme, open }) => ({
+  width: drawerWidth,
+  flexShrink: 0,
+  whiteSpace: "nowrap",
+  boxSizing: "border-box",
+  ...(open && {
+    ...openedMixin(theme),
+    "& .MuiDrawer-paper": openedMixin(theme),
+  }),
+  ...(!open && {
+    ...closedMixin(theme),
+    "& .MuiDrawer-paper": closedMixin(theme),
+  }),
+}));
+
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
-    root: {
-      display: "flex",
-    },
-    appBar: {
-      zIndex: theme.zIndex.drawer + 1,
-      transition: theme.transitions.create(["width", "margin"], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
-    },
-    appBarShift: {
-      marginLeft: drawerWidth,
-      width: `calc(100% - ${drawerWidth}px)`,
-      transition: theme.transitions.create(["width", "margin"], {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-    },
-    menuButton: {
-      marginRight: 36,
-    },
-    sessionInfo: {},
     icon: {
       color: theme.palette.primary.main,
-    },
-    hide: {
-      display: "none",
-    },
-    drawer: {
-      width: drawerWidth,
-      flexShrink: 0,
-      whiteSpace: "nowrap",
-    },
-    drawerOpen: {
-      width: drawerWidth,
-      transition: theme.transitions.create("width", {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.enteringScreen,
-      }),
-    },
-    drawerClose: {
-      transition: theme.transitions.create("width", {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-      }),
-      overflowX: "hidden",
-      width: theme.spacing(7) + 1,
-      [theme.breakpoints.up("sm")]: {
-        width: theme.spacing(9) + 1,
-      },
-    },
-    toolbar: {
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "flex-end",
-      padding: theme.spacing(0, 1),
-      // necessary for content to be below app bar
-      ...theme.mixins.toolbar,
-    },
-    content: {
-      padding: theme.spacing(3),
     },
   })
 );
@@ -109,6 +121,30 @@ interface MiniDrawerProps {
   withMainIcon?: boolean;
 }
 
+interface DrawerListItemProps {
+  onClick: () => void;
+  text: string;
+  icon: IconName;
+}
+
+const DrawerListItem = ({ onClick, icon, text }: DrawerListItemProps) => {
+  const classes = useStyles();
+  return (
+    <ListItem onClick={onClick}>
+      <ListItemButton>
+        <ListItemIcon>
+          <FontAwesomeIcon
+            icon={["fal", icon]}
+            size="lg"
+            className={classes.icon}
+          />
+        </ListItemIcon>
+        <ListItemText primary={text} />
+      </ListItemButton>
+    </ListItem>
+  );
+};
+
 const MiniDrawer: React.FunctionComponent<MiniDrawerProps> = ({
   children,
   title,
@@ -116,8 +152,6 @@ const MiniDrawer: React.FunctionComponent<MiniDrawerProps> = ({
   withMainIcon,
   canShowContent,
 }: MiniDrawerProps) => {
-  const classes = useStyles();
-  const theme = useTheme();
   const navigate = useNavigate();
 
   const itemsToShow = items.filter((item) => item.show);
@@ -138,24 +172,16 @@ const MiniDrawer: React.FunctionComponent<MiniDrawerProps> = ({
   const goHome = () => navigate(Paths.moduleRoot);
 
   return (
-    <div className={classes.root}>
+    <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar
-        position="fixed"
-        className={clsx(classes.appBar, {
-          [classes.appBarShift]: open,
-        })}
-      >
+      <AppBar position="fixed" open={open}>
         <Toolbar>
           <IconButton
             color="inherit"
             aria-label="open drawer"
             onClick={handleDrawerOpen}
             edge="start"
-            className={clsx(classes.menuButton, {
-              [classes.hide]: open,
-            })}
-            size="large"
+            sx={{ mr: 2, ...(open && { display: "none" }) }}
           >
             <FontAwesomeIcon icon={["fal", "bars"]} />
           </IconButton>
@@ -166,78 +192,53 @@ const MiniDrawer: React.FunctionComponent<MiniDrawerProps> = ({
           </Box>
           {authUser.user && (
             <Box position="absolute" right="20px">
-              <Typography className={classes.sessionInfo}>
-                {authUser.user?.username}
-              </Typography>
+              <Typography>{authUser.user?.username}</Typography>
             </Box>
           )}
         </Toolbar>
       </AppBar>
-      <Drawer
-        variant="permanent"
-        className={clsx(classes.drawer, {
-          [classes.drawerOpen]: open,
-          [classes.drawerClose]: !open,
-        })}
-        classes={{
-          paper: clsx({
-            [classes.drawerOpen]: open,
-            [classes.drawerClose]: !open,
-          }),
-        }}
-      >
-        <div className={classes.toolbar}>
+      <Drawer variant="permanent" open={open}>
+        <DrawerHeader>
           <IconButton onClick={handleDrawerClose} size="large">
-            {theme.direction === "rtl" ? (
-              <FontAwesomeIcon icon={["fal", "angle-right"]} />
-            ) : (
-              <FontAwesomeIcon icon={["fal", "angle-left"]} />
-            )}
+            <FontAwesomeIcon icon={["fal", "angle-left"]} />
           </IconButton>
-        </div>
+        </DrawerHeader>
         <Divider />
         <List>
           {canShowContent &&
             itemsToShow.map((item) => (
-              <ListItem button key={item.text} onClick={item.onClick}>
-                <ListItemIcon>
-                  <FontAwesomeIcon
-                    className={classes.icon}
-                    icon={["fal", item.icon]}
-                    size="lg"
-                  />
-                </ListItemIcon>
-                <ListItemText primary={item.text} />
-              </ListItem>
+              <DrawerListItem
+                key={item.text}
+                onClick={item.onClick}
+                icon={item.icon}
+                text={item.text}
+              />
             ))}
         </List>
         <Divider />
         <List>
           {withMainIcon && (
-            <ListItem button onClick={goHome}>
-              <ListItemIcon>
-                <FontAwesomeIcon icon={["fal", "home"]} size="2x" />
-              </ListItemIcon>
-              <ListItemText primary={DRAWER.MENU_HOME} />
-            </ListItem>
+            <DrawerListItem
+              onClick={goHome}
+              icon={"home"}
+              text={DRAWER.MENU_HOME}
+            />
           )}
-          <ListItem button onClick={goLogOut}>
-            <ListItemIcon>
-              <FontAwesomeIcon icon={["fal", "sign-out"]} size="2x" />
-            </ListItemIcon>
-            <ListItemText primary={DRAWER.MENU_SIGN_OUT} />
-          </ListItem>
+          <DrawerListItem
+            onClick={goLogOut}
+            icon={"sign-out"}
+            text={DRAWER.MENU_SIGN_OUT}
+          />
         </List>
       </Drawer>
-      <Box className={classes.content} flexGrow={1} overflow="scroll">
-        <div className={classes.toolbar} />
-        {canShowContent ? (
-          children
-        ) : (
+
+      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+        <DrawerHeader />
+        {(canShowContent && children) || (
           <NoViewDisplayAllowed instanceNamePlural={title} />
         )}
       </Box>
-    </div>
+    </Box>
   );
 };
 MiniDrawer.defaultProps = {

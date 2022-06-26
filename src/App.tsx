@@ -1,4 +1,4 @@
-import React from "react";
+import React, { StrictMode } from "react";
 import "./App.css";
 import { MainRouter } from "@containers/index";
 import { loadIcons } from "@theme/index";
@@ -14,9 +14,9 @@ loadIcons();
 const App: React.FunctionComponent = () => {
   return (
     <MuiPickersUtilsProvider utils={MomentUtils}>
-      <React.StrictMode>
+      <StrictMode>
         <MainRouter />
-      </React.StrictMode>
+      </StrictMode>
     </MuiPickersUtilsProvider>
   );
 };

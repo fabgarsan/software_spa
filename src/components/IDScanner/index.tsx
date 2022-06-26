@@ -34,8 +34,8 @@ const IDScanner = ({ children, onBlur }: IDScannerProp) => {
   const [openIdScanner, setOpenIdScanner] = useState<boolean>(false);
   const classes = useStyles();
   return (
-    <Box>
-      <Box>{!openIdScanner && children}</Box>
+    <>
+      <>{!openIdScanner && children}</>
       <Box>
         {openIdScanner && (
           <TextField
@@ -90,7 +90,7 @@ const IDScanner = ({ children, onBlur }: IDScannerProp) => {
           onClick={() => setOpenIdScanner(!openIdScanner)}
         />
       </Box>
-    </Box>
+    </>
   );
 };
 
