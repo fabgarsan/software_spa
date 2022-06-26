@@ -9,9 +9,12 @@ import {
   TextField,
   Box,
   FormHelperText,
-} from "@material-ui/core";
+} from "@mui/material";
 import { UI, FORM_FIELDS } from "@utils/constants";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
 
 interface SignInControlConfirmationDialogProps {
   setTextAnswer: (answer: string) => void;

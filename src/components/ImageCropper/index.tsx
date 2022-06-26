@@ -9,7 +9,7 @@ import {
   DialogActions,
   DialogContent,
   Typography,
-} from "@material-ui/core";
+} from "@mui/material";
 
 const savePhoto = async (
   img: HTMLImageElement | null,

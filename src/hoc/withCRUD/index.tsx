@@ -6,7 +6,7 @@ import {
   TablePagination,
   TextField,
   Typography,
-} from "@material-ui/core";
+} from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useCheckGenericUserPermissions, useNotifications } from "@hooks/index";
 import { DialogConfirmation } from "@components/index";
@@ -336,13 +336,17 @@ const index = <ElementInterface,>(
                   rowsPerPageOptions={TABLE_PAGINATOR.ROWS_PER_PAGE_OPTIONS}
                   labelRowsPerPage={TABLE_PAGINATOR.LABEL_ROWS_PER_PAGE}
                   labelDisplayedRows={TABLE_PAGINATOR.LABEL_DISPLAYED_ROWS}
-                  nextIconButtonText={TABLE_PAGINATOR.NEXT_ICON_BUTTON_TEXT}
-                  backIconButtonText={TABLE_PAGINATOR.BACK_ICON_BUTTON_TEXT}
                   count={paginatorState.count}
                   page={paginatorState.currentPage}
                   rowsPerPage={paginatorState.limit}
-                  onChangeRowsPerPage={handleChangeRowsPerPage}
+                  onRowsPerPageChange={handleChangeRowsPerPage}
                   onPageChange={handleChangePage}
+                  // nextIconButtonText={{
+                  //   text: TABLE_PAGINATOR.NEXT_ICON_BUTTON_TEXT,
+                  // }}
+                  // backIconButtonText={{
+                  //   text: TABLE_PAGINATOR.BACK_ICON_BUTTON_TEXT,
+                  // }}
                 />
               )}
             </Box>

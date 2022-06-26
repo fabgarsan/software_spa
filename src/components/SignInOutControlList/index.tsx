@@ -1,6 +1,6 @@
 import React from "react";
 import { Escort } from "../../dto/escorts";
-import { Grid, Typography, Box } from "@material-ui/core";
+import { Grid, Typography, Box } from "@mui/material";
 import { INSTANCES_NAMES } from "@utils/constants";
 
 interface SignInOutControlListProps {

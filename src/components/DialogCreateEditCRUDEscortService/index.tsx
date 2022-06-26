@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import Button from "@material-ui/core/Button";
-import { TextField, DialogActions, Box, Grid } from "@material-ui/core";
+import Button from "@mui/material/Button";
+import { TextField, DialogActions, Box, Grid } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
 import { EscortService } from "../../dto/index";
 import { DialogCreateEditBase } from "@components/index";

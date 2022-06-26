@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import Button from "@material-ui/core/Button";
-import { DialogActions, Box, Grid } from "@material-ui/core";
+import Button from "@mui/material/Button";
+import { DialogActions, Box, Grid } from "@mui/material";
 import { useForm } from "react-hook-form";
 import { BloodType, ExtendedUser, GenderType } from "../../dto/index";
 import {

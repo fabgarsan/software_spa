@@ -1,22 +1,19 @@
 import React from "react";
 import clsx from "clsx";
-import {
-  createStyles,
-  makeStyles,
-  useTheme,
-  Theme,
-} from "@material-ui/core/styles";
-import Drawer from "@material-ui/core/Drawer";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import List from "@material-ui/core/List";
-import CssBaseline from "@material-ui/core/CssBaseline";
-import Typography from "@material-ui/core/Typography";
-import Divider from "@material-ui/core/Divider";
-import IconButton from "@material-ui/core/IconButton";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
+import { useTheme, Theme } from "@mui/material/styles";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
+import Drawer from "@mui/material/Drawer";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import List from "@mui/material/List";
+import CssBaseline from "@mui/material/CssBaseline";
+import Typography from "@mui/material/Typography";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import ListItem from "@mui/material/ListItem";
+import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useSelector, useDispatch } from "react-redux";
 import { drawerState, changeOpenState } from "@stores/drawerSlices";
@@ -26,7 +23,7 @@ import { useNavigate } from "react-router-dom";
 
 import { Paths, DRAWER } from "@utils/index";
 import { NoViewDisplayAllowed } from "@components/index";
-import { Box } from "@material-ui/core";
+import { Box } from "@mui/material";
 
 const drawerWidth = 240;
 
@@ -158,6 +155,7 @@ const MiniDrawer: React.FunctionComponent<MiniDrawerProps> = ({
             className={clsx(classes.menuButton, {
               [classes.hide]: open,
             })}
+            size="large"
           >
             <FontAwesomeIcon icon={["fal", "bars"]} />
           </IconButton>
@@ -189,7 +187,7 @@ const MiniDrawer: React.FunctionComponent<MiniDrawerProps> = ({
         }}
       >
         <div className={classes.toolbar}>
-          <IconButton onClick={handleDrawerClose}>
+          <IconButton onClick={handleDrawerClose} size="large">
             {theme.direction === "rtl" ? (
               <FontAwesomeIcon icon={["fal", "angle-right"]} />
             ) : (

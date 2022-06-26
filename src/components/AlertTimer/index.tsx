@@ -1,10 +1,10 @@
 import React from "react";
 import { useInterval } from "@hooks/index";
-import { Alert, Color } from "@material-ui/lab";
+import { Alert, AlertColor } from "@mui/material";
 
 interface AlertTimerProps {
   time: number;
-  severity: Color;
+  severity: AlertColor;
   message: string;
   onClose: () => void;
 }

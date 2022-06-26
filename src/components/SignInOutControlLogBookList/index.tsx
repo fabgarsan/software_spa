@@ -1,12 +1,6 @@
 import React from "react";
 import { SignInControl } from "../../dto/index";
-import {
-  Typography,
-  List,
-  ListItem,
-  ListItemText,
-  Grid,
-} from "@material-ui/core";
+import { Typography, List, ListItem, ListItemText, Grid } from "@mui/material";
 import { INSTANCES_NAMES, diffDates } from "@utils/index";
 import moment from "moment";
 

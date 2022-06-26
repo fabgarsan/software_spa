@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
-import TextField from "@material-ui/core/TextField";
-import Autocomplete from "@material-ui/lab/Autocomplete";
+import TextField from "@mui/material/TextField";
 import { fetchCities } from "@api/index";
 import { CitySearch } from "../../dto/geography";
 import { useDebounce } from "@hooks/index";
-import { Box, CircularProgress } from "@material-ui/core";
+import { CircularProgress, Autocomplete } from "@mui/material";
 import { FORM_FIELDS } from "@utils/constants";
 
 interface CityOption {
@@ -28,15 +27,14 @@ const AutocompleteCities = ({
   );
   const debouncedSearchTerm = useDebounce(search, 1000);
   useEffect(() => {
-    const getCities = async () => {
-      const response = await fetchCities(debouncedSearchTerm);
-      setCities(response.data);
-    };
-    if (debouncedSearchTerm.length > 3) {
-      getCities();
-    } else {
-      setCities([]);
-    }
+    (async () => {
+      if (debouncedSearchTerm.length > 3) {
+        const { data } = await fetchCities(debouncedSearchTerm);
+        setCities(data);
+      } else {
+        setCities([]);
+      }
+    })();
   }, [debouncedSearchTerm]);
   let citiesToSelect: CityOption[] = cities.map(
     ({ id, name, department, country }) => ({
@@ -51,16 +49,16 @@ const AutocompleteCities = ({
   return (
     <Autocomplete
       fullWidth
-      options={citiesToSelect}
+      isOptionEqualToValue={(option, value) => option.name === value.name}
       getOptionLabel={(option) => option.name}
+      options={citiesToSelect}
+      loading={loading}
       onInputChange={(_, value) => setSearch(value)}
       onChange={(_, selected) => {
         setSelectedOption(selected || undefined);
         onChange(selected?.id || undefined);
       }}
       defaultValue={initialValue}
-      getOptionSelected={(option, value) => option.name === value.name}
-      renderOption={(option) => <Box component="span">{option.name}</Box>}
       renderInput={(params) => (
         <TextField
           {...params}

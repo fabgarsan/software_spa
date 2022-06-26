@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { Box, TextField } from "@material-ui/core";
+import { Box, TextField } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
 import { BloodType, GenderType } from "../../dto/index";
 
 interface IDScannerProp {

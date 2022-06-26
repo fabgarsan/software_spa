@@ -1,4 +1,4 @@
-import { LabelDisplayedRowsArgs } from "@material-ui/core";
+import { LabelDisplayedRowsArgs } from "@mui/material";
 
 export const ERROR_MESSAGES = {
   BASIC_ERROR: "Something went wrong.",

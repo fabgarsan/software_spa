@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Button from "@material-ui/core/Button";
+import Button from "@mui/material/Button";
 import {
   TextField,
   DialogActions,
@@ -9,7 +9,7 @@ import {
   InputLabel,
   Select,
   FormHelperText,
-} from "@material-ui/core";
+} from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
 import { BloodType, Escort, EscortCategory, GenderType } from "../../dto/index";
 import {
@@ -29,7 +29,9 @@ import {
 } from "@utils/index";
 
 import { CRUDDefaultFormProps } from "@hoc/index";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
 import { useCRUDGenericApiCall } from "@hooks/index";
 import useValidation from "./DialogCreateEditCRUDEscort.hooks";
 

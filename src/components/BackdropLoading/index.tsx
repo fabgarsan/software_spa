@@ -1,7 +1,10 @@
 import React from "react";
-import { Backdrop } from "@material-ui/core";
+import { Backdrop } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
 
 interface BackdropLoadingProps {
   isOpen: boolean;

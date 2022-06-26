@@ -8,11 +8,13 @@ import {
   InputLabel,
   Select,
   TextField,
-} from "@material-ui/core";
+} from "@mui/material";
 import { Control, Controller, FieldErrors } from "react-hook-form";
 import { FORM_FIELDS, diffDates, FORMATS } from "@utils/index";
 import { ExtendedUser } from "../../dto/index";
-import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import createStyles from "@mui/styles/createStyles";
+import makeStyles from "@mui/styles/makeStyles";
 import { KeyboardDatePicker } from "@material-ui/pickers";
 
 interface DialogCreateEditCRUDFormExtendedUserProps {

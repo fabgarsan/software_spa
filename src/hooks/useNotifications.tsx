@@ -1,8 +1,8 @@
 import React, { useMemo } from "react";
-import { Box } from "@material-ui/core";
+import { Box } from "@mui/material";
 import { useDispatch, useSelector } from "react-redux";
 import { AlertTimer } from "@components/index";
-import { Color } from "@material-ui/lab";
+import { AlertColor } from "@mui/lab";
 import {
   createNotification,
   getNotifications,
@@ -37,7 +37,7 @@ const useNotifications = () => {
 
   const dispatchNotification = (
     message: string,
-    severity: Color,
+    severity: AlertColor,
     time?: number
   ) =>
     dispatch(

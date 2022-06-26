@@ -1,6 +1,6 @@
 import React from "react";
 import { NoViewDisplayAllowed } from "@components/index";
-import { Box, Typography } from "@material-ui/core";
+import { Box, Typography } from "@mui/material";
 
 interface CommonLayoutProps {
   title: string;

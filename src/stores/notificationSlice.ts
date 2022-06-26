@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import omit from "lodash.omit";
 import { RootState } from "@stores/store";
-import { Color } from "@material-ui/lab";
+import { AlertColor } from "@mui/lab";
 
 export type Notification = {
   message: string;
   time: number;
-  severity: Color;
+  severity: AlertColor;
 };
 
 export type SliceState = {

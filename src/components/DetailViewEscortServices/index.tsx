@@ -5,7 +5,7 @@ import {
   FormControlLabel,
   FormGroup,
   Typography,
-} from "@material-ui/core";
+} from "@mui/material";
 import { EscortService } from "../../dto/index";
 
 interface DetailViewEscortServicesProps {

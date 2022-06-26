@@ -6,7 +6,7 @@ import {
   NOTIFICATION_MESSAGES,
   PERMISSION_INSTANCES,
 } from "@utils/index";
-import { Box } from "@material-ui/core";
+import { Box } from "@mui/material";
 import { signIn } from "@api/index";
 import {
   useCheckPermissions,

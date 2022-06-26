@@ -8,12 +8,12 @@ import {
   TableRow,
   TableCell,
   Typography,
-} from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+} from "@mui/material";
+import makeStyles from "@mui/styles/makeStyles";
 import { CRUDDefaultTableProps } from "@hoc/index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { TABLE_HEADERS, setIfNotString } from "@utils/index";
-import IconButton from "@material-ui/core/IconButton";
+import IconButton from "@mui/material/IconButton";
 
 interface TableHeader<DataTableInterface> {
   headerName: string;
@@ -170,6 +170,7 @@ const TableGenericCRUD = <DataTableInterface,>({
                     className={classes.tableCellIcon}
                     onClick={() => onOpenEdit(row)}
                     edge="start"
+                    size="large"
                   >
                     <FontAwesomeIcon icon={["fal", "edit"]} size="xs" />
                   </IconButton>
@@ -188,6 +189,7 @@ const TableGenericCRUD = <DataTableInterface,>({
                     className={classes.tableCellIcon}
                     onClick={() => onOpenDelete(row)}
                     edge="start"
+                    size="large"
                   >
                     <FontAwesomeIcon icon={["fal", "trash"]} size="xs" />
                   </IconButton>
@@ -209,6 +211,7 @@ const TableGenericCRUD = <DataTableInterface,>({
                       navigate(`${row[idField]}`)
                     }
                     edge="start"
+                    size="large"
                   >
                     <FontAwesomeIcon icon={["fal", "eye"]} size="xs" />
                   </IconButton>

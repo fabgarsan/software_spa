@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import "react-image-crop/dist/ReactCrop.css";
-import { makeStyles, Theme, createStyles } from "@material-ui/core/styles";
+import { Theme } from "@mui/material/styles";
+import makeStyles from "@mui/styles/makeStyles";
+import createStyles from "@mui/styles/createStyles";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   Box,
@@ -16,7 +18,7 @@ import {
   DialogContent,
   DialogActions,
   Button,
-} from "@material-ui/core";
+} from "@mui/material";
 import { DialogConfirmation } from "@components/index";
 import { DIALOG_MESSAGES } from "@utils/constants";
 import clsx from "clsx";
@@ -116,6 +118,7 @@ const DetailViewEscortImageListItem = ({
           <IconButton
             aria-label="open preview"
             onClick={() => setPreviewOpen(true)}
+            size="large"
           >
             <FontAwesomeIcon icon={["fal", "eye"]} size="xs" />
           </IconButton>
@@ -123,12 +126,14 @@ const DetailViewEscortImageListItem = ({
             aria-label="publish photo"
             color={publishedWeb ? "primary" : "secondary"}
             onClick={() => setPublished(imageId, !publishedWeb)}
+            size="large"
           >
             <FontAwesomeIcon icon={["fal", "globe-americas"]} size="xs" />
           </IconButton>
           <IconButton
             aria-label="delete"
             onClick={() => setConfirmationDeleteOpen(true)}
+            size="large"
           >
             <FontAwesomeIcon icon={["fal", "trash"]} size="xs" />
           </IconButton>
@@ -139,6 +144,7 @@ const DetailViewEscortImageListItem = ({
             onClick={handleExpandClick}
             aria-expanded={expanded}
             aria-label="show more"
+            size="large"
           >
             <FontAwesomeIcon icon={["fal", "angle-down"]} size="xs" />
           </IconButton>

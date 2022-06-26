@@ -9,9 +9,18 @@ import {
   BackdropLoading,
 } from "@components/index";
 import { theme } from "@theme/index";
-import { ThemeProvider } from "@material-ui/core/styles";
+import {
+  ThemeProvider,
+  Theme,
+  StyledEngineProvider,
+} from "@mui/material/styles";
 import { camelizeKeys, decamelizeKeys } from "humps";
 import { BrowserRouter } from "react-router-dom";
+
+declare module "@mui/styles/defaultTheme" {
+  // eslint-disable-next-line @typescript-eslint/no-empty-interface
+  interface DefaultTheme extends Theme {}
+}
 
 const { client, removeToken } = mainAxiosClientManager;
 
@@ -130,17 +139,19 @@ const withInterceptorHandler = <P extends WithInterceptorHandlerProps>(
     }, [handleResponseError, handleRequestError]);
 
     return (
-      <ThemeProvider theme={theme}>
-        <LoadingOverlay />
-        <Notify />
-        <BrowserRouter>
-          <Suspense fallback={<BackdropLoading isOpen />}>
-            {(!isAuthenticated && (
-              <FormSignIn logIn={logIn} errors={authError} />
-            )) || <WrappedComponent {...(props as P)} />}
-          </Suspense>
-        </BrowserRouter>
-      </ThemeProvider>
+      <StyledEngineProvider injectFirst>
+        <ThemeProvider theme={theme}>
+          <LoadingOverlay />
+          <Notify />
+          <BrowserRouter>
+            <Suspense fallback={<BackdropLoading isOpen />}>
+              {(!isAuthenticated && (
+                <FormSignIn logIn={logIn} errors={authError} />
+              )) || <WrappedComponent {...(props as P)} />}
+            </Suspense>
+          </BrowserRouter>
+        </ThemeProvider>
+      </StyledEngineProvider>
     );
   };
 };

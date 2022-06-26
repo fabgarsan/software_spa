@@ -1,6 +1,6 @@
 import React from "react";
 import { CommonLayout } from "@components/index";
-import { Box, Typography, Button } from "@material-ui/core";
+import { Box, Typography, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 type Attribute = {

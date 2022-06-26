@@ -4,7 +4,7 @@ import { IconList } from "@components/Drawer";
 import { Paths, DRAWER, PERMISSION_MODULES } from "@utils/index";
 import { useNavigate } from "react-router-dom";
 import { useCheckPermissions } from "@hooks/index";
-import { Box } from "@material-ui/core";
+import { Box } from "@mui/material";
 import printJS from "print-js";
 import axios from "axios";
 

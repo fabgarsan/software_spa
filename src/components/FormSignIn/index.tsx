@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import { Box, Button, Grid, TextField, Typography } from "@material-ui/core";
+import { Box, Button, Grid, TextField, Typography } from "@mui/material";
 
 import useFormSignInValidation from "./FormSignIn.validation";
 
