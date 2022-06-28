@@ -1,5 +1,6 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import store from "@stores/store";
 
 import {
   logInThunk,
@@ -15,34 +16,32 @@ import {
 } from "@stores/permissionSlice";
 
 const useAuth = () => {
-  const dispatch = useDispatch();
-
   const logIn = (username: string, password: string) => {
-    dispatch(logInThunk({ username, password }));
+    store.dispatch(logInThunk({ username, password }));
   };
 
   const logOut = () => {
-    return dispatch(logOutThunk());
+    store.dispatch(logOutThunk());
   };
 
   const setIsNotAuthenticated = () => {
-    dispatch(setIsNotAuthenticatedAction());
+    store.dispatch(setIsNotAuthenticatedAction());
   };
 
   const auth = useSelector(authInfo);
   useEffect(() => {
-    dispatch(loadUserThunk());
-  }, [dispatch]);
+    store.dispatch(loadUserThunk());
+  }, []);
 
   useEffect(() => {
     if (auth.isAuthenticated) {
       if (localStorage.getItem("permissions")) {
-        dispatch(loadPermissionsFromStorage());
+        store.dispatch(loadPermissionsFromStorage());
       } else {
-        dispatch(fetchPermissionCurrentUserThunk());
+        store.dispatch(fetchPermissionCurrentUserThunk());
       }
     }
-  }, [auth.isAuthenticated, dispatch]);
+  }, [auth.isAuthenticated]);
 
   return {
     auth,

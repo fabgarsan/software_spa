@@ -17,7 +17,7 @@ import {
 } from "@mui/material";
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { drawerState, changeOpenState } from "@stores/drawerSlices";
 import { IconName } from "@fortawesome/pro-light-svg-icons";
 import { logOutThunk, auth } from "@stores/authSlice";
@@ -26,6 +26,7 @@ import { useNavigate } from "react-router-dom";
 import { Paths, DRAWER } from "@utils/index";
 import { NoViewDisplayAllowed } from "@components/index";
 import { createStyles, makeStyles } from "@mui/styles";
+import store from "@stores/store";
 
 const drawerWidth = 240;
 
@@ -158,17 +159,16 @@ const MiniDrawer: React.FunctionComponent<MiniDrawerProps> = ({
 
   const open = useSelector(drawerState);
   const authUser = useSelector(auth);
-  const dispatch = useDispatch();
 
   const handleDrawerOpen = () => {
-    dispatch(changeOpenState());
+    store.dispatch(changeOpenState());
   };
 
   const handleDrawerClose = () => {
-    dispatch(changeOpenState());
+    store.dispatch(changeOpenState());
   };
 
-  const goLogOut = () => dispatch(logOutThunk());
+  const goLogOut = () => store.dispatch(logOutThunk());
   const goHome = () => navigate(Paths.moduleRoot);
 
   return (

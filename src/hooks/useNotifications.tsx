@@ -1,6 +1,6 @@
 import React, { useMemo } from "react";
 import { Box } from "@mui/material";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { AlertTimer } from "@components/index";
 import { AlertColor } from "@mui/lab";
 import {
@@ -8,9 +8,9 @@ import {
   getNotifications,
   removeNotification,
 } from "@stores/notificationSlice";
+import store from "@stores/store";
 
 const useNotifications = () => {
-  const dispatch = useDispatch();
   const notifications = useSelector(getNotifications);
   const showNotification = useMemo(
     () => Object.keys(notifications).length !== 0,
@@ -26,7 +26,7 @@ const useNotifications = () => {
             <AlertTimer
               severity={values.severity}
               time={values.time}
-              onClose={() => dispatch(removeNotification(key))}
+              onClose={() => store.dispatch(removeNotification(key))}
               message={values.message}
             />
           </Box>
@@ -40,7 +40,7 @@ const useNotifications = () => {
     severity: AlertColor,
     time?: number
   ) =>
-    dispatch(
+    store.dispatch(
       createNotification({
         message,
         severity,

@@ -1,8 +1,4 @@
-import {
-  configureStore,
-  Dispatch,
-  getDefaultMiddleware,
-} from "@reduxjs/toolkit";
+import { configureStore, Dispatch } from "@reduxjs/toolkit";
 import { useDispatch } from "react-redux";
 import authSlice from "@stores/authSlice";
 import notificationSlice from "@stores/notificationSlice";
@@ -11,8 +7,6 @@ import permissionSlice from "@stores/./permissionSlice";
 
 import logger from "redux-logger";
 
-const middleware = [...getDefaultMiddleware(), logger];
-
 const store = configureStore({
   reducer: {
     auth: authSlice.reducer,
@@ -20,7 +14,7 @@ const store = configureStore({
     drawer: drawerSlice.reducer,
     permission: permissionSlice.reducer,
   },
-  middleware,
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });
 export type RootState = ReturnType<typeof store.getState>;
 
