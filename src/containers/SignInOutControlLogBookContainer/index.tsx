@@ -16,7 +16,7 @@ import {
   reducerFilter,
   filterInitial,
 } from "@containers/SignInOutControlLogBookContainer/SignInOutControlLogBookContainer.reducer";
-import moment from "moment";
+import { format } from "date-fns";
 
 const SignInOutControlLogBookContainer = () => {
   const [state, dispatch] = useReducer(reducerFilter, filterInitial);
@@ -25,13 +25,12 @@ const SignInOutControlLogBookContainer = () => {
     API_ROUTES.SIGN_IN_CONTROL
   );
   useEffect(() => {
-    const fetchData = async () => {
+    (async () => {
       const responseData = await fetchAll({
-        date: moment(new Date()).format(FORMATS.DATE_TIME_TO_SEND),
+        date: format(new Date(), FORMATS.DATE_TIME_TO_SEND),
       });
       setData(responseData);
-    };
-    fetchData();
+    })();
   }, [fetchAll]);
 
   const handleOnSearch = async () => {
@@ -59,7 +58,9 @@ const SignInOutControlLogBookContainer = () => {
           onDateFromChange={(date) =>
             dispatch({ type: "filterRangeFrom", date })
           }
-          onDateChange={(date) => dispatch({ type: "filterDate", date })}
+          onDateChange={(date) => {
+            dispatch({ type: "filterDate", date });
+          }}
           onFilterTypeChange={(event) =>
             dispatch({ type: "changeFilterType", mode: event.target.value })
           }

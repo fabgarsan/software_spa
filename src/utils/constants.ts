@@ -273,6 +273,10 @@ export const PERMISSION_MODULES = {
 };
 
 export const FORMATS = {
-  DATE_TIME_TO_SEND: "YYYY-MM-DD",
-  DATE_TIME_TO_SHOW: "MM/DD/YYYY",
+  DATE_TIME_TO_SEND: "yyyy-MM-dd",
+  DATE_TIME_TO_SHOW: "MM/dd/yyyy",
+};
+
+export const SYSTEM_CONFIGURATION = {
+  TIMEZONE: "America/Bogota",
 };

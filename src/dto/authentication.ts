@@ -4,8 +4,8 @@ export interface SignInControl {
   id: number;
   user: number;
   fullName: string;
-  signInDatetime: Date;
+  signInDatetime: string;
   categoryName: string;
   userType: UserType;
-  signOutDatetime: Date | null;
+  signOutDatetime: string | null;
 }

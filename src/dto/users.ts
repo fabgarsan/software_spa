@@ -31,6 +31,6 @@ export interface ExtendedUser extends User {
   idNumber: string;
   gender: GenderType;
   userType: UserType;
-  dateOfBirth: Date;
+  dateOfBirth: string | Date;
   bloodType: BloodType;
 }

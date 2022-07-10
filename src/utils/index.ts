@@ -15,6 +15,7 @@ export {
   PERMISSION_INSTANCES,
   PERMISSION_MODULES,
   FORMATS,
+  SYSTEM_CONFIGURATION,
 } from "./constants";
 
 export {
@@ -25,4 +26,4 @@ export {
   getFormFieldError,
 } from "./typeGuards";
 
-export { diffDates, setFormError, setFormValue } from "./functions";
+export { setFormError, setFormValue } from "./functions";

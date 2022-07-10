@@ -10,12 +10,15 @@ import {
   RadioGroup,
   TextField,
 } from "@mui/material";
-import { KeyboardDatePickerRange } from "@components/index";
-import { KeyboardDatePicker } from "@material-ui/pickers";
-import { FORM_FIELDS, FORMATS, UI } from "@utils/constants";
-import { DateType } from "@date-io/type";
-
-type MaterialUiPickersDate = DateType | null;
+import { DatePickerRange } from "@components/index";
+import {
+  FORM_FIELDS,
+  FORMATS,
+  SYSTEM_CONFIGURATION,
+  UI,
+} from "@utils/constants";
+import { DatePicker } from "@mui/lab";
+import { zonedTimeToUtc } from "date-fns-tz";
 
 interface SignInOutControlLogBookFilterProps {
   dateTo: string;
@@ -24,9 +27,9 @@ interface SignInOutControlLogBookFilterProps {
   searchText: string;
   filterType: string;
   setSearchText: (text: string) => void;
-  onDateFromChange: (date: MaterialUiPickersDate) => void;
-  onDateToChange: (date: MaterialUiPickersDate) => void;
-  onDateChange: (date: MaterialUiPickersDate) => void;
+  onDateFromChange: (date: string | null) => void;
+  onDateToChange: (date: string | null) => void;
+  onDateChange: (date: string | null) => void;
   onFilterTypeChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   onSearch: () => void;
 }
@@ -44,6 +47,8 @@ const SignInOutControlLogBookFilter = ({
   onFilterTypeChange,
   onSearch,
 }: SignInOutControlLogBookFilterProps) => {
+  console.log(date, "LA CARGADA");
+  console.log(zonedTimeToUtc(date, "America/Bogota"), "LA CARGADA 2");
   return (
     <Grid container>
       <Grid item xs={12} sm={6}>
@@ -58,7 +63,7 @@ const SignInOutControlLogBookFilter = ({
       <Grid item xs={12} md={4}>
         <Box>
           {filterType === "range" && (
-            <KeyboardDatePickerRange
+            <DatePickerRange
               toDate={dateTo}
               fromDate={dateFrom}
               onDateFromChange={onDateFromChange}
@@ -66,15 +71,12 @@ const SignInOutControlLogBookFilter = ({
             />
           )}
           {filterType === "date" && (
-            <KeyboardDatePicker
-              margin="dense"
+            <DatePicker
               label={FORM_FIELDS.GENERAL.LABEL_DATE}
-              format={FORMATS.DATE_TIME_TO_SHOW}
-              value={date}
+              inputFormat={FORMATS.DATE_TIME_TO_SHOW}
+              value={zonedTimeToUtc(date, SYSTEM_CONFIGURATION.TIMEZONE)}
               onChange={onDateChange}
-              KeyboardButtonProps={{
-                "aria-label": "change date",
-              }}
+              renderInput={(props) => <TextField {...props} />}
             />
           )}
         </Box>

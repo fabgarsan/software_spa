@@ -10,12 +10,14 @@ import {
   TextField,
 } from "@mui/material";
 import { Control, Controller, FieldErrors } from "react-hook-form";
-import { FORM_FIELDS, diffDates, FORMATS } from "@utils/index";
+import { FORM_FIELDS, FORMATS, SYSTEM_CONFIGURATION } from "@utils/index";
 import { ExtendedUser } from "@dto/users";
 import { Theme } from "@mui/material/styles";
-import createStyles from "@mui/styles/createStyles";
-import makeStyles from "@mui/styles/makeStyles";
-import { KeyboardDatePicker } from "@material-ui/pickers";
+import { createStyles, makeStyles } from "@mui/styles";
+
+import { DatePicker } from "@mui/lab";
+import { zonedTimeToUtc } from "date-fns-tz";
+import { differenceInYears } from "date-fns";
 
 interface DialogCreateEditCRUDFormExtendedUserProps {
   control: Control<ExtendedUser>;
@@ -89,20 +91,20 @@ const DialogCreateEditCRUDFormExtendedUser = ({
         <Controller
           name="dateOfBirth"
           control={control}
+          // @ts-ignore
           defaultValue={maxDate}
           render={({ field }) => (
             <>
-              <KeyboardDatePicker
+              <DatePicker
                 maxDate={maxDate || undefined}
-                margin="normal"
-                id="date-picker-dialog"
                 label={FORM_FIELDS.EXTENDED_USER.LABEL_DATE_OF_BIRTH}
-                format={FORMATS.DATE_TIME_TO_SHOW}
-                value={field.value}
+                inputFormat={FORMATS.DATE_TIME_TO_SHOW}
+                value={zonedTimeToUtc(
+                  field.value,
+                  SYSTEM_CONFIGURATION.TIMEZONE
+                )}
                 onChange={field.onChange}
-                KeyboardButtonProps={{
-                  "aria-label": "change date",
-                }}
+                renderInput={(props) => <TextField {...props} />}
               />
               {formErrors?.dateOfBirth ? (
                 <FormHelperText className={classes.error}>
@@ -110,7 +112,8 @@ const DialogCreateEditCRUDFormExtendedUser = ({
                 </FormHelperText>
               ) : (
                 <FormHelperText>
-                  {diffDates(today, field.value, "years")}
+                  {differenceInYears(new Date(today), new Date(field.value))}{" "}
+                  years
                 </FormHelperText>
               )}
             </>

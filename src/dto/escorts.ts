@@ -12,7 +12,7 @@ export interface EscortImage {
   altText: string;
   type: "I" | "P";
   altTextEng: string;
-  created: Date;
+  created: string;
   publishedWeb: boolean;
 }
 

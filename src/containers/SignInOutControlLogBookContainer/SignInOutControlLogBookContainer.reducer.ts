@@ -1,8 +1,6 @@
-import moment from "moment";
-import { DateType } from "@date-io/type";
+import React from "react";
 import { FORMATS } from "@utils/index";
-
-type MaterialUiPickersDate = DateType | null;
+import { format } from "date-fns";
 
 interface FilterParams {
   date?: string;
@@ -17,18 +15,18 @@ export interface FilterState {
 }
 
 export type FilterActions =
-  | { type: "filterDate"; date: MaterialUiPickersDate }
-  | { type: "filterRangeFrom"; date: MaterialUiPickersDate }
-  | { type: "filterRangeTo"; date: MaterialUiPickersDate }
+  | { type: "filterDate"; date: string | null }
+  | { type: "filterRangeFrom"; date: string | null }
+  | { type: "filterRangeTo"; date: string | null }
   | { type: "setSearchText"; text: string }
   | { type: "changeFilterType"; mode: "range" | "date" | string };
 
 export const filterInitial: FilterState = {
   filterType: "date",
   params: {
-    date: moment(new Date()).format(FORMATS.DATE_TIME_TO_SEND),
-    dateFrom: moment(new Date()).format(FORMATS.DATE_TIME_TO_SEND),
-    dateTo: moment(new Date()).format(FORMATS.DATE_TIME_TO_SEND),
+    date: format(new Date(), FORMATS.DATE_TIME_TO_SEND),
+    dateFrom: format(new Date(), FORMATS.DATE_TIME_TO_SEND),
+    dateTo: format(new Date(), FORMATS.DATE_TIME_TO_SEND),
     search: "",
   },
 };
@@ -43,7 +41,8 @@ export const reducerFilter: React.Reducer<FilterState, FilterActions> = (
         ...state,
         params: {
           date:
-            action.date?.format(FORMATS.DATE_TIME_TO_SEND) ||
+            (action.date &&
+              format(new Date(action.date), FORMATS.DATE_TIME_TO_SEND)) ||
             filterInitial.params.date,
         },
       };
@@ -53,7 +52,8 @@ export const reducerFilter: React.Reducer<FilterState, FilterActions> = (
         params: {
           dateTo: state.params.dateTo,
           dateFrom:
-            action.date?.format(FORMATS.DATE_TIME_TO_SEND) ||
+            (action.date &&
+              format(new Date(action.date), FORMATS.DATE_TIME_TO_SEND)) ||
             filterInitial.params.date,
         },
       };
@@ -62,7 +62,8 @@ export const reducerFilter: React.Reducer<FilterState, FilterActions> = (
         ...state,
         params: {
           dateTo:
-            action.date?.format(FORMATS.DATE_TIME_TO_SEND) ||
+            (action.date &&
+              format(new Date(action.date), FORMATS.DATE_TIME_TO_SEND)) ||
             filterInitial.params.date,
           dateFrom: state.params.dateFrom,
         },

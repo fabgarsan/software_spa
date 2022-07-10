@@ -18,7 +18,7 @@ export { default as Drawer } from "./Drawer";
 export { default as FormSignIn } from "./FormSignIn";
 export { default as IDScanner } from "./IDScanner";
 export { default as ImageCropper } from "./ImageCropper";
-export { default as KeyboardDatePickerRange } from "./KeyboardDatePickerRange";
+export { default as DatePickerRange } from "./DatePickerRange/index";
 export { default as LoadingOverlay } from "./LoadingOverlay";
 export { default as Notify } from "./Notify";
 export { default as NoViewDisplayAllowed } from "./NoViewDisplayAllowed";

@@ -1,12 +1,15 @@
 import React from "react";
 import { SignInControl } from "@dto/authentication";
 import { Typography, List, ListItem, ListItemText, Grid } from "@mui/material";
-import { INSTANCES_NAMES, diffDates } from "@utils/index";
-import moment from "moment";
+import { INSTANCES_NAMES } from "@utils/index";
+import { format } from "date-fns";
+import { differenceInHours } from "date-fns";
 
 interface SignInOutControlListProps {
   list: SignInControl[];
 }
+
+const timeFormat = "LLLL dd, KK:mm:ss aaa";
 
 const SignInOutControlLogBookList = ({ list }: SignInOutControlListProps) => {
   const sortedList = list.sort((a, b) => a.fullName.localeCompare(b.fullName));
@@ -23,13 +26,16 @@ const SignInOutControlLogBookList = ({ list }: SignInOutControlListProps) => {
           {usersList.map((user) => {
             const { categoryName, signOutDatetime, signInDatetime, fullName } =
               user;
-            const timeIn = moment(signInDatetime).format("LL, LT");
+            const timeIn = format(new Date(signInDatetime), timeFormat);
             const timeOut = signOutDatetime
-              ? moment(signOutDatetime).format("LL, LT")
+              ? format(new Date(signOutDatetime), timeFormat)
               : null;
 
             const hours = signOutDatetime
-              ? diffDates(signOutDatetime, signInDatetime, "hours")
+              ? `- ${differenceInHours(
+                  new Date(signOutDatetime),
+                  new Date(signInDatetime)
+                )} horas`
               : "Presente";
 
             const presentTime = `[${timeIn}${

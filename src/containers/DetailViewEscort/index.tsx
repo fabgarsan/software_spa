@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { API_ROUTES, INSTANCES_NAMES, diffDates } from "@utils/index";
+import { API_ROUTES, INSTANCES_NAMES } from "@utils/index";
 import { useCRUDGenericApiCall } from "@hooks/index";
 import {
   DetailViewGeneric,
@@ -13,6 +13,7 @@ import {
   addEscortService,
   removeEscortService,
 } from "@api/user";
+import { differenceInHours } from "date-fns";
 
 const DetailViewEscort: React.FunctionComponent = () => {
   const { id } = useParams();
@@ -42,7 +43,10 @@ const DetailViewEscort: React.FunctionComponent = () => {
         {
           label: "Edad",
           value: instanceData.dateOfBirth
-            ? diffDates(new Date(), instanceData.dateOfBirth, "years")
+            ? `${differenceInHours(
+                new Date(),
+                new Date(instanceData.dateOfBirth)
+              )} Horas`
             : "",
         },
         {
