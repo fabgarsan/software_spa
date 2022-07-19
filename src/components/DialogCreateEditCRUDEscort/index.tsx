@@ -64,11 +64,10 @@ const DialogCreateEditEscort: React.FunctionComponent<
     setError,
   } = useForm<Escort>({ resolver });
   useEffect(() => {
-    const getCategories = async () => {
+    (async () => {
       const response = await fetchAllPagination(10, 0, {});
       setCategories(response.results);
-    };
-    getCategories();
+    })();
   }, [fetchAllPagination]);
 
   useEffect(() => {

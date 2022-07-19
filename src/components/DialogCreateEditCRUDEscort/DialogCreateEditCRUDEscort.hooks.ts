@@ -22,7 +22,10 @@ const useValidation = () => {
             return differenceInYears(new Date(), value) >= 18;
           }),
         alias: yup.string().required(FORM_VALIDATIONS.REQUIRED_FIELD),
-        category: yup.number().required(FORM_VALIDATIONS.REQUIRED_FIELD),
+        category: yup
+          .number()
+          .required(FORM_VALIDATIONS.REQUIRED_FIELD)
+          .typeError(FORM_VALIDATIONS.REQUIRED_FIELD),
       }),
     []
   );
