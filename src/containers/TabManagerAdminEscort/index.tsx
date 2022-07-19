@@ -2,26 +2,36 @@ import React from "react";
 import {
   CRUDAdminEscort,
   CRUDAdminEscortCategory,
+  CRUDAdminEscortCategoryRate,
   CRUDAdminEscortServices,
 } from "@containers/index";
 import { TabManager } from "@components/index";
-import { INSTANCES_NAMES } from "@utils/constants";
+import { instancesDescriptor, InstancesDescriptorKeys } from "@utils/index";
+
+const { escort, escortCategory, escortCategoryRate, escortService } =
+  InstancesDescriptorKeys;
+
+const getTabName = (descriptorKey: InstancesDescriptorKeys) =>
+  instancesDescriptor[descriptorKey]?.tab || "";
+const tabManagerName = instancesDescriptor[escort].plural;
 
 const TabManagerAdminEscort = () => {
   return (
     <TabManager
       labels={[
-        INSTANCES_NAMES.ESCORT_SINGULAR,
-        INSTANCES_NAMES.ESCORT_CATEGORIES_SINGULAR,
-        INSTANCES_NAMES.ESCORT_SERVICE_SINGULAR,
+        getTabName(escort),
+        getTabName(escortCategory),
+        getTabName(escortCategoryRate),
+        getTabName(escortService),
       ]}
-      title={INSTANCES_NAMES.ESCORT_PLURAL}
+      title={tabManagerName}
     >
       {({ tabIndex }) => (
         <>
           {tabIndex === 0 && <CRUDAdminEscort />}
           {tabIndex === 1 && <CRUDAdminEscortCategory />}
-          {tabIndex === 2 && <CRUDAdminEscortServices />}
+          {tabIndex === 2 && <CRUDAdminEscortCategoryRate />}
+          {tabIndex === 3 && <CRUDAdminEscortServices />}
         </>
       )}
     </TabManager>

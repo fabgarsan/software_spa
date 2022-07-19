@@ -3,13 +3,6 @@ export {
   ERROR_MESSAGES,
   DIALOG_MESSAGES,
   NOTIFICATION_MESSAGES,
-  DRAWER,
-  INSTANCES_NAMES,
-  FORM_VALIDATIONS,
-  UI,
-  FORM_FIELDS,
-  TABLE_HEADERS,
-  TABLE_PAGINATOR,
   API_ROUTES,
   CONTAINERS,
   PERMISSION_INSTANCES,
@@ -27,3 +20,16 @@ export {
 } from "./typeGuards";
 
 export { setFormError, setFormValue } from "./functions";
+export {
+  TABLE_PAGINATOR,
+  TABLE_HEADERS,
+  FORM_FIELDS,
+  UI,
+  FORM_VALIDATIONS,
+  DRAWER,
+} from "@utils/constantsUI";
+export {
+  instancesDescriptor,
+  InstancesDescriptorKeys,
+} from "@utils/instancesDescriptors";
+export type { InstancesDescriptorValue } from "@utils/instancesDescriptors";

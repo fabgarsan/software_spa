@@ -1,6 +1,6 @@
-import { GenericPermission } from "@utils/constants";
 import { useSelector } from "react-redux";
 import { permissions as statePermissions } from "@stores/permissionSlice";
+import { GenericPermission } from "@utils/instancesDescriptors";
 
 type CheckedGenericPermissions = {
   LIST: boolean;

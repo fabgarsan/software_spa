@@ -20,12 +20,12 @@ import {
 } from "@components/index";
 import {
   DIALOG_MESSAGES,
-  INSTANCES_NAMES,
   UI,
   FORM_FIELDS,
-  API_ROUTES,
   setFormError,
   setFormValue,
+  InstancesDescriptorKeys,
+  instancesDescriptor,
 } from "@utils/index";
 
 import { CRUDDefaultFormProps } from "@hoc/index";
@@ -34,6 +34,11 @@ import createStyles from "@mui/styles/createStyles";
 import makeStyles from "@mui/styles/makeStyles";
 import { useCRUDGenericApiCall } from "@hooks/index";
 import useValidation from "./DialogCreateEditCRUDEscort.hooks";
+
+const { escort, escortCategory } = InstancesDescriptorKeys;
+
+const instanceDescriptorEscort = instancesDescriptor[escort];
+const instanceDescriptorEscortCategory = instancesDescriptor[escortCategory];
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -53,7 +58,7 @@ const DialogCreateEditEscort: React.FunctionComponent<
   const resolver = useValidation();
   const classes = useStyles();
   const { fetchAllPagination } = useCRUDGenericApiCall<EscortCategory>(
-    API_ROUTES.ESCORT_CATEGORY
+    instanceDescriptorEscortCategory.apiRoute || ""
   );
   const [categories, setCategories] = useState<EscortCategory[]>();
   const {
@@ -97,7 +102,7 @@ const DialogCreateEditEscort: React.FunctionComponent<
     <DialogCreateEditBase
       open={open}
       title={DIALOG_MESSAGES.CRUD_CREATE_EDIT_DIALOG_TITLE(
-        INSTANCES_NAMES.ESCORT_SINGULAR,
+        instanceDescriptorEscort.singular,
         Boolean(instance)
       )}
     >

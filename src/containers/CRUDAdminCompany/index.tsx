@@ -5,11 +5,7 @@ import {
   TableCRUDCompany,
   DialogCreateEditCRUDCompany,
 } from "@components/index";
-import {
-  INSTANCES_NAMES,
-  API_ROUTES,
-  PERMISSION_INSTANCES,
-} from "@utils/index";
+import { InstancesDescriptorKeys, instancesDescriptor } from "@utils/index";
 
 import { useCRUDGenericApiCall } from "@hooks/index";
 
@@ -18,14 +14,14 @@ const DetailViewHOC = withCRUD<Company>(
   TableCRUDCompany
 );
 
+const instanceDescriptor = instancesDescriptor[InstancesDescriptorKeys.company];
+
 const CRUDAdminCompany: React.FunctionComponent = () => {
   const { fetchAllPagination, create, destroy, fetch, edit } =
-    useCRUDGenericApiCall<Company>(API_ROUTES.COMPANIES);
+    useCRUDGenericApiCall<Company>(instanceDescriptor?.apiRoute || "");
   return (
     <DetailViewHOC
-      genericPermission={PERMISSION_INSTANCES.COMPANY.GENERIC}
-      instanceNamePlural={INSTANCES_NAMES.COMPANY_PLURAL}
-      instanceNameSingular={INSTANCES_NAMES.COMPANY_SINGULAR}
+      instancesDescriptorValue={instanceDescriptor}
       toStringField="name"
       idField="id"
       fetchAllPaginationMethod={fetchAllPagination}

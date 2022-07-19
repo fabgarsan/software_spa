@@ -1,5 +1,5 @@
 import React from "react";
-import { FORMATS, FORM_FIELDS, SYSTEM_CONFIGURATION } from "@utils/constants";
+import { FORMATS, SYSTEM_CONFIGURATION } from "@utils/constants";
 import { DatePicker } from "@mui/lab";
 import { Grid, TextField } from "@mui/material";
 import { Theme } from "@mui/material/styles";
@@ -7,6 +7,7 @@ import { Theme } from "@mui/material/styles";
 import createStyles from "@mui/styles/createStyles";
 import makeStyles from "@mui/styles/makeStyles";
 import { zonedTimeToUtc } from "date-fns-tz";
+import { FORM_FIELDS } from "@utils/constantsUI";
 
 interface DatePickerRangeProps {
   onDateFromChange: (date: string | null) => void;

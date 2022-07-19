@@ -10,14 +10,18 @@ import {
 } from "@components/index";
 import {
   DIALOG_MESSAGES,
-  INSTANCES_NAMES,
   UI,
   setFormError,
   setFormValue,
+  InstancesDescriptorKeys,
+  instancesDescriptor,
 } from "@utils/index";
 
 import { CRUDDefaultFormProps } from "@hoc/index";
 import useValidation from "./DialogCreateEditCRUDEmployee.hooks";
+
+const instanceDescriptor =
+  instancesDescriptor[InstancesDescriptorKeys.employee];
 
 const DialogCreateEditEscort: React.FunctionComponent<
   CRUDDefaultFormProps<ExtendedUser>
@@ -63,7 +67,7 @@ const DialogCreateEditEscort: React.FunctionComponent<
     <DialogCreateEditBase
       open={open}
       title={DIALOG_MESSAGES.CRUD_CREATE_EDIT_DIALOG_TITLE(
-        INSTANCES_NAMES.ESCORT_SINGULAR,
+        instanceDescriptor.singular,
         Boolean(instance)
       )}
     >

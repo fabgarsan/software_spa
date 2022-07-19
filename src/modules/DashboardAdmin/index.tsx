@@ -5,8 +5,9 @@ import { IconList } from "@components/Drawer";
 import {
   Paths,
   DRAWER,
-  PERMISSION_INSTANCES,
   PERMISSION_MODULES,
+  instancesDescriptor,
+  InstancesDescriptorKeys,
 } from "@utils/index";
 import {
   CRUDAdminCompany,
@@ -20,6 +21,18 @@ import {
   useCheckPermissions,
 } from "@hooks/index";
 
+const instanceDescriptorUser =
+  instancesDescriptor[InstancesDescriptorKeys.users];
+
+const instanceDescriptorEscortCategory =
+  instancesDescriptor[InstancesDescriptorKeys.escortCategory];
+
+const instanceDescriptorEmployee =
+  instancesDescriptor[InstancesDescriptorKeys.employee];
+
+const instanceDescriptorCompany =
+  instancesDescriptor[InstancesDescriptorKeys.company];
+
 const DashboardAdmin: React.FunctionComponent = () => {
   const navigate = useNavigate();
 
@@ -28,15 +41,16 @@ const DashboardAdmin: React.FunctionComponent = () => {
       text: DRAWER.MODULE_ADMIN_MENU_USERS,
       icon: "users",
       onClick: () => navigate(Paths.moduleAdminUsers),
-      show: useCheckGenericUserPermissions(PERMISSION_INSTANCES.USER.GENERIC)
-        .HAS_ANY,
+      show: useCheckGenericUserPermissions(
+        instanceDescriptorUser.permissions.generic
+      ).HAS_ANY,
     },
     {
       text: DRAWER.MODULE_ADMIN_MENU_ESCORTS,
       icon: "user-nurse",
       onClick: () => navigate(Paths.moduleAdminEscorts),
       show: useCheckGenericUserPermissions(
-        PERMISSION_INSTANCES.ESCORT_CATEGORY.GENERIC
+        instanceDescriptorEscortCategory.permissions.generic
       ).HAS_ANY,
     },
     {
@@ -44,15 +58,16 @@ const DashboardAdmin: React.FunctionComponent = () => {
       icon: "user-hard-hat",
       onClick: () => navigate(Paths.moduleAdminEmployees),
       show: useCheckGenericUserPermissions(
-        PERMISSION_INSTANCES.EMPLOYEE.GENERIC
+        instanceDescriptorEmployee.permissions.generic
       ).HAS_ANY,
     },
     {
       text: DRAWER.MODULE_ADMIN_MENU_COMPANIES,
       icon: "building",
       onClick: () => navigate(Paths.moduleAdminCompanies),
-      show: useCheckGenericUserPermissions(PERMISSION_INSTANCES.COMPANY.GENERIC)
-        .HAS_ANY,
+      show: useCheckGenericUserPermissions(
+        instanceDescriptorCompany.permissions.generic
+      ).HAS_ANY,
     },
   ];
 

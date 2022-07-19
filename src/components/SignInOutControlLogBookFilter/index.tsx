@@ -11,14 +11,10 @@ import {
   TextField,
 } from "@mui/material";
 import { DatePickerRange } from "@components/index";
-import {
-  FORM_FIELDS,
-  FORMATS,
-  SYSTEM_CONFIGURATION,
-  UI,
-} from "@utils/constants";
+import { FORMATS, SYSTEM_CONFIGURATION } from "@utils/constants";
 import { DatePicker } from "@mui/lab";
 import { zonedTimeToUtc } from "date-fns-tz";
+import { FORM_FIELDS, UI } from "@utils/constantsUI";
 
 interface SignInOutControlLogBookFilterProps {
   dateTo: string;
@@ -47,8 +43,6 @@ const SignInOutControlLogBookFilter = ({
   onFilterTypeChange,
   onSearch,
 }: SignInOutControlLogBookFilterProps) => {
-  console.log(date, "LA CARGADA");
-  console.log(zonedTimeToUtc(date, "America/Bogota"), "LA CARGADA 2");
   return (
     <Grid container>
       <Grid item xs={12} sm={6}>

@@ -1,25 +1,26 @@
 import React from "react";
 import { withCRUD } from "@hoc/index";
-import { EscortCategory } from "@dto/escorts";
+import { EscortCategoryRate } from "@dto/escorts";
 import {
-  DialogCreateEditCRUDEscortCategory,
-  TableCRUDEscortCategory,
+  DialogCreateEditCRUDEscortCategoryRate,
+  TableCRUDEscortCategoryRate,
 } from "@components/index";
 import { instancesDescriptor, InstancesDescriptorKeys } from "@utils/index";
 
 import { useCRUDGenericApiCall } from "@hooks/index";
 
-const DetailViewHOC = withCRUD<EscortCategory>(
-  DialogCreateEditCRUDEscortCategory,
-  TableCRUDEscortCategory
+const DetailViewHOC = withCRUD<EscortCategoryRate>(
+  DialogCreateEditCRUDEscortCategoryRate,
+  TableCRUDEscortCategoryRate
 );
-
 const instanceDescriptor =
-  instancesDescriptor[InstancesDescriptorKeys.escortCategory];
+  instancesDescriptor[InstancesDescriptorKeys.escortCategoryRate];
 
-const CRUDAdminEscortCategory: React.FunctionComponent = () => {
+const CRUDAdminEscortCategoryRate: React.FunctionComponent = () => {
   const { fetchAllPagination, create, destroy, fetch, edit } =
-    useCRUDGenericApiCall<EscortCategory>(instanceDescriptor?.apiRoute || "");
+    useCRUDGenericApiCall<EscortCategoryRate>(
+      instanceDescriptor?.apiRoute || ""
+    );
   return (
     <DetailViewHOC
       instancesDescriptorValue={instanceDescriptor}
@@ -35,4 +36,4 @@ const CRUDAdminEscortCategory: React.FunctionComponent = () => {
     />
   );
 };
-export default CRUDAdminEscortCategory;
+export default CRUDAdminEscortCategoryRate;

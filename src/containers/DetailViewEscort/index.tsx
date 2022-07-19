@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { API_ROUTES, INSTANCES_NAMES } from "@utils/index";
+import {
+  API_ROUTES,
+  InstancesDescriptorKeys,
+  instancesDescriptor,
+} from "@utils/index";
 import { useCRUDGenericApiCall } from "@hooks/index";
 import {
   DetailViewGeneric,
@@ -15,19 +19,26 @@ import {
 } from "@api/user";
 import { differenceInHours } from "date-fns";
 
+const { escort: escortDescriptorKey, escortService } = InstancesDescriptorKeys;
+
+const instanceDescriptorEscort = instancesDescriptor[escortDescriptorKey];
+const instanceDescriptorEscortService = instancesDescriptor[escortService];
+
 const DetailViewEscort: React.FunctionComponent = () => {
-  const { id } = useParams();
+  const { id: escortId } = useParams();
   const [instanceData, setInstanceData] = useState<Escort | null>(null);
   const [servicesData, setServicesData] = useState<EscortService[]>([]);
   const [imagesData, setImagesData] = useState<EscortImage[]>([]);
-  const { fetch } = useCRUDGenericApiCall<Escort>(API_ROUTES.USER);
+  const { fetch } = useCRUDGenericApiCall<Escort>(
+    instanceDescriptorEscort.apiRoute || ""
+  );
   const {
     fetchAll: fetchAllImages,
     destroy: deleteImage,
     edit: editImage,
   } = useCRUDGenericApiCall<EscortImage>(API_ROUTES.ESCORT_IMAGES);
   const { fetchAll: fetchAllServices } = useCRUDGenericApiCall<EscortService>(
-    API_ROUTES.ESCORT_SERVICES
+    instanceDescriptorEscortService.apiRoute || ""
   );
   const attributes = instanceData
     ? [
@@ -60,37 +71,39 @@ const DetailViewEscort: React.FunctionComponent = () => {
     : [];
   const fetchImages = async () => {
     const images = await fetchAllImages({
-      extended_user__user_id: id,
+      extended_user__user_id: escortId,
       ordering: "-created",
     });
     setImagesData(images);
   };
   useEffect(() => {
-    const fetchData = async () => {
-      if (id) {
+    (async () => {
+      if (escortId) {
         const [escort, services, images] = await Promise.all([
-          fetch(id),
+          fetch(escortId),
           fetchAllServices(),
-          fetchAllImages({ extended_user__user_id: id, ordering: "-created" }),
+          fetchAllImages({
+            extended_user__user_id: escortId,
+            ordering: "-created",
+          }),
         ]);
         setServicesData(services);
         setInstanceData(escort);
         setImagesData(images);
       }
-    };
-    fetchData();
+    })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [id]);
+  }, [escortId]);
   const onCheckService = async (serviceId: number, checked: boolean) => {
-    if (id) {
-      if (checked) await addEscortService(id, { serviceId });
-      if (!checked) await removeEscortService(id, { serviceId });
-      const data = await fetch(id);
+    if (escortId) {
+      if (checked) await addEscortService(escortId, { serviceId });
+      if (!checked) await removeEscortService(escortId, { serviceId });
+      const data = await fetch(escortId);
       setInstanceData(data);
     }
   };
   const onUploadImage = async (file: Blob, imageType: "P" | "I") => {
-    if (id) await uploadEscortImage(id, file, imageType);
+    if (escortId) await uploadEscortImage(escortId, file, imageType);
     await fetchImages();
   };
   const onDeleteImage = async (imageId: number) => {
@@ -105,7 +118,7 @@ const DetailViewEscort: React.FunctionComponent = () => {
   return (
     <DetailViewGeneric
       canView
-      title={`${INSTANCES_NAMES.ESCORT_SINGULAR} ${instanceData?.alias}`}
+      title={`${instanceDescriptorEscort.singular} ${instanceData?.alias}`}
       attributes={attributes}
     >
       {instanceData && servicesData?.length > 0 && (

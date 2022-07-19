@@ -22,6 +22,13 @@ export interface EscortCategory {
   order: number;
 }
 
+export interface EscortCategoryRate {
+  id: number;
+  name: string;
+  minutes: number;
+  value: number;
+}
+
 export interface Escort extends ExtendedUser {
   categoryName: string;
   alias: string;

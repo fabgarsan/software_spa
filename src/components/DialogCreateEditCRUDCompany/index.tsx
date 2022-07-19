@@ -6,15 +6,18 @@ import { Company } from "@dto/companies";
 import { DialogCreateEditBase } from "@components/index";
 import {
   DIALOG_MESSAGES,
-  INSTANCES_NAMES,
   UI,
   setFormError,
   setFormValue,
   FORM_FIELDS,
+  InstancesDescriptorKeys,
+  instancesDescriptor,
 } from "@utils/index";
 
 import { CRUDDefaultFormProps } from "@hoc/index";
 import useValidation from "./DialogCreateEditCRUDCompany.hooks";
+
+const instanceDescriptor = instancesDescriptor[InstancesDescriptorKeys.company];
 
 const DialogCreateEditCRUDCompany: React.FunctionComponent<
   CRUDDefaultFormProps<Company>
@@ -43,7 +46,7 @@ const DialogCreateEditCRUDCompany: React.FunctionComponent<
     <DialogCreateEditBase
       open={open}
       title={DIALOG_MESSAGES.CRUD_CREATE_EDIT_DIALOG_TITLE(
-        INSTANCES_NAMES.COMPANY_PLURAL,
+        instanceDescriptor.plural,
         Boolean(instance)
       )}
     >

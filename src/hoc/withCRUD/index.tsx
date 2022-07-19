@@ -10,7 +10,6 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useCheckGenericUserPermissions, useNotifications } from "@hooks/index";
 import { DialogConfirmation } from "@components/index";
-import { GenericPermission } from "@utils/constants";
 import {
   DIALOG_MESSAGES,
   isNumber,
@@ -18,6 +17,7 @@ import {
   NOTIFICATION_MESSAGES,
   UI,
   TABLE_PAGINATOR,
+  InstancesDescriptorValue,
 } from "@utils/index";
 import { AxiosResponseListPaginationData } from "@dto/common";
 import NoViewDisplayAllowed from "@components/NoViewDisplayAllowed";
@@ -47,9 +47,7 @@ export interface CRUDDefaultFormProps<E> {
 
 interface DefaultCRUDProps<E> {
   viewUrl?: string;
-  genericPermission: GenericPermission;
-  instanceNameSingular: string;
-  instanceNamePlural: string;
+  instancesDescriptorValue: InstancesDescriptorValue;
   toStringField: keyof E;
   idField: keyof E;
   deleteMethod?: (id: number) => void;
@@ -71,7 +69,7 @@ const index = <ElementInterface,>(
   Table: React.FC<CRUDDefaultTableProps<ElementInterface>> | null
 ) => {
   const CRUD: React.FC<DefaultCRUDProps<ElementInterface>> = ({
-    instanceNamePlural,
+    instancesDescriptorValue,
     toStringField,
     deleteMethod,
     createMethod,
@@ -80,15 +78,15 @@ const index = <ElementInterface,>(
     fetchMethod,
     fetchAllPaginationMethod,
     idField,
-    instanceNameSingular,
     fetchAllParams,
     hasSearch,
     withTitle,
-    genericPermission,
   }: DefaultCRUDProps<ElementInterface>) => {
     const { createSuccessNotification } = useNotifications();
     const [searchText, setSearchText] = useState<string>("");
-    const permissions = useCheckGenericUserPermissions(genericPermission);
+    const permissions = useCheckGenericUserPermissions(
+      instancesDescriptorValue.permissions.generic
+    );
 
     const showAddButton = Form && createMethod && permissions.ADD;
     const showList = Table && fetchAllPaginationMethod && permissions.LIST;
@@ -139,7 +137,7 @@ const index = <ElementInterface,>(
             await handleOnFetchAll();
             createSuccessNotification(
               NOTIFICATION_MESSAGES.CRUD_DELETE_SUCCESS(
-                instanceNameSingular,
+                instancesDescriptorValue.singular,
                 setIfNotString(element[toStringField])
               )
             );
@@ -165,7 +163,7 @@ const index = <ElementInterface,>(
             const data = await editMethod(elementId, formValues);
             dispatchElementActions({ type: "closeSaveEditDialog" });
             const message = NOTIFICATION_MESSAGES.CRUD_SUCCESS_ON_EDIT(
-              instanceNameSingular,
+              instancesDescriptorValue.singular,
               setIfNotString(data[toStringField])
             );
             createSuccessNotification(message, 5000);
@@ -174,7 +172,7 @@ const index = <ElementInterface,>(
           const data = await createMethod(formValues);
           dispatchElementActions({ type: "closeSaveEditDialog" });
           const message = NOTIFICATION_MESSAGES.CRUD_SUCCESS_ON_SAVE(
-            instanceNameSingular,
+            instancesDescriptorValue.singular,
             setIfNotString(data[toStringField])
           );
           createSuccessNotification(message);
@@ -213,19 +211,20 @@ const index = <ElementInterface,>(
 
     useEffect(() => {
       let mounted = true;
-      const loadAll = async () => {
-        if (mounted) {
-          await handleOnFetchAll();
-        }
-      };
-      loadAll();
+      (async () => {
+        if (mounted) await handleOnFetchAll();
+      })();
       return () => {
         mounted = false;
       };
     }, [handleOnFetchAll]);
 
     if (!permissions.HAS_ANY) {
-      return <NoViewDisplayAllowed instanceNamePlural={instanceNamePlural} />;
+      return (
+        <NoViewDisplayAllowed
+          instanceNamePlural={instancesDescriptorValue.plural}
+        />
+      );
     }
 
     return (
@@ -234,10 +233,10 @@ const index = <ElementInterface,>(
           elementActionsState.element && (
             <DialogConfirmation
               title={DIALOG_MESSAGES.CRUD_DELETE_DIALOG_TITLE(
-                instanceNameSingular
+                instancesDescriptorValue.singular
               )}
               message={DIALOG_MESSAGES.CRUD_DELETE_DIALOG_TEXT(
-                instanceNameSingular,
+                instancesDescriptorValue.singular,
                 setIfNotString(elementActionsState.element[toStringField])
               )}
               open={elementActionsState.openDeleteDialog}
@@ -261,7 +260,7 @@ const index = <ElementInterface,>(
           <Grid item sm={8} xs={12}>
             {withTitle && (
               <Typography variant="h5" gutterBottom color="primary">
-                {instanceNamePlural}
+                {instancesDescriptorValue.singular}
               </Typography>
             )}
           </Grid>

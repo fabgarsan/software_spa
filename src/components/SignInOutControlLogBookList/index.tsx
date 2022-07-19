@@ -1,13 +1,19 @@
 import React from "react";
 import { SignInControl } from "@dto/authentication";
 import { Typography, List, ListItem, ListItemText, Grid } from "@mui/material";
-import { INSTANCES_NAMES } from "@utils/index";
 import { format } from "date-fns";
 import { differenceInHours } from "date-fns";
+import { InstancesDescriptorKeys, instancesDescriptor } from "@utils/index";
 
 interface SignInOutControlListProps {
   list: SignInControl[];
 }
+
+const instanceDescriptorEscort =
+  instancesDescriptor[InstancesDescriptorKeys.escort];
+
+const instanceDescriptorEmployee =
+  instancesDescriptor[InstancesDescriptorKeys.employee];
 
 const timeFormat = "LLLL dd, KK:mm:ss aaa";
 
@@ -60,9 +66,9 @@ const SignInOutControlLogBookList = ({ list }: SignInOutControlListProps) => {
   return (
     <Grid container>
       {Boolean(escorts.length) &&
-        renderList(escorts, INSTANCES_NAMES.ESCORT_PLURAL)}
+        renderList(escorts, instanceDescriptorEscort.plural)}
       {Boolean(employees.length) &&
-        renderList(employees, INSTANCES_NAMES.EMPLOYEE_PLURAL)}
+        renderList(employees, instanceDescriptorEmployee.plural)}
     </Grid>
   );
 };

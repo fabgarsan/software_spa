@@ -5,11 +5,7 @@ import {
   DialogCreateEditCRUDEscortService,
   TableCRUDEscortService,
 } from "@components/index";
-import {
-  INSTANCES_NAMES,
-  API_ROUTES,
-  PERMISSION_INSTANCES,
-} from "@utils/index";
+import { instancesDescriptor, InstancesDescriptorKeys } from "@utils/index";
 
 import { useCRUDGenericApiCall } from "@hooks/index";
 
@@ -17,15 +13,15 @@ const DetailViewHOC = withCRUD<EscortService>(
   DialogCreateEditCRUDEscortService,
   TableCRUDEscortService
 );
+const instanceDescriptor =
+  instancesDescriptor[InstancesDescriptorKeys.escortService];
 
 const CRUDAdminEscortServices: React.FunctionComponent = () => {
   const { fetchAllPagination, create, destroy, fetch, edit } =
-    useCRUDGenericApiCall<EscortService>(API_ROUTES.ESCORT_SERVICES);
+    useCRUDGenericApiCall<EscortService>(instanceDescriptor?.apiRoute || "");
   return (
     <DetailViewHOC
-      genericPermission={PERMISSION_INSTANCES.ESCORT_SERVICE.GENERIC}
-      instanceNamePlural={INSTANCES_NAMES.ESCORT_SERVICE_PLURAL}
-      instanceNameSingular={INSTANCES_NAMES.ESCORT_SERVICE_SINGULAR}
+      instancesDescriptorValue={instanceDescriptor}
       toStringField="name"
       idField="id"
       fetchAllPaginationMethod={fetchAllPagination}

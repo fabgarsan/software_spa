@@ -6,15 +6,19 @@ import { EscortService } from "@dto/escorts";
 import { DialogCreateEditBase } from "@components/index";
 import {
   DIALOG_MESSAGES,
-  INSTANCES_NAMES,
   UI,
   FORM_FIELDS,
   setFormError,
   setFormValue,
+  InstancesDescriptorKeys,
+  instancesDescriptor,
 } from "@utils/index";
 
 import { CRUDDefaultFormProps } from "@hoc/index";
 import useValidation from "./DialogCreateEditCRUDEscortService.validation";
+
+const instanceDescriptor =
+  instancesDescriptor[InstancesDescriptorKeys.escortService];
 
 const DialogCreateEditEscortService: React.FunctionComponent<
   CRUDDefaultFormProps<EscortService>
@@ -42,7 +46,7 @@ const DialogCreateEditEscortService: React.FunctionComponent<
     <DialogCreateEditBase
       open={open}
       title={DIALOG_MESSAGES.CRUD_CREATE_EDIT_DIALOG_TITLE(
-        INSTANCES_NAMES.ESCORT_SERVICE_SINGULAR,
+        instanceDescriptor.singular,
         Boolean(instance)
       )}
     >

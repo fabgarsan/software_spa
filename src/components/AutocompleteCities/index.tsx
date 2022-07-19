@@ -4,7 +4,7 @@ import { fetchCities } from "@api/index";
 import { CitySearch } from "@dto/geography";
 import { useDebounce } from "@hooks/index";
 import { CircularProgress, Autocomplete } from "@mui/material";
-import { FORM_FIELDS } from "@utils/constants";
+import { FORM_FIELDS } from "@utils/constantsUI";
 
 interface CityOption {
   id: number;

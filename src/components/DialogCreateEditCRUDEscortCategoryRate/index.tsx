@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Button from "@mui/material/Button";
 import { TextField, DialogActions, Box, Grid } from "@mui/material";
 import { useForm, Controller } from "react-hook-form";
-import { EscortCategory } from "@dto/escorts";
+import { EscortCategoryRate } from "@dto/escorts";
 import { DialogCreateEditBase } from "@components/index";
 import {
   DIALOG_MESSAGES,
@@ -21,13 +21,13 @@ const instanceDescriptor =
   instancesDescriptor[InstancesDescriptorKeys.escortCategory];
 
 const DialogCreateEditEscortCategory: React.FunctionComponent<
-  CRUDDefaultFormProps<EscortCategory>
+  CRUDDefaultFormProps<EscortCategoryRate>
 > = ({
   open,
   handleClose,
   onSave,
   instance,
-}: CRUDDefaultFormProps<EscortCategory>) => {
+}: CRUDDefaultFormProps<EscortCategoryRate>) => {
   const resolver = useDialogCreateEditCRUDEscortCategoryValidation();
   const {
     handleSubmit,
@@ -35,11 +35,11 @@ const DialogCreateEditEscortCategory: React.FunctionComponent<
     formState: { errors: formErrors },
     setValue,
     setError,
-  } = useForm<EscortCategory>({ resolver });
+  } = useForm<EscortCategoryRate>({ resolver });
 
   useEffect(() => {
     if (instance) {
-      setFormValue<EscortCategory>(setValue, instance);
+      setFormValue<EscortCategoryRate>(setValue, instance);
     }
   }, [instance, setValue]);
   return (
@@ -56,7 +56,7 @@ const DialogCreateEditEscortCategory: React.FunctionComponent<
           try {
             await onSave({ ...data, name: data.name?.toUpperCase() });
           } catch (errors) {
-            setFormError<EscortCategory>(setError, errors);
+            setFormError<EscortCategoryRate>(setError, errors);
           }
         })}
       >
@@ -82,7 +82,7 @@ const DialogCreateEditEscortCategory: React.FunctionComponent<
           </Grid>
           <Grid item xs={12}>
             <Controller
-              name="order"
+              name="minutes"
               control={control}
               defaultValue={0}
               render={({ field }) => (
@@ -91,8 +91,8 @@ const DialogCreateEditEscortCategory: React.FunctionComponent<
                   fullWidth
                   label={FORM_FIELDS.ESCORT_CATEGORIES.LABEL_ORDER}
                   variant="outlined"
-                  helperText={formErrors?.order?.message}
-                  error={Boolean(formErrors?.order)}
+                  helperText={formErrors?.minutes?.message}
+                  error={Boolean(formErrors?.minutes)}
                   autoComplete="off"
                 />
               )}

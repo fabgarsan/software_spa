@@ -1,7 +1,13 @@
 import React from "react";
 import { Escort } from "@dto/escorts";
 import { Grid, Typography, Box } from "@mui/material";
-import { INSTANCES_NAMES } from "@utils/constants";
+import { InstancesDescriptorKeys, instancesDescriptor } from "@utils/index";
+
+const instanceDescriptorEscort =
+  instancesDescriptor[InstancesDescriptorKeys.escort];
+
+const instanceDescriptorEmployee =
+  instancesDescriptor[InstancesDescriptorKeys.employee];
 
 interface SignInOutControlListProps {
   list: Escort[];
@@ -20,7 +26,7 @@ const SignInOutControlList = ({
       {Boolean(escorts.length) && (
         <>
           <Typography variant="h6" gutterBottom color="primary">
-            {INSTANCES_NAMES.ESCORT_PLURAL}
+            {instanceDescriptorEscort.plural}
           </Typography>
           <Box>
             <Grid container>
@@ -46,7 +52,7 @@ const SignInOutControlList = ({
       {Boolean(employees.length) && (
         <>
           <Typography variant="h6" gutterBottom color="primary">
-            {INSTANCES_NAMES.EMPLOYEE_PLURAL}
+            {instanceDescriptorEmployee.plural}
           </Typography>
           <Box>
             <Grid container>
