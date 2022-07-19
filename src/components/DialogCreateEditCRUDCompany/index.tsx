@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import Button from "@mui/material/Button";
 import { DialogActions, Box, Grid, TextField } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
-import { Company } from "../../dto/index";
+import { Company } from "@dto/companies";
 import { DialogCreateEditBase } from "@components/index";
 import {
   DIALOG_MESSAGES,
@@ -51,7 +51,10 @@ const DialogCreateEditCRUDCompany: React.FunctionComponent<
         component="form"
         onSubmit={handleSubmit(async (data) => {
           try {
-            await onSave(data);
+            await onSave({
+              ...data,
+              name: data.name.toUpperCase(),
+            });
           } catch (errors) {
             setFormError<Company>(setError, errors);
           }
