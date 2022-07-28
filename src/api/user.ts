@@ -8,13 +8,13 @@ export const addEscortService = (
   userId: string,
   data: { serviceId: number }
 ): Promise<AxiosResponse> =>
-  client.post(`${API_ROUTES.USER}${userId}/add-escort-service/`, data);
+  client.put(`${API_ROUTES.USER}${userId}/services/`, data);
 
 export const removeEscortService = (
   userId: string,
-  data: { serviceId: number }
+  serviceId: number
 ): Promise<AxiosResponse> =>
-  client.post(`${API_ROUTES.USER}${userId}/remove-escort-service/`, data);
+  client.delete(`${API_ROUTES.USER}${userId}/services/${serviceId}`);
 
 export const uploadEscortImage = (
   userId: string,

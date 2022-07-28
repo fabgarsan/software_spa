@@ -97,7 +97,7 @@ const DetailViewEscort: React.FunctionComponent = () => {
   const onCheckService = async (serviceId: number, checked: boolean) => {
     if (escortId) {
       if (checked) await addEscortService(escortId, { serviceId });
-      if (!checked) await removeEscortService(escortId, { serviceId });
+      if (!checked) await removeEscortService(escortId, serviceId);
       const data = await fetch(escortId);
       setInstanceData(data);
     }
