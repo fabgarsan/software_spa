@@ -1,7 +1,7 @@
 import React, { useMemo } from "react";
 import { Box } from "@mui/material";
 import { useSelector } from "react-redux";
-import { AlertTimer } from "@components/index";
+import { AlertTimer } from "@components/shared";
 import { AlertColor } from "@mui/lab";
 import {
   createNotification,
