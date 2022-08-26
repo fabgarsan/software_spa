@@ -1,6 +1,6 @@
 import React, { StrictMode } from "react";
 import "./App.css";
-import { MainRouter } from "@containers/index";
+import { MainRouter } from "@components//index";
 import { loadIcons } from "@theme/index";
 import { withInterceptorHandler } from "@hoc/index";
 import AdapterDateFns from "@mui/lab/AdapterDateFns";

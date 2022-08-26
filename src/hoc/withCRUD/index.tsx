@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useCheckGenericUserPermissions, useNotifications } from "@hooks/index";
-import { DialogConfirmation } from "@components/index";
+import { DialogConfirmation, NoViewDisplayAllowed } from "@components/shared";
 import {
   DIALOG_MESSAGES,
   isNumber,
@@ -20,7 +20,6 @@ import {
   InstancesDescriptorValue,
 } from "@utils/index";
 import { AxiosResponseListPaginationData } from "@dto/common";
-import NoViewDisplayAllowed from "@components/NoViewDisplayAllowed";
 import {
   reducerPagination,
   paginatorInitial,

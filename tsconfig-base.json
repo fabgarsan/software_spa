@@ -46,10 +46,6 @@
       "@hoc/*": [
         "src/hoc/*",
         "src/hoc/*/index"
-      ],
-      "@modules/*": [
-        "src/modules/*",
-        "src/modules/*/index"
       ]
     },
     "allowJs": true,

@@ -2,12 +2,8 @@ import React, { useEffect, useCallback, Suspense } from "react";
 import { AxiosError } from "axios";
 import { mainAxiosClientManager } from "@clients/axios";
 import { useAuth, useNotifications } from "@hooks/index";
-import {
-  Notify,
-  FormSignIn,
-  LoadingOverlay,
-  BackdropLoading,
-} from "@components/index";
+import { FormSignIn } from "@components/index";
+import { LoadingOverlay, BackdropLoading, Notify } from "@components/shared";
 import { theme } from "@theme/index";
 import {
   ThemeProvider,
