@@ -15,7 +15,7 @@ import { ExtendedUser } from "@dto/users";
 import { Theme } from "@mui/material/styles";
 import { createStyles, makeStyles } from "@mui/styles";
 
-import { DatePicker } from "@mui/lab";
+import { DatePicker } from "@mui/x-date-pickers";
 import { zonedTimeToUtc } from "date-fns-tz";
 import { differenceInYears } from "date-fns";
 
