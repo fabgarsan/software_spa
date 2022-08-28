@@ -1,10 +1,11 @@
 import React from "react";
 import { AxiosError } from "axios";
-import type { UseQueryResult } from "@tanstack/react-query";
+import type { UseQueryResult, UseMutationResult } from "@tanstack/react-query";
 
 type QueryErrorBoundaryProps = {
   children: JSX.Element;
-  queries: UseQueryResult<any, AxiosError>[];
+  queries?: UseQueryResult<any, AxiosError>[];
+  mutations?: UseMutationResult<any, AxiosError>[];
   showRefetchButton?: boolean;
 };
 
@@ -12,17 +13,18 @@ export const QueryErrorBoundary = ({
   showRefetchButton: canRefetch = false,
   children,
   queries,
+  mutations,
 }: QueryErrorBoundaryProps) => {
-  const areLoading = queries.some(({ isLoading }) => isLoading);
-  const hasError = queries.some(({ isError }) => isError);
+  const areLoadingQueries = queries?.some(({ isLoading }) => isLoading);
+  const hasErrorQueries = queries?.some(({ isError }) => isError);
 
-  if (areLoading) {
-    return <div>Loading</div>;
+  if (areLoadingQueries) {
+    return <div>Cargando...</div>;
   }
 
-  if (hasError) {
-    const queriesWithError = queries.filter(({ isError }) => isError);
-    const defaultMessage = `Failed to fetch data for ${queriesWithError.length} resources`;
+  if (hasErrorQueries) {
+    const queriesWithError = queries?.filter(({ isError }) => isError);
+    const defaultMessage = `Failed to fetch data for ${queriesWithError?.length} resources`;
     return (
       <div>
         <div>{defaultMessage}</div>
@@ -30,7 +32,7 @@ export const QueryErrorBoundary = ({
           <div>
             <div
               onClick={() => {
-                queriesWithError.forEach(({ refetch }) => refetch());
+                queriesWithError?.forEach(({ refetch }) => refetch());
               }}
             >
               Refresh

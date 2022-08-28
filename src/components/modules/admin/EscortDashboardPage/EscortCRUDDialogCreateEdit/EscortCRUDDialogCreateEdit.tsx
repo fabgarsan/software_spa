@@ -28,7 +28,7 @@ import {
   instancesDescriptor,
 } from "@utils/index";
 
-import { CRUDDefaultFormProps } from "@hoc/index";
+import { CRUDDefaultFormProps } from "@hoc/withCRUDReactQuery";
 import { Theme } from "@mui/material/styles";
 import createStyles from "@mui/styles/createStyles";
 import makeStyles from "@mui/styles/makeStyles";
@@ -54,7 +54,13 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const EscortCRUDDialogCreateEdit: React.FunctionComponent<
   CRUDDefaultFormProps<Escort>
-> = ({ open, handleClose, onSave, instance }: CRUDDefaultFormProps<Escort>) => {
+> = ({
+  open,
+  error: mutationErrors,
+  handleClose,
+  onSave,
+  instance,
+}: CRUDDefaultFormProps<Escort>) => {
   const resolver = useValidation();
   const classes = useStyles();
   const { fetchAllPagination } = useCRUDGenericApiCall<EscortCategory>(
@@ -80,6 +86,10 @@ export const EscortCRUDDialogCreateEdit: React.FunctionComponent<
       setFormValue<Escort>(setValue, instance);
     }
   }, [instance, setValue]);
+
+  useEffect(() => {
+    setFormError<Escort>(setError, mutationErrors);
+  }, [setError, mutationErrors]);
 
   const handleOnBlur = (
     dateOfBirth: Date,
@@ -109,18 +119,14 @@ export const EscortCRUDDialogCreateEdit: React.FunctionComponent<
       <Box
         component="form"
         onSubmit={handleSubmit(async (data) => {
-          try {
-            await onSave({
-              ...data,
-              gender: "F",
-              userType: "A",
-              alias: data.alias.toUpperCase(),
-              firstName: data.firstName.toUpperCase(),
-              lastName: data.lastName.toUpperCase(),
-            });
-          } catch (errors) {
-            setFormError<Escort>(setError, errors);
-          }
+          onSave({
+            ...data,
+            gender: "F",
+            userType: "A",
+            alias: data.alias.toUpperCase(),
+            firstName: data.firstName.toUpperCase(),
+            lastName: data.lastName.toUpperCase(),
+          });
         })}
       >
         <IDScanner onBlur={handleOnBlur}>

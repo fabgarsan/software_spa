@@ -14,7 +14,7 @@ import {
   instancesDescriptor,
 } from "@utils/index";
 
-import { CRUDDefaultFormProps } from "@hoc/index";
+import { CRUDDefaultFormProps } from "@hoc/withCRUDReactQuery";
 import useValidation from "./EscortServiceCRUDDialogCreateEdit.hooks";
 
 const instanceDescriptor =
@@ -24,6 +24,7 @@ export const EscortServiceCRUDDialogCreateEdit: React.FunctionComponent<
   CRUDDefaultFormProps<EscortService>
 > = ({
   open,
+  error: mutationErrors,
   handleClose,
   onSave,
   instance,
@@ -42,6 +43,10 @@ export const EscortServiceCRUDDialogCreateEdit: React.FunctionComponent<
       setFormValue<EscortService>(setValue, instance);
     }
   }, [instance, setValue]);
+
+  useEffect(() => {
+    setFormError<EscortService>(setError, mutationErrors);
+  }, [setError, mutationErrors]);
   return (
     <DialogCreateEditBase
       open={open}

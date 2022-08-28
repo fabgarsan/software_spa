@@ -14,7 +14,7 @@ import {
   instancesDescriptor,
 } from "@utils/index";
 
-import { CRUDDefaultFormProps } from "@hoc/index";
+import { CRUDDefaultFormProps } from "@hoc/withCRUDReactQuery";
 import useDialogCreateEditCRUDEscortCategoryValidation from "./EscortCategoryRateCRUDDialogCreateEdit.hooks";
 
 const instanceDescriptor =
@@ -24,6 +24,7 @@ export const EscortCategoryRateCRUDDialogCreateEdit: React.FunctionComponent<
   CRUDDefaultFormProps<EscortCategoryRate>
 > = ({
   open,
+  error: mutationErrors,
   handleClose,
   onSave,
   instance,
@@ -42,6 +43,10 @@ export const EscortCategoryRateCRUDDialogCreateEdit: React.FunctionComponent<
       setFormValue<EscortCategoryRate>(setValue, instance);
     }
   }, [instance, setValue]);
+
+  useEffect(() => {
+    setFormError<EscortCategoryRate>(setError, mutationErrors);
+  }, [setError, mutationErrors]);
   return (
     <DialogCreateEditBase
       open={open}
@@ -53,11 +58,7 @@ export const EscortCategoryRateCRUDDialogCreateEdit: React.FunctionComponent<
       <Box
         component="form"
         onSubmit={handleSubmit(async (data) => {
-          try {
-            await onSave({ ...data, name: data.name?.toUpperCase() });
-          } catch (errors) {
-            setFormError<EscortCategoryRate>(setError, errors);
-          }
+          onSave({ ...data, name: data.name?.toUpperCase() });
         })}
       >
         <Grid container>

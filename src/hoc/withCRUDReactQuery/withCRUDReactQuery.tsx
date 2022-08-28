@@ -92,7 +92,7 @@ export const withCRUDReactQuery = <ElementInterface,>(
     const showList = Table && permissions.LIST;
 
     const [paginatorState, dispatchPaginatorAction] = useReducer(
-      reducerPagination<ElementInterface>(),
+      reducerPagination(),
       paginatorInitial
     );
 
@@ -122,18 +122,20 @@ export const withCRUDReactQuery = <ElementInterface,>(
       fetchAllPaginationQueryResult;
 
     const { mutate: deleteMutation, isLoading: deleteMutationIsLoading } =
-      useDestroy(async () => {
-        await refetchList();
-        createSuccessNotification(
-          NOTIFICATION_MESSAGES.CRUD_DELETE_SUCCESS(
-            instancesDescriptorValue.singular,
-            setIfNotString(
-              elementActionsState.element &&
-                elementActionsState.element[toStringField]
+      useDestroy({
+        onSuccessCallBack: async () => {
+          await refetchList();
+          createSuccessNotification(
+            NOTIFICATION_MESSAGES.CRUD_DELETE_SUCCESS(
+              instancesDescriptorValue.singular,
+              setIfNotString(
+                elementActionsState.element &&
+                  elementActionsState.element[toStringField]
+              )
             )
-          )
-        );
-        dispatchElementActions({ type: "closeDeleteDialog" });
+          );
+          dispatchElementActions({ type: "closeDeleteDialog" });
+        },
       });
 
     const elementIdToFetch =
@@ -145,23 +147,26 @@ export const withCRUDReactQuery = <ElementInterface,>(
     const {
       isLoading: fetchQueryIsLoading,
       fetchStatus: fetchQueryFetchStatus,
-    } = useFetch(elementIdToFetch || "", (data) => {
-      const elementId = data[idField];
-      if (isNumber(elementId)) {
-        if (elementActionsState.fetchingForEdit) {
-          dispatchElementActions({
-            type: "openEditDialog",
-            element: data,
-            elementId,
-          });
-        } else if (elementActionsState.fetchingForDelete) {
-          dispatchElementActions({
-            type: "openDeleteDialog",
-            element: data,
-            elementId,
-          });
+    } = useFetch({
+      id: elementIdToFetch || "",
+      onSuccessCallBack: (element) => {
+        const elementId = element[idField];
+        if (isNumber(elementId)) {
+          if (elementActionsState.fetchingForEdit) {
+            dispatchElementActions({
+              type: "openEditDialog",
+              element,
+              elementId,
+            });
+          } else if (elementActionsState.fetchingForDelete) {
+            dispatchElementActions({
+              type: "openDeleteDialog",
+              element,
+              elementId,
+            });
+          }
         }
-      }
+      },
     });
 
     const {
@@ -170,7 +175,6 @@ export const withCRUDReactQuery = <ElementInterface,>(
       isLoading: editMutationIsLoading,
       error: editMutationError,
     } = useEdit({
-      id: elementActionsState?.elementId || "",
       onSuccessCallBack: async (data) => {
         await refetchList();
         createSuccessNotification(
@@ -200,8 +204,10 @@ export const withCRUDReactQuery = <ElementInterface,>(
       mutate: createMutation,
       isLoading: createMutationIsLoading,
       error: createMutationError,
-    } = useCreate(async (data) => {
-      await onCreateCallBack(data);
+    } = useCreate({
+      onSuccessCallBack: async (data) => {
+        await onCreateCallBack(data);
+      },
     });
 
     useEffect(() => {
@@ -237,7 +243,10 @@ export const withCRUDReactQuery = <ElementInterface,>(
     const handleOnSave = async (formValues: ElementInterface) => {
       try {
         if (elementActionsState.elementId) {
-          editMutation(formValues);
+          editMutation({
+            id: elementActionsState?.elementId || "",
+            dataEdit: formValues,
+          });
         } else {
           createMutation(formValues);
         }

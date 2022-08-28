@@ -4,13 +4,13 @@ import { Box, Typography } from "@mui/material";
 import { EscortImage } from "@dto/escorts";
 import { Ratio } from "@components/shared/ImageCropper";
 import { ImageListItem } from "../ImageListItem";
-import { ImageCropper } from "@components/shared";
+import { ImageCropper, BackdropLoading } from "@components/shared";
+import { useReactQueryCRUDGenericApiCall } from "@api/reactQueryApi";
+import { API_ROUTES } from "@utils/constants";
+import { useUploadEscortImageMutation } from "@api/user";
 
 interface ImageListProps {
-  uploadImage: (file: Blob, imageType: "I" | "P") => void;
-  deleteImage: (imageId: number) => void;
-  setPublished: (imageId: number, publishedWeb: boolean) => void;
-  images: EscortImage[];
+  escortId: string | undefined;
 }
 
 const ASPECT_RATIOS_PROFILE: { [name: string]: Ratio } = {
@@ -21,34 +21,47 @@ const ASPECT_RATIOS: { [name: string]: Ratio } = {
   "2 / 3": { ratio: 2 / 3, minWidth: 700 },
   "3 / 2": { ratio: 3 / 2, minWidth: 1200 },
 };
-export const ImageList = ({
-  images,
-  uploadImage,
-  setPublished,
-  deleteImage,
-}: ImageListProps) => {
-  const galleryImages = images.filter((img) => img.type === "I");
-  const profileImage = images.filter((img) => img.type === "P")[0];
+export const ImageList = ({ escortId }: ImageListProps) => {
+  const { useFetchAll: fetchImagesQuery } =
+    useReactQueryCRUDGenericApiCall<EscortImage>(API_ROUTES.ESCORT_IMAGES);
+  const {
+    data: imagesData,
+    isLoading: imagesQueryIsLoading,
+    refetch: refetchImageQuery,
+  } = fetchImagesQuery({
+    params: {
+      extended_user__user_id: escortId,
+      ordering: "-created",
+    },
+  });
+
+  const galleryImages = imagesData?.filter((img) => img.type === "I");
+  const profileImage = imagesData?.filter((img) => img.type === "P")[0];
+  const {
+    mutate: uploadEscortImageMutate,
+    isLoading: uploadImageMutateIsLoading,
+  } = useUploadEscortImageMutation({
+    escortId,
+    onSuccessCallBack: () => refetchImageQuery(),
+  });
+
   return (
     <Box paddingLeft={2}>
+      <BackdropLoading
+        isOpen={imagesQueryIsLoading || uploadImageMutateIsLoading}
+      />
       <Typography variant="h5">Imágenes Página Web</Typography>
       <Box paddingLeft={2}>
         <Typography variant="h6">Imágen de Perfil</Typography>
         <ImageCropper
           aspectRatios={ASPECT_RATIOS_PROFILE}
-          saveMethod={(blob) => uploadImage(blob, "P")}
+          saveMethod={(file) => uploadEscortImageMutate({ type: "P", file })}
         />
         <Box>
           {profileImage && (
             <ImageListItem
-              created={profileImage.created.toString()}
-              path={profileImage.image}
-              altTextEng={profileImage.altTextEng}
-              altText={profileImage.altText}
-              imageId={profileImage.id}
-              deleteImage={deleteImage}
-              publishedWeb={profileImage.publishedWeb}
-              setPublished={setPublished}
+              escortImage={profileImage}
+              refetchImage={refetchImageQuery}
             />
           )}
         </Box>
@@ -57,26 +70,20 @@ export const ImageList = ({
           <Box>
             <ImageCropper
               aspectRatios={ASPECT_RATIOS}
-              saveMethod={(blob) => uploadImage(blob, "I")}
+              saveMethod={(file) =>
+                uploadEscortImageMutate({ type: "I", file })
+              }
             />
           </Box>
           {galleryImages && (
             <Box display="flex" flexWrap="wrap">
-              {galleryImages.map(
-                ({ image, id, created, altTextEng, altText, publishedWeb }) => (
-                  <ImageListItem
-                    key={id}
-                    created={created.toString()}
-                    path={image}
-                    altTextEng={altTextEng}
-                    altText={altText}
-                    imageId={id}
-                    deleteImage={deleteImage}
-                    publishedWeb={publishedWeb}
-                    setPublished={setPublished}
-                  />
-                )
-              )}
+              {galleryImages.map((galleryImage) => (
+                <ImageListItem
+                  refetchImage={refetchImageQuery}
+                  key={galleryImage.id}
+                  escortImage={galleryImage}
+                />
+              ))}
             </Box>
           )}
         </Box>

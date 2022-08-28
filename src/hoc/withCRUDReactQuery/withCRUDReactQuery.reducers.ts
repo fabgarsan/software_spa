@@ -11,7 +11,7 @@ export interface PaginatorState {
   params: Record<string, unknown>;
 }
 
-export type PaginationActions<L> =
+export type PaginationActions =
   | { type: "changePage"; newPage: number }
   | { type: "changeLimit"; newLimit: number }
   | { type: "setSearch"; search: string }
@@ -30,8 +30,8 @@ export const paginatorInitial = {
   params: {},
 };
 
-export const reducerPagination = <T>() => {
-  const reducer: React.Reducer<PaginatorState, PaginationActions<T>> = (
+export const reducerPagination = () => {
+  const reducer: React.Reducer<PaginatorState, PaginationActions> = (
     state,
     action
   ): PaginatorState => {

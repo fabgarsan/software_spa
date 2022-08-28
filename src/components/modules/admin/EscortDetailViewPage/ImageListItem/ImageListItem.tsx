@@ -19,9 +19,11 @@ import {
   DialogActions,
   Button,
 } from "@mui/material";
-import { DialogConfirmation } from "@components/shared";
-import { DIALOG_MESSAGES } from "@utils/constants";
+import { BackdropLoading, DialogConfirmation } from "@components/shared";
+import { API_ROUTES, DIALOG_MESSAGES } from "@utils/constants";
 import clsx from "clsx";
+import { EscortImage } from "@dto/escorts";
+import { useReactQueryCRUDGenericApiCall } from "@api/reactQueryApi";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -49,25 +51,13 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 interface ImageListItemProps {
-  path: string;
-  imageId: number;
-  created: string;
-  altText: string;
-  publishedWeb: boolean;
-  altTextEng: string;
-  deleteImage: (imageId: number) => void;
-  setPublished: (imageId: number, publishedWeb: boolean) => void;
+  escortImage: EscortImage;
+  refetchImage: () => void;
 }
 
 export const ImageListItem = ({
-  path,
-  imageId,
-  deleteImage,
-  created,
-  altText,
-  altTextEng,
-  setPublished,
-  publishedWeb,
+  refetchImage,
+  escortImage,
 }: ImageListItemProps) => {
   const classes = useStyles();
   const [expanded, setExpanded] = useState<boolean>(false);
@@ -77,18 +67,35 @@ export const ImageListItem = ({
   const handleExpandClick = () => {
     setExpanded(!expanded);
   };
+
+  const { useDestroy: deleteImageMutation, useEdit: editImageMutation } =
+    useReactQueryCRUDGenericApiCall<EscortImage>(API_ROUTES.ESCORT_IMAGES);
+  const deleteImageMutationResult = deleteImageMutation({
+    onSuccessCallBack: () => refetchImage(),
+  });
+  const { mutate: deleteImageMutate, isLoading: deleteImageMutateIsLoading } =
+    deleteImageMutationResult;
+
+  const editImageMutationResult = editImageMutation({
+    onSuccessCallBack: () => refetchImage(),
+  });
+  const { mutate: editImageMutate, isLoading: editImageMutateIsLoading } =
+    editImageMutationResult;
   return (
     <Box padding={1}>
+      <BackdropLoading
+        isOpen={deleteImageMutateIsLoading || editImageMutateIsLoading}
+      />
       {confirmationDeleteOpen && (
         <DialogConfirmation
           title={DIALOG_MESSAGES.CRUD_DELETE_DIALOG_TITLE("Imagen")}
           message={DIALOG_MESSAGES.DELETE_DIALOG_TEXT("Imagen")}
           open={confirmationDeleteOpen}
-          onAccept={() => deleteImage(imageId)}
+          onAccept={() => deleteImageMutate(escortImage.id)}
           onCancel={() => setConfirmationDeleteOpen(false)}
         >
           <Box>
-            <img src={path} alt="" width="100%" />
+            <img src={escortImage.image} alt="" width="100%" />
           </Box>
         </DialogConfirmation>
       )}
@@ -101,7 +108,7 @@ export const ImageListItem = ({
         >
           <DialogContent>
             <Box>
-              <img src={path} alt="" width="100%" />
+              <img src={escortImage.image} alt="" width="100%" />
             </Box>
           </DialogContent>
           <DialogActions>
@@ -112,8 +119,12 @@ export const ImageListItem = ({
         </Dialog>
       )}
       <Card className={classes.root}>
-        <CardHeader subheader={created} />
-        <CardMedia className={classes.media} image={path} title="Paella dish" />
+        <CardHeader subheader={escortImage.created} />
+        <CardMedia
+          className={classes.media}
+          image={escortImage.image}
+          title="Paella dish"
+        />
         <CardActions disableSpacing>
           <IconButton
             aria-label="open preview"
@@ -124,8 +135,15 @@ export const ImageListItem = ({
           </IconButton>
           <IconButton
             aria-label="publish photo"
-            color={publishedWeb ? "primary" : "secondary"}
-            onClick={() => setPublished(imageId, !publishedWeb)}
+            color={escortImage.publishedWeb ? "primary" : "secondary"}
+            onClick={() =>
+              editImageMutate({
+                id: escortImage.id,
+                dataEdit: {
+                  publishedWeb: !escortImage.publishedWeb,
+                },
+              })
+            }
             size="large"
           >
             <FontAwesomeIcon icon={["fal", "globe-americas"]} size="xs" />
@@ -152,11 +170,11 @@ export const ImageListItem = ({
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
             <Typography paragraph>Alt Español:</Typography>
-            <Typography paragraph>{altText}</Typography>
+            <Typography paragraph>{escortImage.altText}</Typography>
             <Typography paragraph>Alt Ingles:</Typography>
-            <Typography paragraph>{altTextEng}</Typography>
+            <Typography paragraph>{escortImage.altTextEng}</Typography>
             <Typography paragraph>Nombre Archivo:</Typography>
-            <Typography paragraph>{path}</Typography>
+            <Typography paragraph>{escortImage.image}</Typography>
           </CardContent>
         </Collapse>
       </Card>

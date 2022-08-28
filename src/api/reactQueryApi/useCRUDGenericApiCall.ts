@@ -5,7 +5,7 @@ import {
   fetchAllGenericPaginationApiCall,
   deleteGenericApiCall,
   fetchGenericApiCall,
-  editGenericApiCall,
+  patchGenericApiCall,
   fetchAllGenericApiCall,
 } from "@api/reactQueryApi";
 import { AxiosResponseListPaginationData } from "@dto/common";
@@ -13,72 +13,105 @@ import { InstancesDescriptorKeys, instancesDescriptor } from "@utils/index";
 
 const buildTimeInSeconds = (seconds: number) => seconds * 1000;
 
+type EditType<T> = { dataEdit: Partial<T>; id: number | string };
+
 export const useReactQueryCRUDGenericApiCall = <T>(
-  descriptorKey: InstancesDescriptorKeys
+  routeConstructor: InstancesDescriptorKeys | string
 ) => {
-  const instanceDescriptor = instancesDescriptor[descriptorKey];
-  const url = instanceDescriptor?.apiRoute || "";
-  const cacheUrl = (instanceDescriptor?.apiRoute || "").replace("/", "");
-  const useDestroy = (onSuccessCallBack: () => void) =>
+  let url = "";
+  let cacheUrl = "";
+  if (typeof routeConstructor === "string") {
+    url = routeConstructor;
+    cacheUrl = routeConstructor.replace("/", "");
+  } else {
+    const instanceDescriptor = instancesDescriptor[routeConstructor];
+    url = instanceDescriptor?.apiRoute || "";
+    cacheUrl = (instanceDescriptor?.apiRoute || "").replace("/", "");
+  }
+  const useDestroy = ({
+    onSuccessCallBack,
+  }: {
+    onSuccessCallBack?: () => void;
+  }) =>
     useMutation(
       (id: number | string) =>
         deleteGenericApiCall(url, id).then((res) => res.data),
       {
         onSuccess: () => {
-          onSuccessCallBack();
+          if (onSuccessCallBack) onSuccessCallBack();
         },
         onMutate: () => {},
       }
     );
 
-  const useFetch = (
-    id: number | string,
-    onSuccessCallBack: (data: T) => void
-  ) => {
+  const useFetch = ({
+    id,
+    onSuccessCallBack,
+  }: {
+    id: number | string;
+    onSuccessCallBack?: (data: T) => void;
+  }) => {
     return useQuery<T, AxiosError>(
       [cacheUrl, id],
       () => fetchGenericApiCall<T>(url, id).then((res) => res.data),
       {
         onSuccess: (data) => {
-          onSuccessCallBack(data);
+          if (onSuccessCallBack) onSuccessCallBack(data);
         },
         enabled: !!id && id !== "",
-        staleTime: 1,
+        staleTime: 1000,
       }
     );
   };
 
-  const useCreate = (onSuccessCallBack: (data: T) => void) =>
+  const useCreate = ({
+    onSuccessCallBack,
+  }: {
+    onSuccessCallBack?: (data: T) => void;
+  }) =>
     useMutation<T, AxiosError, T, () => void>(
       (dataCreate: T) =>
         createGenericApiCall<T>(url, dataCreate).then((res) => res.data),
       {
         onSuccess: (data) => {
-          onSuccessCallBack(data);
+          if (onSuccessCallBack) onSuccessCallBack(data);
         },
       }
     );
 
   const useEdit = ({
-    id,
     onSuccessCallBack,
   }: {
-    id: number | string;
-    onSuccessCallBack: (data: T) => void;
+    onSuccessCallBack?: (data: T) => void;
   }) =>
-    useMutation<T, AxiosError, T, () => void>(
-      (dataEdit: Partial<T>) =>
-        editGenericApiCall<T>(url, id, dataEdit).then((res) => res.data),
+    useMutation<T, AxiosError, EditType<T>, () => void>(
+      ({ dataEdit, id }: EditType<T>) =>
+        patchGenericApiCall<T>(url, id, dataEdit).then((res) => res.data),
       {
         onSuccess: (data) => {
-          onSuccessCallBack(data);
+          if (onSuccessCallBack) onSuccessCallBack(data);
         },
       }
     );
 
-  const useFetchAll = (params?: Record<string, unknown>) => {
-    return useQuery<T[], AxiosError>([cacheUrl, params], () =>
-      fetchAllGenericApiCall<T>(url, params).then((res) => res.data)
+  const useFetchAll = ({
+    params,
+    onSuccessCallBack,
+    enabled = true,
+  }: {
+    params?: Record<string, unknown>;
+    onSuccessCallBack?: (data: T[]) => void;
+    enabled?: boolean;
+  }) => {
+    return useQuery<T[], AxiosError>(
+      [cacheUrl, params],
+      () => fetchAllGenericApiCall<T>(url, params).then((res) => res.data),
+      {
+        onSuccess: (data) => {
+          if (onSuccessCallBack) onSuccessCallBack(data);
+        },
+        enabled,
+      }
     );
   };
 

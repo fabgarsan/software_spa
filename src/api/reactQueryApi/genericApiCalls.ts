@@ -34,8 +34,14 @@ export const fetchGenericApiCall = <T>(
   id: number | string
 ): Promise<AxiosResponse<T>> => client.get(`${url}${id}/`);
 
-export const editGenericApiCall = <T>(
+export const patchGenericApiCall = <T>(
   url: string,
   id: number | string,
   data: Partial<T>
 ): Promise<AxiosResponse<T>> => client.patch(`${url}${id}/`, data);
+
+export const putGenericApiCall = <T>(
+  url: string,
+  id: number | string,
+  data: Partial<T>
+): Promise<AxiosResponse<T>> => client.put(`${url}${id}/`, data);
