@@ -1,4 +1,3 @@
-import { AxiosResponse } from "axios";
 import { mainAxiosClientManager } from "@clients/index";
 import { API_ROUTES } from "@utils/index";
 import { useMutation } from "@tanstack/react-query";
@@ -72,19 +71,3 @@ export const useUploadEscortImageMutation = ({
       },
     }
   );
-
-export const uploadEscortImage = (
-  userId: string,
-  file: Blob,
-  type: "I" | "P"
-): Promise<AxiosResponse> => {
-  const data = new FormData();
-  const extension = file.type.split("/").slice(-1);
-  data.append("image", file, `prueba.${extension}`);
-  data.append("type", type);
-  return client.post(`${API_ROUTES.USER}${userId}/upload-escort-image/`, data, {
-    headers: {
-      "Content-Type": "multipart/form-data",
-    },
-  });
-};

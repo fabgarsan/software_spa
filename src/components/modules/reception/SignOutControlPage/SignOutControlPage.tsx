@@ -1,27 +1,21 @@
-import React, { useEffect, useReducer } from "react";
-import {
-  useCheckPermissions,
-  useCRUDGenericApiCall,
-  useNotifications,
-} from "@hooks/index";
-import { Escort } from "@dto/escorts";
-import {
-  API_ROUTES,
-  CONTAINERS,
-  NOTIFICATION_MESSAGES,
-  PERMISSION_INSTANCES,
-} from "@utils/constants";
+import React, { useReducer } from "react";
+import { useCheckPermissions } from "@hooks/index";
+import { CONTAINERS, PERMISSION_INSTANCES } from "@utils/constants";
 
 import { SignInOutControlConfirmationDialog } from "../SignInOutControlConfirmationDialog";
 import { SignInOutControlList } from "../SignInOutControlList";
-import { CommonLayout } from "@components/shared";
+import { CommonLayout, QueryErrorBoundary } from "@components/shared";
+
+import {
+  usePresentUsersQuery,
+  useSignOutMutation,
+} from "./SignOutControlPage.hooks";
 
 import {
   reducerSignInOut,
   signInOutInitial,
 } from "@components/modules/reception/SignInOutControlList/SignInOutControlList.reducer";
-import { signOut } from "@api/index";
-import { trackPromise } from "react-promise-tracker";
+import { ExtendedUser } from "@dto/users";
 
 const generateQuestion = () => {
   const option: ("first" | "last")[] = ["first", "last"];
@@ -30,31 +24,23 @@ const generateQuestion = () => {
 
 export const SignOutControlPage = () => {
   const [signOutState, dispatchSignOutAction] = useReducer(
-    reducerSignInOut<Escort>(),
+    reducerSignInOut<ExtendedUser>(),
     signInOutInitial
   );
-  const { createSuccessNotification, createErrorNotification } =
-    useNotifications();
+  const presentUsersQueryResult = usePresentUsersQuery();
+  const { data: presentUsersList, refetch: refetchPresentUsers } =
+    presentUsersQueryResult;
+
+  const { mutate: signOutMutate } = useSignOutMutation({
+    onSuccessCallback: refetchPresentUsers,
+    userFullName: signOutState?.selectedUser?.fullName || "",
+  });
 
   const canView = useCheckPermissions([
     PERMISSION_INSTANCES.SIGN_IN_CONTROL.MADE_SIGN_OUT_OTHERS,
   ]);
-  const { fetchAll } = useCRUDGenericApiCall<Escort>(
-    API_ROUTES.USER_SIGN_IN_OUT
-  );
 
-  useEffect(() => {
-    const handleOnFetch = async () => {
-      const data = await fetchAll({
-        extended_user__present: true,
-      });
-      dispatchSignOutAction({ type: "setUserList", fetchedList: data });
-    };
-    if (canView) handleOnFetch();
-    return () => {};
-  }, [fetchAll, canView]);
-
-  const onSelectUser = (user: Escort) => {
+  const onSelectUser = (user: ExtendedUser) => {
     const selectedOption = generateQuestion();
     dispatchSignOutAction({
       type: "selectUser",
@@ -74,21 +60,8 @@ export const SignOutControlPage = () => {
       } no coinciden con el documento`;
       dispatchSignOutAction({ type: "setError", errorMessage });
     } else if (signOutState.selectedUser) {
-      try {
-        await trackPromise(signOut(signOutState.selectedUser.id));
-        createSuccessNotification(
-          `${NOTIFICATION_MESSAGES.SIGN_OUT_SUCCESSFUL_MESSAGE} ${signOutState.selectedUser.fullName}`
-        );
-        dispatchSignOutAction({ type: "completedSignOutInRegistration" });
-        const data = await fetchAll({
-          extended_user__present: true,
-        });
-        dispatchSignOutAction({ type: "setUserList", fetchedList: data });
-      } catch (error) {
-        createErrorNotification(
-          `${NOTIFICATION_MESSAGES.SIGN_OUT_FAILED_MESSAGE} ${signOutState.selectedUser.fullName}`
-        );
-      }
+      signOutMutate(signOutState.selectedUser.id);
+      dispatchSignOutAction({ type: "completedSignOutInRegistration" });
     }
   };
 
@@ -109,10 +82,15 @@ export const SignOutControlPage = () => {
           }
         />
       )}
-      <SignInOutControlList
-        list={signOutState.userList}
-        handleOnSelectEscort={onSelectUser}
-      />
+      <QueryErrorBoundary
+        queries={[presentUsersQueryResult]}
+        loadOnFetching={true}
+      >
+        <SignInOutControlList
+          list={presentUsersList || []}
+          handleOnSelectUser={onSelectUser}
+        />
+      </QueryErrorBoundary>
     </CommonLayout>
   );
 };

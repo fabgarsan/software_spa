@@ -57,7 +57,7 @@ interface DefaultCRUDProps<E> {
   descriptorKey: InstancesDescriptorKeys;
   toStringField: keyof E;
   idField: keyof E;
-  fetchAllParams?: any;
+  fetchAllParams?: Record<string, unknown>;
   hasSearch?: boolean;
   withTitle?: boolean;
   secondsToReFetchList?: number;

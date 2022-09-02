@@ -1,12 +1,6 @@
-import React, { useEffect, useReducer, useState } from "react";
-import { useCheckPermissions, useCRUDGenericApiCall } from "@hooks/index";
-import {
-  API_ROUTES,
-  CONTAINERS,
-  FORMATS,
-  PERMISSION_INSTANCES,
-} from "@utils/constants";
-import { SignInControl } from "@dto/authentication";
+import React, { useReducer, useState } from "react";
+import { useCheckPermissions } from "@hooks/index";
+import { CONTAINERS, PERMISSION_INSTANCES } from "@utils/constants";
 import { LogBookList } from "./LogBookList";
 import { LogBookFilter } from "./LogBookFilter";
 import { CommonLayout } from "@components/shared";
@@ -14,33 +8,29 @@ import {
   reducerFilter,
   filterInitial,
 } from "@components/modules/reception/SignInOutControlLogBookPage/SignInOutControlLogBookContainer.reducer";
-import { format } from "date-fns";
+import { usePresentUsersQuery } from "@components/modules/reception/SignInOutControlLogBookPage/SignInOutControlLogBookPage.hooks";
+import { useQueryClient } from "@tanstack/react-query";
 
 export const SignInOutControlLogBookPage = () => {
+  const queryClient = useQueryClient();
+  const [search, setSearch] = useState<boolean>(true);
   const [state, dispatch] = useReducer(reducerFilter, filterInitial);
-  const [data, setData] = useState<SignInControl[]>([]);
-  const { fetchAll } = useCRUDGenericApiCall<SignInControl>(
-    API_ROUTES.SIGN_IN_CONTROL
-  );
-  useEffect(() => {
-    (async () => {
-      const responseData = await fetchAll({
-        date: format(new Date(), FORMATS.DATE_TIME_TO_SEND),
-      });
-      setData(responseData);
-    })();
-  }, [fetchAll]);
 
-  const handleOnSearch = async () => {
-    const responseData = await fetchAll(
-      state.params as Record<string, unknown>
-    );
-    setData(responseData);
-  };
+  const presentUsersQuery = usePresentUsersQuery({
+    params: state.params,
+    enabled: search,
+    disableSearch: () => setSearch(false),
+  });
+  const { data: users } = presentUsersQuery;
 
   const canFilter = useCheckPermissions([
     PERMISSION_INSTANCES.SIGN_IN_CONTROL.FILTER_LOG_BOOK,
   ]);
+
+  const onSearch = () => {
+    queryClient.removeQueries(["log-in-out-users"]);
+    setSearch(true);
+  };
 
   return (
     <CommonLayout title={CONTAINERS.SIGN_IN_OUT_LOG_BOOK_TITLE} canView>
@@ -62,10 +52,10 @@ export const SignInOutControlLogBookPage = () => {
           onFilterTypeChange={(event) =>
             dispatch({ type: "changeFilterType", mode: event.target.value })
           }
-          onSearch={handleOnSearch}
+          onSearch={onSearch}
         />
       )}
-      <LogBookList list={data} />
+      <LogBookList list={users || []} />
     </CommonLayout>
   );
 };

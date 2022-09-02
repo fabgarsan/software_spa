@@ -1,18 +1,7 @@
 import React, { useReducer } from "react";
-import { Escort } from "@dto/escorts";
-import {
-  API_ROUTES,
-  CONTAINERS,
-  NOTIFICATION_MESSAGES,
-  PERMISSION_INSTANCES,
-} from "@utils/index";
+import { CONTAINERS, PERMISSION_INSTANCES } from "@utils/index";
 import { Box } from "@mui/material";
-import { signIn } from "@api/index";
-import {
-  useCheckPermissions,
-  useCRUDGenericApiCall,
-  useNotifications,
-} from "@hooks/index";
+import { useCheckPermissions } from "@hooks/index";
 import {
   reducerSignInOut,
   signInOutInitial,
@@ -22,8 +11,12 @@ import { ControlSearch } from "./ControlSearch";
 import { SignInOutControlConfirmationDialog } from "../SignInOutControlConfirmationDialog";
 import { SignInOutControlList } from "../SignInOutControlList";
 
-import { trackPromise } from "react-promise-tracker";
-import { CommonLayout } from "@components/shared";
+import { CommonLayout, QueryErrorBoundary } from "@components/shared";
+import {
+  useAbsentUsersQuery,
+  useSignInMutation,
+} from "@components/modules/reception/SignInControlPage/SignInControlPage.hooks";
+import { ExtendedUser } from "@dto/users";
 
 const generateQuestion = () => {
   const option: ("first" | "last")[] = ["first", "last"];
@@ -31,28 +24,34 @@ const generateQuestion = () => {
 };
 
 export const SignInControlPage = () => {
-  const { createSuccessNotification, createErrorNotification } =
-    useNotifications();
   const [signInState, dispatchSignInAction] = useReducer(
-    reducerSignInOut<Escort>(),
+    reducerSignInOut<ExtendedUser>(),
     signInOutInitial
   );
-  const { fetchAll } = useCRUDGenericApiCall<Escort>(
-    API_ROUTES.USER_SIGN_IN_OUT
-  );
+
+  const absentUsersQueryResult = useAbsentUsersQuery({
+    search: signInState.textToSearch,
+    enabled: signInState.textToSearch !== "",
+  });
+
+  const { data: absentUsersList, refetch: refetchAbsentUsers } =
+    absentUsersQueryResult;
+
+  const { mutate: signInMutate } = useSignInMutation({
+    onSuccessCallback: refetchAbsentUsers,
+    userFullName: signInState?.selectedUser?.fullName || "",
+  });
+
   const onSearch = async () => {
     if (signInState.searchText === "") {
       dispatchSignInAction({ type: "clearFetchedList" });
+    } else if (signInState.searchText === signInState.textToSearch) {
+      await refetchAbsentUsers();
     } else {
-      const data = await fetchAll({
-        is_active: true,
-        extended_user__present: false,
-        search: signInState.searchText,
-      });
-      dispatchSignInAction({ type: "setUserList", fetchedList: data });
+      dispatchSignInAction({ type: "search" });
     }
   };
-  const onSelectUser = (user: Escort) => {
+  const onSelectUser = (user: ExtendedUser) => {
     const selectedOption = generateQuestion();
     dispatchSignInAction({
       type: "selectUser",
@@ -71,17 +70,8 @@ export const SignInControlPage = () => {
       } no coinciden con el documento`;
       dispatchSignInAction({ type: "setError", errorMessage });
     } else if (signInState.selectedUser) {
-      try {
-        await trackPromise(signIn(signInState.selectedUser.id));
-        createSuccessNotification(
-          `${NOTIFICATION_MESSAGES.SIGN_IN_SUCCESSFUL_MESSAGE} ${signInState.selectedUser.fullName}`
-        );
-        dispatchSignInAction({ type: "completedSignOutInRegistration" });
-      } catch (error) {
-        createErrorNotification(
-          `${NOTIFICATION_MESSAGES.SIGN_IN_FAILED_MESSAGE} ${signInState.selectedUser.fullName}`
-        );
-      }
+      signInMutate(signInState.selectedUser.id);
+      dispatchSignInAction({ type: "completedSignOutInRegistration" });
     }
   };
   return (
@@ -116,10 +106,12 @@ export const SignInControlPage = () => {
             dispatchSignInAction({ type: "setSearchText", text })
           }
         />
-        <SignInOutControlList
-          list={signInState.userList}
-          handleOnSelectEscort={onSelectUser}
-        />
+        <QueryErrorBoundary queries={[absentUsersQueryResult]}>
+          <SignInOutControlList
+            list={absentUsersList || []}
+            handleOnSelectUser={onSelectUser}
+          />
+        </QueryErrorBoundary>
       </Box>
     </CommonLayout>
   );

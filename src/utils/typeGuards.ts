@@ -1,3 +1,6 @@
+import { ExtendedUser } from "@dto/users";
+import { Escort } from "@dto/escorts";
+
 export const isNumber = (idField: unknown): idField is number =>
   typeof idField === "number";
 
@@ -12,3 +15,6 @@ export const getFormFieldError = (value: unknown): string =>
 
 export const setIfNotNumber = (text: unknown, newText = 0): number =>
   (isNumber(text) && text) || newText;
+
+export const isEscort = (user: ExtendedUser | Escort): user is Escort =>
+  (user as Escort).categoryName !== undefined;

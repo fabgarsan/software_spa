@@ -5,6 +5,8 @@ import { CitySearch } from "@dto/geography";
 import { useDebounce } from "@hooks/index";
 import { CircularProgress, Autocomplete } from "@mui/material";
 import { FORM_FIELDS } from "@utils/constantsUI";
+import { useQuery } from "@tanstack/react-query";
+import { AxiosError } from "axios";
 
 interface CityOption {
   id: number;
@@ -20,28 +22,26 @@ export const AutocompleteCities = ({
   onChange,
   initialValue,
 }: AutocompleteCitiesProps) => {
-  const [cities, setCities] = useState<CitySearch[]>([]);
   const [search, setSearch] = useState("");
   const [selectedOption, setSelectedOption] = useState<CityOption | undefined>(
     initialValue
   );
   const debouncedSearchTerm = useDebounce(search, 1000);
+  const { data: citiesData, refetch } = useQuery<CitySearch[], AxiosError>(
+    ["cities", "create-escort"],
+    () => fetchCities(debouncedSearchTerm).then((response) => response.data),
+    { enabled: debouncedSearchTerm.length > 3, staleTime: 1000 }
+  );
+
   useEffect(() => {
-    (async () => {
-      if (debouncedSearchTerm.length > 3) {
-        const { data } = await fetchCities(debouncedSearchTerm);
-        setCities(data);
-      } else {
-        setCities([]);
-      }
-    })();
-  }, [debouncedSearchTerm]);
-  let citiesToSelect: CityOption[] = cities.map(
-    ({ id, name, department, country }) => ({
+    if (debouncedSearchTerm.length > 3) refetch();
+  }, [refetch, debouncedSearchTerm]);
+
+  let citiesToSelect: CityOption[] =
+    citiesData?.map(({ id, name, department, country }) => ({
       name: `${name} - ${department} - ${country}`,
       id,
-    })
-  );
+    })) || [];
   if (initialValue) citiesToSelect = [initialValue, ...citiesToSelect];
   if (selectedOption) citiesToSelect = [selectedOption, ...citiesToSelect];
 

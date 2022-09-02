@@ -1,24 +1,30 @@
 import React from "react";
 import { AxiosError } from "axios";
-import type { UseQueryResult, UseMutationResult } from "@tanstack/react-query";
+import type { UseQueryResult } from "@tanstack/react-query";
 
 type QueryErrorBoundaryProps = {
   children: JSX.Element;
-  queries?: UseQueryResult<any, AxiosError>[];
-  mutations?: UseMutationResult<any, AxiosError>[];
+  queries?: UseQueryResult<unknown, AxiosError>[];
   showRefetchButton?: boolean;
+  loadOnFetching?: boolean;
 };
 
 export const QueryErrorBoundary = ({
   showRefetchButton: canRefetch = false,
+  loadOnFetching = false,
   children,
   queries,
-  mutations,
 }: QueryErrorBoundaryProps) => {
-  const areLoadingQueries = queries?.some(({ isLoading }) => isLoading);
+  const areLoadingQueries = queries?.some(
+    ({ isLoading, fetchStatus }) => isLoading && fetchStatus !== "idle"
+  );
+  const areFetchingQueries =
+    (loadOnFetching &&
+      queries?.some(({ fetchStatus }) => fetchStatus === "fetching")) ||
+    false;
   const hasErrorQueries = queries?.some(({ isError }) => isError);
 
-  if (areLoadingQueries) {
+  if (areLoadingQueries || areFetchingQueries) {
     return <div>Cargando...</div>;
   }
 

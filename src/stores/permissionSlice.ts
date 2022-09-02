@@ -1,16 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { fetchPermissionCurrentUser } from "@api/index";
+import { fetchPermissionCurrentUser, Permission } from "@api/index";
 import { RootState } from "@stores/store";
 import { createNotification } from "@stores/notificationSlice";
 
 import { trackPromise } from "react-promise-tracker";
-
-export type Permission = {
-  id: number;
-  name: string;
-  codename: string;
-  contentType: number;
-};
 
 export type SliceState = {
   permissions: Permission[];

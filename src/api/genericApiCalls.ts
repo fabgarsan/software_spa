@@ -1,6 +1,6 @@
 import { AxiosResponse } from "axios";
 import { mainAxiosClientManager } from "@clients/index";
-import { AxiosResponseListPaginationData } from "../dto/common";
+import { AxiosResponseListPaginationData } from "@dto/common";
 
 const { client } = mainAxiosClientManager;
 

@@ -1,7 +1,8 @@
 import React from "react";
-import { Escort } from "@dto/escorts";
+import { ExtendedUser } from "@dto/users";
 import { Grid, Typography, Box } from "@mui/material";
 import { InstancesDescriptorKeys, instancesDescriptor } from "@utils/index";
+import { isEscort } from "@utils/typeGuards";
 
 const instanceDescriptorEscort =
   instancesDescriptor[InstancesDescriptorKeys.escort];
@@ -10,13 +11,52 @@ const instanceDescriptorEmployee =
   instancesDescriptor[InstancesDescriptorKeys.employee];
 
 interface SignInOutControlListProps {
-  list: Escort[];
-  handleOnSelectEscort: (escort: Escort) => void;
+  list: ExtendedUser[];
+  handleOnSelectUser: (user: ExtendedUser) => void;
 }
+
+type ListProps<T> = {
+  list: T[];
+  handleOnSelectUser: (user: T) => void;
+};
+
+const List = <T extends ExtendedUser>({
+  list,
+  handleOnSelectUser,
+}: ListProps<T>) => {
+  if (list.length === 0) return <></>;
+  return (
+    <>
+      <Typography variant="h6" gutterBottom color="primary">
+        {(isEscort(list[0]) && instanceDescriptorEscort.plural) ||
+          instanceDescriptorEmployee.plural}
+      </Typography>
+      <Box>
+        <Grid container>
+          {list.map((user) => (
+            <Grid item xs={12} sm={4} md={3} lg={2} key={user.id}>
+              <Box textAlign="center" margin="3px" marginTop="3px">
+                <Box
+                  padding="1px"
+                  border="1px solid black"
+                  borderRadius="5px"
+                  onClick={() => handleOnSelectUser(user)}
+                >
+                  <Typography variant="h6">{user.fullName}</Typography>
+                  {isEscort(user) && user?.categoryName}
+                </Box>
+              </Box>
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
+    </>
+  );
+};
 
 export const SignInOutControlList = ({
   list,
-  handleOnSelectEscort,
+  handleOnSelectUser,
 }: SignInOutControlListProps) => {
   const sortedList = list.sort((a, b) => a.fullName.localeCompare(b.fullName));
   const escorts = sortedList.filter((user) => user.userType === "A");
@@ -24,56 +64,10 @@ export const SignInOutControlList = ({
   return (
     <Box>
       {Boolean(escorts.length) && (
-        <>
-          <Typography variant="h6" gutterBottom color="primary">
-            {instanceDescriptorEscort.plural}
-          </Typography>
-          <Box>
-            <Grid container>
-              {escorts.map((escort) => (
-                <Grid item xs={12} sm={4} md={3} lg={2} key={escort.id}>
-                  <Box textAlign="center" margin="3px" marginTop="3px">
-                    <Box
-                      padding="1px"
-                      border="1px solid black"
-                      borderRadius="5px"
-                      onClick={() => handleOnSelectEscort(escort)}
-                    >
-                      <Typography variant="h6">{escort.fullName}</Typography>
-                      {escort.categoryName}
-                    </Box>
-                  </Box>
-                </Grid>
-              ))}
-            </Grid>
-          </Box>
-        </>
+        <List list={escorts} handleOnSelectUser={handleOnSelectUser} />
       )}
       {Boolean(employees.length) && (
-        <>
-          <Typography variant="h6" gutterBottom color="primary">
-            {instanceDescriptorEmployee.plural}
-          </Typography>
-          <Box>
-            <Grid container>
-              {employees.map((escort) => (
-                <Grid item xs={12} sm={4} md={3} lg={2} key={escort.id}>
-                  <Box textAlign="center" margin="3px" marginTop="3px">
-                    <Box
-                      padding="1px"
-                      border="1px solid black"
-                      borderRadius="5px"
-                      onClick={() => handleOnSelectEscort(escort)}
-                    >
-                      <Typography variant="h6">{escort.fullName}</Typography>
-                      {escort.categoryName}
-                    </Box>
-                  </Box>
-                </Grid>
-              ))}
-            </Grid>
-          </Box>
-        </>
+        <List list={employees} handleOnSelectUser={handleOnSelectUser} />
       )}
     </Box>
   );

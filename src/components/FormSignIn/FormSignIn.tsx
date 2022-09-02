@@ -3,14 +3,10 @@ import { useForm } from "react-hook-form";
 import { Box, Button, Grid, TextField, Typography } from "@mui/material";
 
 import useFormSignInValidation from "./FormSignIn.hooks";
-
-type FormValues = {
-  username: string;
-  password: string;
-};
+import { AuthCredential } from "@api/authentication";
 
 interface FormSignInProps {
-  logIn: (username: string, password: string) => void;
+  logIn: (credentials: AuthCredential) => void;
   errors: { [errorName: string]: string } | null;
 }
 
@@ -23,7 +19,7 @@ export const FormSignIn: React.FunctionComponent<FormSignInProps> = ({
     register,
     handleSubmit,
     formState: { errors: formErrors },
-  } = useForm<FormValues>({ resolver });
+  } = useForm<AuthCredential>({ resolver });
   return (
     <Box m={6}>
       <Box color="info.main" mt={5}>
@@ -31,7 +27,9 @@ export const FormSignIn: React.FunctionComponent<FormSignInProps> = ({
           m="auto"
           maxWidth={400}
           component="form"
-          onSubmit={handleSubmit((data) => logIn(data.username, data.password))}
+          onSubmit={handleSubmit((data) =>
+            logIn({ username: data.username, password: data.password })
+          )}
         >
           <Grid container spacing={3} justifyContent="flex-end">
             <Grid item xs={12}>
