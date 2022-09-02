@@ -75,6 +75,7 @@ export const DialogCreateEdit: React.FunctionComponent<
         instanceDescriptor.singular,
         Boolean(instance)
       )}
+      nonFieldErrors={mutationErrors.nonFieldErrors}
     >
       <Box
         component="form"

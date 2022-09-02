@@ -34,40 +34,57 @@ import { useReactQueryCRUDGenericApiCall } from "@api/reactQueryApi";
 
 import { QueryErrorBoundary } from "@components/shared";
 
-export interface CRUDDefaultTableProps<E> {
-  list: E[];
+export interface CRUDDefaultTableProps<ApiResponseDataType> {
+  list: ApiResponseDataType[];
   canDelete: boolean;
   canView?: boolean;
   viewUrl?: string;
   canEdit: boolean;
-  onOpenDelete: ((element: E) => void) | undefined;
-  onOpenEdit: ((element: E) => void) | undefined;
+  onOpenDelete: ((element: ApiResponseDataType) => void) | undefined;
+  onOpenEdit: ((element: ApiResponseDataType) => void) | undefined;
 }
 
-export interface CRUDDefaultFormProps<E> {
-  instance: E | null;
-  onSave: (formValues: E) => void;
+export interface CRUDDefaultFormProps<
+  ApiResponseDataType,
+  ApiRequestCreateDataType = ApiResponseDataType,
+  ApiRequestEditDataType = ApiResponseDataType
+> {
+  instance: ApiResponseDataType | null;
+  onSave: (
+    formValues: ApiRequestCreateDataType | ApiRequestEditDataType
+  ) => void;
   handleClose: () => void;
   error: any;
   open: boolean;
 }
 
-interface DefaultCRUDProps<E> {
+interface DefaultCRUDProps<ApiResponseDataType> {
   viewUrl?: string;
   descriptorKey: InstancesDescriptorKeys;
-  toStringField: keyof E;
-  idField: keyof E;
+  toStringField: keyof ApiResponseDataType;
+  idField: keyof ApiResponseDataType;
   fetchAllParams?: Record<string, unknown>;
   hasSearch?: boolean;
   withTitle?: boolean;
   secondsToReFetchList?: number;
 }
 
-export const withCRUDReactQuery = <ElementInterface,>(
-  Form: React.FC<CRUDDefaultFormProps<ElementInterface>> | null,
-  Table: React.FC<CRUDDefaultTableProps<ElementInterface>> | null
+export const withCRUDReactQuery = <
+  DataType,
+  ApiResponseDataType = DataType,
+  ApiRequestCreateDataType = DataType,
+  ApiRequestEditDataType = DataType
+>(
+  Form: React.FC<
+    CRUDDefaultFormProps<
+      ApiResponseDataType,
+      ApiRequestCreateDataType,
+      ApiRequestEditDataType
+    >
+  > | null,
+  Table: React.FC<CRUDDefaultTableProps<ApiResponseDataType>> | null
 ) => {
-  const CRUD: React.FC<DefaultCRUDProps<ElementInterface>> = ({
+  const CRUD: React.FC<DefaultCRUDProps<ApiResponseDataType>> = ({
     toStringField,
     viewUrl,
     idField,
@@ -76,9 +93,14 @@ export const withCRUDReactQuery = <ElementInterface,>(
     withTitle,
     descriptorKey,
     secondsToReFetchList,
-  }: DefaultCRUDProps<ElementInterface>) => {
+  }) => {
     const { useCreate, useEdit, useFetch, useFetchAllPagination, useDestroy } =
-      useReactQueryCRUDGenericApiCall<ElementInterface>(descriptorKey);
+      useReactQueryCRUDGenericApiCall<
+        DataType,
+        ApiResponseDataType,
+        ApiRequestCreateDataType,
+        ApiRequestEditDataType
+      >(descriptorKey);
 
     const instancesDescriptorValue = instancesDescriptor[descriptorKey];
 
@@ -97,7 +119,7 @@ export const withCRUDReactQuery = <ElementInterface,>(
     );
 
     const [elementActionsState, dispatchElementActions] = useReducer(
-      reducerElementActions<ElementInterface>(),
+      reducerElementActions<ApiResponseDataType>(),
       elementActionsStateInitial
     );
 
@@ -188,7 +210,7 @@ export const withCRUDReactQuery = <ElementInterface,>(
       },
     });
 
-    const onCreateCallBack = async (data: ElementInterface) => {
+    const onCreateCallBack = async (data: ApiResponseDataType) => {
       await refetchList();
       dispatchElementActions({ type: "closeCreateEditDialog" });
       createSuccessNotification(
@@ -230,7 +252,7 @@ export const withCRUDReactQuery = <ElementInterface,>(
       }
     };
 
-    const handleOnOpenEdit = async (element: ElementInterface) => {
+    const handleOnOpenEdit = async (element: ApiResponseDataType) => {
       const elementId = element[idField];
       if (isNumber(elementId)) {
         dispatchElementActions({
@@ -240,14 +262,26 @@ export const withCRUDReactQuery = <ElementInterface,>(
       }
     };
 
-    const handleOnSave = async (formValues: ElementInterface) => {
+    const handleOnSave = async (
+      formValues: ApiRequestCreateDataType | ApiRequestEditDataType
+    ) => {
+      const isEdit = (
+        values: ApiRequestCreateDataType | ApiRequestEditDataType
+      ): values is ApiRequestEditDataType =>
+        elementActionsState?.elementId !== null;
+
+      const isCreate = (
+        values: ApiRequestCreateDataType | ApiRequestEditDataType
+      ): values is ApiRequestCreateDataType =>
+        elementActionsState?.elementId === null;
+
       try {
-        if (elementActionsState.elementId) {
+        if (elementActionsState.elementId && isEdit(formValues)) {
           editMutation({
             id: elementActionsState?.elementId || "",
             dataEdit: formValues,
           });
-        } else {
+        } else if (isCreate(formValues)) {
           createMutation(formValues);
         }
       } catch (errors) {
@@ -274,7 +308,7 @@ export const withCRUDReactQuery = <ElementInterface,>(
       });
     };
 
-    const handleOnOpenDelete = (element: ElementInterface) => {
+    const handleOnOpenDelete = (element: ApiResponseDataType) => {
       const elementId = element[idField];
       if (isNumber(elementId)) {
         dispatchElementActions({

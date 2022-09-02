@@ -24,9 +24,10 @@ export interface EscortCategory {
 
 export interface EscortCategoryRate {
   id: number;
-  name: string;
   minutes: number;
   value: number;
+  category: string;
+  publishedWeb: boolean;
 }
 
 export interface Escort extends ExtendedUser {

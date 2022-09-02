@@ -54,6 +54,7 @@ export const EscortCategoryCRUDDialogCreateEdit: React.FunctionComponent<
         instanceDescriptor.singular,
         Boolean(instance)
       )}
+      nonFieldErrors={mutationErrors.nonFieldErrors}
     >
       <Box
         component="form"

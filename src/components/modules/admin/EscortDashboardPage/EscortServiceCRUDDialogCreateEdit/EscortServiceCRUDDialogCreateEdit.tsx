@@ -54,19 +54,16 @@ export const EscortServiceCRUDDialogCreateEdit: React.FunctionComponent<
         instanceDescriptor.singular,
         Boolean(instance)
       )}
+      nonFieldErrors={mutationErrors.nonFieldErrors}
     >
       <Box
         component="form"
-        onSubmit={handleSubmit(async (data) => {
-          try {
-            await onSave({
-              ...data,
-              name: data.name?.toUpperCase(),
-              nameEn: data.nameEn?.toUpperCase(),
-            });
-          } catch (errors) {
-            setFormError<EscortService>(setError, errors);
-          }
+        onSubmit={handleSubmit((data) => {
+          onSave({
+            ...data,
+            name: data.name?.toUpperCase(),
+            nameEn: data.nameEn?.toUpperCase(),
+          });
         })}
       >
         <Grid container>

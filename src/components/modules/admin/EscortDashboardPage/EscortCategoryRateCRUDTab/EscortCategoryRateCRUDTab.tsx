@@ -4,17 +4,18 @@ import { EscortCategoryRate } from "@dto/escorts";
 import { EscortCategoryRateCRUDTable } from "../EscortCategoryRateCRUDTable";
 import { EscortCategoryRateCRUDDialogCreateEdit } from "../EscortCategoryRateCRUDDialogCreateEdit";
 import { InstancesDescriptorKeys } from "@utils/index";
+import { GetEscortCategoryRate } from "@api/escort";
 
-const DetailViewHOC = withCRUDReactQuery<EscortCategoryRate>(
-  EscortCategoryRateCRUDDialogCreateEdit,
-  EscortCategoryRateCRUDTable
-);
+const DetailViewHOC = withCRUDReactQuery<
+  EscortCategoryRate,
+  GetEscortCategoryRate
+>(EscortCategoryRateCRUDDialogCreateEdit, EscortCategoryRateCRUDTable);
 
 export const EscortCategoryRateCRUDTab: React.FunctionComponent = () => {
   return (
     <DetailViewHOC
       descriptorKey={InstancesDescriptorKeys.escortCategoryRate}
-      toStringField="name"
+      toStringField="toString"
       idField="id"
       hasSearch
       withTitle={false}

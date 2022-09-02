@@ -15,7 +15,12 @@ const buildTimeInSeconds = (seconds: number) => seconds * 1000;
 
 type EditType<T> = { dataEdit: Partial<T>; id: number | string };
 
-export const useReactQueryCRUDGenericApiCall = <T>(
+export const useReactQueryCRUDGenericApiCall = <
+  DataType,
+  ApiResponseDataType = DataType,
+  ApiRequestCreateDataType = DataType,
+  ApiRequestEditDataType = DataType
+>(
   routeConstructor: InstancesDescriptorKeys | string
 ) => {
   let url = "";
@@ -49,11 +54,14 @@ export const useReactQueryCRUDGenericApiCall = <T>(
     onSuccessCallBack,
   }: {
     id: number | string;
-    onSuccessCallBack?: (data: T) => void;
+    onSuccessCallBack?: (data: ApiResponseDataType) => void;
   }) => {
-    return useQuery<T, AxiosError>(
+    return useQuery<ApiResponseDataType, AxiosError>(
       [cacheUrl, id],
-      () => fetchGenericApiCall<T>(url, id).then((res) => res.data),
+      () =>
+        fetchGenericApiCall<ApiResponseDataType>(url, id).then(
+          (res) => res.data
+        ),
       {
         onSuccess: (data) => {
           if (onSuccessCallBack) onSuccessCallBack(data);
@@ -67,11 +75,19 @@ export const useReactQueryCRUDGenericApiCall = <T>(
   const useCreate = ({
     onSuccessCallBack,
   }: {
-    onSuccessCallBack?: (data: T) => void;
+    onSuccessCallBack?: (data: ApiResponseDataType) => void;
   }) =>
-    useMutation<T, AxiosError, T, () => void>(
-      (dataCreate: T) =>
-        createGenericApiCall<T>(url, dataCreate).then((res) => res.data),
+    useMutation<
+      ApiResponseDataType,
+      AxiosError,
+      ApiRequestCreateDataType,
+      () => void
+    >(
+      (dataCreate: ApiRequestCreateDataType) =>
+        createGenericApiCall<ApiRequestCreateDataType, ApiResponseDataType>(
+          url,
+          dataCreate
+        ).then((res) => res.data),
       {
         onSuccess: (data) => {
           if (onSuccessCallBack) onSuccessCallBack(data);
@@ -82,11 +98,20 @@ export const useReactQueryCRUDGenericApiCall = <T>(
   const useEdit = ({
     onSuccessCallBack,
   }: {
-    onSuccessCallBack?: (data: T) => void;
+    onSuccessCallBack?: (data: ApiResponseDataType) => void;
   }) =>
-    useMutation<T, AxiosError, EditType<T>, () => void>(
-      ({ dataEdit, id }: EditType<T>) =>
-        patchGenericApiCall<T>(url, id, dataEdit).then((res) => res.data),
+    useMutation<
+      ApiResponseDataType,
+      AxiosError,
+      EditType<ApiRequestEditDataType>,
+      () => void
+    >(
+      ({ dataEdit, id }: EditType<ApiRequestEditDataType>) =>
+        patchGenericApiCall<ApiRequestEditDataType, ApiResponseDataType>(
+          url,
+          id,
+          dataEdit
+        ).then((res) => res.data),
       {
         onSuccess: (data) => {
           if (onSuccessCallBack) onSuccessCallBack(data);
@@ -100,12 +125,15 @@ export const useReactQueryCRUDGenericApiCall = <T>(
     enabled = true,
   }: {
     params?: Record<string, unknown>;
-    onSuccessCallBack?: (data: T[]) => void;
+    onSuccessCallBack?: (data: ApiResponseDataType[]) => void;
     enabled?: boolean;
   }) => {
-    return useQuery<T[], AxiosError>(
+    return useQuery<ApiResponseDataType[], AxiosError>(
       [cacheUrl, params],
-      () => fetchAllGenericApiCall<T>(url, params).then((res) => res.data),
+      () =>
+        fetchAllGenericApiCall<ApiResponseDataType>(url, params).then(
+          (res) => res.data
+        ),
       {
         onSuccess: (data) => {
           if (onSuccessCallBack) onSuccessCallBack(data);
@@ -125,15 +153,23 @@ export const useReactQueryCRUDGenericApiCall = <T>(
     limit: number;
     secondsToReFetch?: number;
     offset: number;
-    onSuccessCallBack: (data: AxiosResponseListPaginationData<T>) => void;
+    onSuccessCallBack: (
+      data: AxiosResponseListPaginationData<ApiResponseDataType>
+    ) => void;
     params: Record<string, unknown>;
   }) => {
-    return useQuery<AxiosResponseListPaginationData<T>, AxiosError>(
+    return useQuery<
+      AxiosResponseListPaginationData<ApiResponseDataType>,
+      AxiosError
+    >(
       [cacheUrl, limit, offset, params],
       () =>
-        fetchAllGenericPaginationApiCall<T>(url, limit, offset, params).then(
-          (res) => res.data
-        ),
+        fetchAllGenericPaginationApiCall<ApiResponseDataType>(
+          url,
+          limit,
+          offset,
+          params
+        ).then((res) => res.data),
       {
         keepPreviousData: true,
         refetchInterval:

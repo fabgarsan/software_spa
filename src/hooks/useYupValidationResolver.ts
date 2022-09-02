@@ -1,13 +1,17 @@
 import { useCallback } from "react";
+import { ObjectSchema } from "yup";
+import { ObjectShape } from "yup/lib/object";
 
-// @ts-ignore
-const useYupValidationResolver = (validationSchema) =>
+const useYupValidationResolver = <TShape extends ObjectShape>(
+  validationSchema: ObjectSchema<TShape>
+) =>
   useCallback(
     // @ts-ignore
     async (data) => {
       try {
         const values = await validationSchema.validate(data, {
           abortEarly: false,
+          stripUnknown: true,
         });
 
         return {

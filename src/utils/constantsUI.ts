@@ -48,6 +48,12 @@ export const FORM_FIELDS = {
     }`,
     LABEL_ORDER: "Orden",
   },
+  ESCORT_CATEGORIES_RATES: {
+    LABEL_VALUE: "Valor",
+    LABEL_MINUTES: "Minutos",
+    LABEL_CATEGORY: "Categoría",
+    LABEL_PUBLISHED_WEB: "Publicar en la página",
+  },
   ESCORT_SERVICES: {
     LABEL_NAME: `Nombre ${
       instancesDescriptor[InstancesDescriptorKeys.escortService].singular
@@ -127,6 +133,13 @@ export const TABLE_HEADERS = {
     NAME: "Nombre",
     ORDER: "Orden",
     CATEGORY: "Categoría",
+  },
+  ESCORT_CATEGORIES_RATES: {
+    NAME: "Nombre",
+    CATEGORY_NAME: "Categoría",
+    MINUTES: "Minutos",
+    VALUE: "Valor",
+    PUBLISHED_WEB: "En Página Web",
   },
   ESCORT_SERVICE: {
     NAME: "Nombre",

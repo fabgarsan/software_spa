@@ -4,44 +4,57 @@ import { AxiosResponseListPaginationData } from "@dto/common";
 
 const client = mainAxiosClient.getInstance();
 
-export const fetchAllGenericPaginationApiCall = <T>(
+export const fetchAllGenericPaginationApiCall = <ApiResponseDataType>(
   url: string,
   limit: number,
   offset: number,
   params: Record<string, unknown>
-): Promise<AxiosResponse<AxiosResponseListPaginationData<T>>> =>
+): Promise<
+  AxiosResponse<AxiosResponseListPaginationData<ApiResponseDataType>>
+> =>
   client.get(url, {
     params: { limit, offset, ...params },
   });
 
-export const fetchAllGenericApiCall = <T>(
+export const fetchAllGenericApiCall = <ApiResponseDataType>(
   url: string,
   params?: Record<string, unknown>
-): Promise<AxiosResponse<T[]>> => client.get(url, { params });
+): Promise<AxiosResponse<ApiResponseDataType[]>> => client.get(url, { params });
 
-export const createGenericApiCall = <T>(
+export const createGenericApiCall = <
+  CreateDataType,
+  ApiResponseDataType = CreateDataType
+>(
   url: string,
-  data: T
-): Promise<AxiosResponse<T>> => client.post(url, data);
+  data: CreateDataType
+): Promise<AxiosResponse<ApiResponseDataType>> => client.post(url, data);
 
 export const deleteGenericApiCall = (
   url: string,
   id: number | string
 ): Promise<AxiosResponse> => client.delete(`${url}${id}/`);
 
-export const fetchGenericApiCall = <T>(
+export const fetchGenericApiCall = <ApiResponseDataType>(
   url: string,
   id: number | string
-): Promise<AxiosResponse<T>> => client.get(`${url}${id}/`);
+): Promise<AxiosResponse<ApiResponseDataType>> => client.get(`${url}${id}/`);
 
-export const patchGenericApiCall = <T>(
+export const patchGenericApiCall = <
+  PatchDataType,
+  ApiResponseDataType = PatchDataType
+>(
   url: string,
   id: number | string,
-  data: Partial<T>
-): Promise<AxiosResponse<T>> => client.patch(`${url}${id}/`, data);
+  data: Partial<PatchDataType>
+): Promise<AxiosResponse<ApiResponseDataType>> =>
+  client.patch(`${url}${id}/`, data);
 
-export const putGenericApiCall = <T>(
+export const putGenericApiCall = <
+  PutDataType,
+  ApiResponseDataType extends PutDataType = PutDataType
+>(
   url: string,
   id: number | string,
-  data: Partial<T>
-): Promise<AxiosResponse<T>> => client.put(`${url}${id}/`, data);
+  data: Partial<PutDataType>
+): Promise<AxiosResponse<ApiResponseDataType>> =>
+  client.put(`${url}${id}/`, data);
