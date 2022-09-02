@@ -1,8 +1,8 @@
-import { mainAxiosClientManager } from "@clients/index";
+import { mainAxiosClient } from "@clients/axios";
 import { API_ROUTES } from "@utils/index";
 import { useMutation } from "@tanstack/react-query";
 
-const { client } = mainAxiosClientManager;
+const client = mainAxiosClient.getInstance();
 
 export const useAddEscortServiceMutation = ({
   escortId,

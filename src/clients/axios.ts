@@ -2,70 +2,72 @@ import axios, { AxiosInstance } from "axios";
 
 import { API_URL } from "../enviromentalConstants.js";
 
-class AxiosClientManager {
-  private static instance: AxiosClientManager;
+export const AxiosClientManagerClosure = () => {
+  let axiosInstance: AxiosInstance | null = null;
+  let tokenName: string | null;
 
-  client: AxiosInstance;
-
-  tokenName: string;
-
-  private constructor({
+  const initiateClient = ({
+    tokenNameForClient,
     baseURL,
-    tokenName,
   }: {
+    tokenNameForClient: string;
     baseURL: string;
-    tokenName: string;
-  }) {
-    this.client = axios.create({ baseURL });
-    this.tokenName = tokenName;
-    this.loadToken();
-  }
+  }): AxiosInstance => {
+    axiosInstance = axios.create({ baseURL });
+    tokenName = tokenNameForClient;
+    return axiosInstance;
+  };
 
-  public static getInstance({
-    baseURL,
-    tokenName,
-  }: {
-    baseURL: string;
-    tokenName: string;
-  }): AxiosClientManager {
-    if (!AxiosClientManager.instance) {
-      AxiosClientManager.instance = new AxiosClientManager({
-        baseURL,
-        tokenName,
-      });
+  const getInstance = (): AxiosInstance => {
+    if (axiosInstance) {
+      return axiosInstance;
+    } else {
+      throw Error("You must initiate the client first");
     }
+  };
 
-    return AxiosClientManager.instance;
-  }
+  const addToken = (token: string): void => {
+    if (axiosInstance && tokenName) {
+      axiosInstance.defaults.headers.common = {
+        Authorization: `Token ${token}`,
+      };
+      localStorage.setItem(tokenName, token);
+    } else {
+      throw Error("You must initiate the client first");
+    }
+  };
 
-  addToken(token: string): void {
-    this.client.defaults.headers.common = {
-      Authorization: `Token ${token}`,
-    };
-    localStorage.setItem(this.tokenName, token);
-  }
-
-  removeToken(): void {
-    try {
-      localStorage.removeItem(this.tokenName);
+  const removeToken = (): void => {
+    if (axiosInstance && tokenName) {
+      localStorage.removeItem(tokenName);
       localStorage.removeItem("permissions");
-      delete this.client.defaults.headers.common.Authorization;
-    } catch (error) {
-      console.log("The ERROR", error);
+      delete axiosInstance.defaults.headers.common.Authorization;
+    } else {
+      throw Error("You must initiate the client first");
     }
-  }
+  };
 
-  loadToken(): void {
-    const token = localStorage.getItem(this.tokenName);
-    if (token) {
-      this.client.defaults.headers.common = {
+  const loadToken = (): void => {
+    if (axiosInstance && tokenName) {
+      const token = localStorage.getItem(tokenName);
+      axiosInstance.defaults.headers.common = {
         Authorization: `Token ${token}`,
       };
     }
-  }
-}
+  };
+  return {
+    getInstance,
+    removeToken,
+    loadToken,
+    addToken,
+    initiateClient,
+  };
+};
 
-export const mainAxiosClientManager = AxiosClientManager.getInstance({
+const mainClient = AxiosClientManagerClosure();
+mainClient.initiateClient({
+  tokenNameForClient: "main_token",
   baseURL: API_URL,
-  tokenName: "main_token",
 });
+mainClient.loadToken();
+export const mainAxiosClient = mainClient;

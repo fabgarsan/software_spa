@@ -1,10 +1,10 @@
 import { AxiosResponse } from "axios";
-import { mainAxiosClientManager } from "@clients/index";
+import { mainAxiosClient } from "@clients/index";
 import { API_ROUTES } from "@utils/index";
 import { ExtendedUser } from "@dto/users";
 import { SignInControl } from "@dto/authentication";
 
-const { client } = mainAxiosClientManager;
+const client = mainAxiosClient.getInstance();
 
 export const performSignIn = (
   userId: number

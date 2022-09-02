@@ -1,1 +1,1 @@
-export { mainAxiosClientManager } from "./axios";
+export * from "./axios";

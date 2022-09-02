@@ -1,8 +1,8 @@
 import { AxiosResponse } from "axios";
-import { mainAxiosClientManager } from "@clients/index";
+import { mainAxiosClient } from "@clients/index";
 import { API_ROUTES } from "@utils/index";
 
-const { client, removeToken } = mainAxiosClientManager;
+const client = mainAxiosClient.getInstance();
 
 export interface AuthUser {
   id: number;
@@ -24,7 +24,7 @@ export const logIn = ({
   password,
 }: AuthCredential): Promise<AxiosResponse<Login>> => {
   localStorage.removeItem("token");
-  removeToken();
+  mainAxiosClient.removeToken();
   return client.post<Login>(`${API_ROUTES.AUTHENTICATION}login/`, {
     username,
     password,

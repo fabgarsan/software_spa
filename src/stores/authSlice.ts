@@ -9,7 +9,7 @@ import {
 } from "@api/authentication";
 import { RootState } from "@stores/store";
 import { createNotification } from "@stores/notificationSlice";
-import { mainAxiosClientManager } from "@clients/index";
+import { mainAxiosClient } from "@clients/axios";
 
 import { trackPromise } from "react-promise-tracker";
 
@@ -36,9 +36,9 @@ const initialState: SliceState = {
 
 export const logInThunk = createAsyncThunk<Login, AuthCredential>(
   "auth/logIn",
-  async ({ username, password }, thunkApi) => {
+  async (credentials, thunkApi) => {
     try {
-      const { data } = await trackPromise(logIn({ username, password }));
+      const { data } = await trackPromise(logIn(credentials));
       thunkApi.dispatch(
         createNotification({
           message: `Bienvenido ${data?.user?.username || ""}`,
@@ -93,17 +93,17 @@ export const authSlice = createSlice({
       state.user = payload.user;
       state.isAuthenticated = true;
       state.error = null;
-      mainAxiosClientManager.addToken(token);
+      mainAxiosClient.addToken(token);
     });
     builder.addCase(logOutThunk.fulfilled, (state) => {
       state.user = null;
       state.isAuthenticated = false;
-      mainAxiosClientManager.removeToken();
+      mainAxiosClient.removeToken();
     });
     builder.addCase(logOutThunk.rejected, (state) => {
       state.user = null;
       state.isAuthenticated = false;
-      mainAxiosClientManager.removeToken();
+      mainAxiosClient.removeToken();
     });
     builder.addCase(loadUserThunk.rejected, (state) => {
       state.user = null;
