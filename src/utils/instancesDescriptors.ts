@@ -5,7 +5,9 @@ export enum InstancesDescriptorKeys {
   escortCategoryRate,
   company,
   employee,
-  users,
+  user,
+  room,
+  roomType,
 }
 
 export type InstancesDescriptorValue = {
@@ -83,12 +85,30 @@ export const instancesDescriptor: Record<
     },
     apiRoute: "users/",
   },
-  [InstancesDescriptorKeys.users]: {
+  [InstancesDescriptorKeys.user]: {
     plural: "Usuarios",
     singular: "Usuario",
     permissions: {
       generic: buildGenericPermissionInstanceDescriptor("users"),
     },
+  },
+  [InstancesDescriptorKeys.roomType]: {
+    plural: "Tipos de Habitaciones",
+    singular: "Tipo Habitación",
+    permissions: {
+      generic: buildGenericPermissionInstanceDescriptor("roomtype"),
+    },
+    tab: "Tipo",
+    apiRoute: "rooms-types/",
+  },
+  [InstancesDescriptorKeys.room]: {
+    plural: "Habitaciones",
+    singular: "Habitación",
+    permissions: {
+      generic: buildGenericPermissionInstanceDescriptor("room"),
+    },
+    tab: "Habitaciones",
+    apiRoute: "rooms-rooms/",
   },
 };
 export type GenericPermission = {

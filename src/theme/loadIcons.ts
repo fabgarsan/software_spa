@@ -24,6 +24,7 @@ import {
   faKeyboard,
   faBuilding,
   faEye,
+  faBed,
 } from "@fortawesome/pro-light-svg-icons";
 
 const loadIcons = (): void => {
@@ -51,6 +52,7 @@ const loadIcons = (): void => {
   library.add(faKeyboard);
   library.add(faBuilding);
   library.add(faEye);
+  library.add(faBed);
 };
 
 export default loadIcons;
