@@ -17,7 +17,6 @@ export const EscortCategoryRateCRUDTab: React.FunctionComponent = () => {
       descriptorKey={InstancesDescriptorKeys.escortCategoryRate}
       toStringField="toString"
       idField="id"
-      hasSearch
       withTitle={false}
     />
   );

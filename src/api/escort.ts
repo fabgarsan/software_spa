@@ -9,13 +9,6 @@ import {
 } from "@utils/instancesDescriptors";
 import { EscortCategory, EscortCategoryRate } from "@dto/escorts";
 
-export type Permission = {
-  id: number;
-  name: string;
-  codename: string;
-  contentType: number;
-};
-
 export interface GetEscortCategoryRate extends EscortCategoryRate {
   readonly categoryName: string;
   readonly id: number;
