@@ -1,5 +1,5 @@
 import React from "react";
-import { CRUDDefaultTableProps } from "@hoc/index";
+import { CRUDDefaultTableProps } from "@hoc/withCRUDReactQuery";
 import { Company } from "@dto/companies";
 import { TableGenericCRUD } from "@components/shared";
 import { TABLE_HEADERS } from "@utils/index";

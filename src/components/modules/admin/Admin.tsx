@@ -13,6 +13,7 @@ import { CompanyCRUDPage } from "./CompanyCRUDPage";
 import { EmployeeCRUDPage } from "./EmployeeCRUDPage";
 import { UserCRUDPage } from "./UserCRUDPage";
 import { EscortDashboardPage } from "./EscortDashboardPage";
+import { RoomDashboardPage } from "./RoomDashboardPage";
 import { EscortDetailViewPage } from "./EscortDetailViewPage";
 import {
   useCheckGenericUserPermissions,
@@ -20,7 +21,10 @@ import {
 } from "@hooks/index";
 
 const instanceDescriptorUser =
-  instancesDescriptor[InstancesDescriptorKeys.users];
+  instancesDescriptor[InstancesDescriptorKeys.user];
+
+const instanceDescriptorRoom =
+  instancesDescriptor[InstancesDescriptorKeys.room];
 
 const instanceDescriptorEscortCategory =
   instancesDescriptor[InstancesDescriptorKeys.escortCategory];
@@ -67,6 +71,14 @@ const Admin: React.FunctionComponent = () => {
         instanceDescriptorCompany.permissions.generic
       ).HAS_ANY,
     },
+    {
+      text: DRAWER.MODULE_ADMIN_MENU_ROOM,
+      icon: "bed",
+      onClick: () => navigate(Paths.moduleAdminRoom),
+      show: useCheckGenericUserPermissions(
+        instanceDescriptorRoom.permissions.generic
+      ).HAS_ANY,
+    },
   ];
 
   const hasPermission = useCheckPermissions([PERMISSION_MODULES.ADMIN], "all");
@@ -90,6 +102,7 @@ const Admin: React.FunctionComponent = () => {
           path={Paths.moduleAdminCompanies}
           element={<CompanyCRUDPage />}
         />
+        <Route path={Paths.moduleAdminRoom} element={<RoomDashboardPage />} />
       </Routes>
     </Drawer>
   );

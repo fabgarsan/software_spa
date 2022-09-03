@@ -1,8 +1,8 @@
 import { AxiosResponse } from "axios";
-import { mainAxiosClientManager } from "@clients/index";
-import { AxiosResponseListPaginationData } from "../dto/common";
+import { mainAxiosClient } from "@clients/index";
+import { AxiosResponseListPaginationData } from "@dto/common";
 
-const { client } = mainAxiosClientManager;
+const client = mainAxiosClient.getInstance();
 
 export const fetchAllGenericPaginationApiCall = <T>(
   url: string,

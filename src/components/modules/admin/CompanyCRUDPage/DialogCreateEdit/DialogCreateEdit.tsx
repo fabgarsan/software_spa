@@ -14,7 +14,7 @@ import {
   instancesDescriptor,
 } from "@utils/index";
 
-import { CRUDDefaultFormProps } from "@hoc/index";
+import { CRUDDefaultFormProps } from "@hoc/withCRUDReactQuery";
 import useValidation from "./DialogCreateEdit.hooks";
 
 const instanceDescriptor = instancesDescriptor[InstancesDescriptorKeys.company];
@@ -23,6 +23,7 @@ export const DialogCreateEdit: React.FunctionComponent<
   CRUDDefaultFormProps<Company>
 > = ({
   open,
+  error: mutationErrors,
   handleClose,
   onSave,
   instance,
@@ -42,6 +43,10 @@ export const DialogCreateEdit: React.FunctionComponent<
     }
   }, [instance, setValue]);
 
+  useEffect(() => {
+    setFormError<Company>(setError, mutationErrors);
+  }, [setError, mutationErrors]);
+
   return (
     <DialogCreateEditBase
       open={open}
@@ -49,18 +54,15 @@ export const DialogCreateEdit: React.FunctionComponent<
         instanceDescriptor.plural,
         Boolean(instance)
       )}
+      nonFieldErrors={mutationErrors.nonFieldErrors}
     >
       <Box
         component="form"
-        onSubmit={handleSubmit(async (data) => {
-          try {
-            await onSave({
-              ...data,
-              name: data.name.toUpperCase(),
-            });
-          } catch (errors) {
-            setFormError<Company>(setError, errors);
-          }
+        onSubmit={handleSubmit((data) => {
+          onSave({
+            ...data,
+            name: data.name.toUpperCase(),
+          });
         })}
       >
         <Grid container>

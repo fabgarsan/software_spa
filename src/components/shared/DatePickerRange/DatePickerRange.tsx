@@ -1,6 +1,6 @@
 import React from "react";
 import { FORMATS, SYSTEM_CONFIGURATION } from "@utils/constants";
-import { DatePicker } from "@mui/lab";
+import { DatePicker } from "@mui/x-date-pickers";
 import { Grid, TextField } from "@mui/material";
 import { Theme } from "@mui/material/styles";
 

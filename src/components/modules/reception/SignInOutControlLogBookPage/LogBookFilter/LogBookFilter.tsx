@@ -12,7 +12,7 @@ import {
 } from "@mui/material";
 import { DatePickerRange } from "@components/shared";
 import { FORMATS, SYSTEM_CONFIGURATION } from "@utils/constants";
-import { DatePicker } from "@mui/lab";
+import { DatePicker } from "@mui/x-date-pickers";
 import { zonedTimeToUtc } from "date-fns-tz";
 import { FORM_FIELDS, UI } from "@utils/constantsUI";
 

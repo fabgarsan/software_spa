@@ -14,10 +14,11 @@ import {
   fetchPermissionCurrentUserThunk,
   loadPermissionsFromStorage,
 } from "@stores/permissionSlice";
+import { AuthCredential } from "@api/authentication";
 
 const useAuth = () => {
-  const logIn = (username: string, password: string) => {
-    store.dispatch(logInThunk({ username, password }));
+  const logIn = (credential: AuthCredential) => {
+    store.dispatch(logInThunk(credential));
   };
 
   const logOut = () => {

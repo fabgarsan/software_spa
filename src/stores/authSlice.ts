@@ -1,8 +1,15 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { loadUser, logIn, logOut } from "@api/authentication";
+import {
+  AuthCredential,
+  AuthUser,
+  loadUser,
+  Login,
+  logIn,
+  logOut,
+} from "@api/authentication";
 import { RootState } from "@stores/store";
 import { createNotification } from "@stores/notificationSlice";
-import { mainAxiosClientManager } from "@clients/index";
+import { mainAxiosClient } from "@clients/axios";
 
 import { trackPromise } from "react-promise-tracker";
 
@@ -12,11 +19,6 @@ import { trackPromise } from "react-promise-tracker";
 // action -> redux
 // services -> Track
 // provider -> api
-
-type AuthUser = {
-  id: number | null;
-  username: string | null;
-};
 
 export type SliceState = {
   user: AuthUser | null;
@@ -32,29 +34,24 @@ const initialState: SliceState = {
   isAuthenticated: false,
 };
 
-type SingInParams = {
-  password: string;
-  username: string;
-};
-
-export const logInThunk = createAsyncThunk<
-  { token: string; user: AuthUser },
-  SingInParams
->("auth/logIn", async ({ username, password }, thunkApi) => {
-  try {
-    const { data } = await trackPromise(logIn(username, password));
-    thunkApi.dispatch(
-      createNotification({
-        message: `Bienvenido ${data?.user?.username || ""}`,
-        severity: "success",
-        time: 10000,
-      })
-    );
-    return data;
-  } catch (error) {
-    return thunkApi.rejectWithValue(error?.response?.data?.detail);
+export const logInThunk = createAsyncThunk<Login, AuthCredential>(
+  "auth/logIn",
+  async (credentials, thunkApi) => {
+    try {
+      const { data } = await trackPromise(logIn(credentials));
+      thunkApi.dispatch(
+        createNotification({
+          message: `Bienvenido ${data?.user?.username || ""}`,
+          severity: "success",
+          time: 10000,
+        })
+      );
+      return data;
+    } catch (error) {
+      return thunkApi.rejectWithValue(error?.response?.data?.detail);
+    }
   }
-});
+);
 
 export const logOutThunk = createAsyncThunk<null>("auth/logOut", async () => {
   const { data } = await trackPromise(logOut());
@@ -96,17 +93,17 @@ export const authSlice = createSlice({
       state.user = payload.user;
       state.isAuthenticated = true;
       state.error = null;
-      mainAxiosClientManager.addToken(token);
+      mainAxiosClient.addToken(token);
     });
     builder.addCase(logOutThunk.fulfilled, (state) => {
       state.user = null;
       state.isAuthenticated = false;
-      mainAxiosClientManager.removeToken();
+      mainAxiosClient.removeToken();
     });
     builder.addCase(logOutThunk.rejected, (state) => {
       state.user = null;
       state.isAuthenticated = false;
-      mainAxiosClientManager.removeToken();
+      mainAxiosClient.removeToken();
     });
     builder.addCase(loadUserThunk.rejected, (state) => {
       state.user = null;

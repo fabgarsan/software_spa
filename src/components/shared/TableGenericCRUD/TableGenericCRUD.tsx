@@ -12,10 +12,10 @@ import {
 import makeStyles from "@mui/styles/makeStyles";
 import { CRUDDefaultTableProps } from "@hoc/index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { TABLE_HEADERS, setIfNotString } from "@utils/index";
+import { TABLE_HEADERS, setIfNotString, isNumber } from "@utils/index";
 import IconButton from "@mui/material/IconButton";
 
-interface TableHeader<DataTableInterface> {
+interface TableConfig<DataTableInterface> {
   headerName: string;
   field: keyof DataTableInterface;
   width?: number | string | null;
@@ -24,11 +24,12 @@ interface TableHeader<DataTableInterface> {
   style?: CSSProperties;
   isBoolean?: boolean;
   openViewUrl?: string | null;
+  formatNumber?: (value: number) => string;
 }
 
 interface TableGenericProps<DataTableInterface>
   extends CRUDDefaultTableProps<DataTableInterface> {
-  headers: TableHeader<DataTableInterface>[];
+  headers: TableConfig<DataTableInterface>[];
   idField: keyof DataTableInterface;
 }
 
@@ -73,7 +74,7 @@ export const TableGenericCRUD = <DataTableInterface,>({
 }: TableGenericProps<DataTableInterface>) => {
   const classes = useStyles();
   const navigate = useNavigate();
-  const configMap: { [name: string]: TableHeader<DataTableInterface> } =
+  const configMap: { [name: string]: TableConfig<DataTableInterface> } =
     headers.reduce((a, b) => {
       return { ...a, [b.field]: b };
     }, {});
@@ -133,6 +134,7 @@ export const TableGenericCRUD = <DataTableInterface,>({
               {headerFields.map((fieldName) => {
                 const field = setIfNotString(fieldName);
                 const cellConfig = configMap[field];
+                const value = row[fieldName];
                 return (
                   <TableCell
                     padding="none"
@@ -146,12 +148,15 @@ export const TableGenericCRUD = <DataTableInterface,>({
                         <FontAwesomeIcon
                           icon={[
                             "fal",
-                            row[fieldName] ? "check-circle" : "times-circle",
+                            value ? "check-circle" : "times-circle",
                           ]}
                           size="lg"
                         />
                       ) : (
-                        row[fieldName]
+                        (cellConfig.formatNumber &&
+                          isNumber(value) &&
+                          cellConfig.formatNumber(value)) ||
+                        value
                       )}
                     </>
                   </TableCell>

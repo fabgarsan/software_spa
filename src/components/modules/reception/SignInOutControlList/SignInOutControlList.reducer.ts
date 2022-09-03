@@ -3,6 +3,7 @@ export interface SignInOutState<L> {
   selectedUser: L | null;
   openConfirmation: boolean;
   searchText: string;
+  textToSearch: string;
   confirmationQuestionOption: "first" | "last" | null;
   correctAnswer: string | null;
   answer: string;
@@ -17,6 +18,7 @@ export type SignInOutActions<L> =
   | { type: "completedSignOutInRegistration" }
   | { type: "setSearchText"; text: string }
   | { type: "setAnswerText"; text: string }
+  | { type: "search" }
   | { type: "selectUser"; user: L; option: "first" | "last"; answer: string };
 
 export const signInOutInitial = {
@@ -24,6 +26,7 @@ export const signInOutInitial = {
   selectedUser: null,
   openConfirmation: false,
   searchText: "",
+  textToSearch: "",
   confirmationQuestionOption: null,
   correctAnswer: null,
   answer: "",
@@ -87,6 +90,11 @@ export const reducerSignInOut = <T>() => {
         return {
           ...state,
           errorMessage: action.errorMessage,
+        };
+      case "search":
+        return {
+          ...state,
+          textToSearch: state.searchText,
         };
       default:
         throw new Error();

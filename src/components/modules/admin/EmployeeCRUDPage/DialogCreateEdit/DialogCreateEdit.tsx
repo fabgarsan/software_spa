@@ -17,7 +17,7 @@ import {
   instancesDescriptor,
 } from "@utils/index";
 
-import { CRUDDefaultFormProps } from "@hoc/index";
+import { CRUDDefaultFormProps } from "@hoc/withCRUDReactQuery";
 import useValidation from "./DialogCreateEdit.hooks";
 
 const instanceDescriptor =
@@ -27,6 +27,7 @@ export const DialogCreateEdit: React.FunctionComponent<
   CRUDDefaultFormProps<ExtendedUser>
 > = ({
   open,
+  error: mutationErrors,
   handleClose,
   onSave,
   instance,
@@ -45,6 +46,10 @@ export const DialogCreateEdit: React.FunctionComponent<
       setFormValue<ExtendedUser>(setValue, instance);
     }
   }, [instance, setValue]);
+
+  useEffect(() => {
+    setFormError<ExtendedUser>(setError, mutationErrors);
+  }, [setError, mutationErrors]);
 
   const handleOnBlur = (
     dateOfBirth: Date,
@@ -70,20 +75,17 @@ export const DialogCreateEdit: React.FunctionComponent<
         instanceDescriptor.singular,
         Boolean(instance)
       )}
+      nonFieldErrors={mutationErrors.nonFieldErrors}
     >
       <Box
         component="form"
         onSubmit={handleSubmit(async (data) => {
-          try {
-            await onSave({
-              ...data,
-              userType: "T",
-              firstName: data.firstName.toUpperCase(),
-              lastName: data.lastName.toUpperCase(),
-            });
-          } catch (errors) {
-            setFormError<ExtendedUser>(setError, errors);
-          }
+          onSave({
+            ...data,
+            userType: "T",
+            firstName: data.firstName.toUpperCase(),
+            lastName: data.lastName.toUpperCase(),
+          });
         })}
       >
         <IDScanner onBlur={handleOnBlur}>

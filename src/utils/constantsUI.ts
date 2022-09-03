@@ -15,6 +15,7 @@ export const DRAWER = {
   MODULE_ADMIN_MENU_ESCORTS: "Acompañantes",
   MODULE_ADMIN_MENU_EMPLOYEES: "Colaboradores",
   MODULE_ADMIN_MENU_COMPANIES: "Empresas",
+  MODULE_ADMIN_MENU_ROOM: "Habitaciones",
   MODULE_ADMIN_MENU_USERS: "Usuarios",
   MENU_SIGN_OUT: "Cerrar Sessión",
   MENU_HOME: "Principal",
@@ -47,6 +48,24 @@ export const FORM_FIELDS = {
       instancesDescriptor[InstancesDescriptorKeys.escortCategory].singular
     }`,
     LABEL_ORDER: "Orden",
+  },
+  ROOM: {
+    LABEL_NUMBER: "Número",
+    LABEL_IS_ACTIVE: "Activa",
+    LABEL_ROOM_TYPE: "Tipo",
+    LABEL_COMPANY: "Empresa",
+  },
+  ROOM_TYPE: {
+    LABEL_NAME: `Nombre ${
+      instancesDescriptor[InstancesDescriptorKeys.roomType].singular
+    }`,
+    LABEL_VALUE: "Valor",
+  },
+  ESCORT_CATEGORIES_RATES: {
+    LABEL_VALUE: "Valor",
+    LABEL_MINUTES: "Minutos",
+    LABEL_CATEGORY: "Categoría",
+    LABEL_PUBLISHED_WEB: "Publicar en la página",
   },
   ESCORT_SERVICES: {
     LABEL_NAME: `Nombre ${
@@ -127,6 +146,24 @@ export const TABLE_HEADERS = {
     NAME: "Nombre",
     ORDER: "Orden",
     CATEGORY: "Categoría",
+  },
+  ROOM_TYPE: {
+    NAME: "Nombre",
+    VALUE: "Valor",
+  },
+  ROOM: {
+    NUMBER: "Número",
+    IS_ACTIVE: "Activa",
+    STATUS: "Estado",
+    COMPANY: "Empresa",
+    TYPE: "Tipo",
+  },
+  ESCORT_CATEGORIES_RATES: {
+    NAME: "Nombre",
+    CATEGORY_NAME: "Categoría",
+    MINUTES: "Minutos",
+    VALUE: "Valor",
+    PUBLISHED_WEB: "En Página Web",
   },
   ESCORT_SERVICE: {
     NAME: "Nombre",

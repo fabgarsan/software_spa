@@ -1,8 +1,7 @@
 import React from "react";
 import { TABLE_PAGINATOR } from "@utils/index";
 
-export interface PaginatorState<L> {
-  list: L[];
+export interface PaginatorState {
   limit: number;
   offset: number;
   count: number;
@@ -12,17 +11,16 @@ export interface PaginatorState<L> {
   params: Record<string, unknown>;
 }
 
-export type PaginationActions<L> =
+export type PaginationActions =
   | { type: "changePage"; newPage: number }
   | { type: "changeLimit"; newLimit: number }
   | { type: "setSearch"; search: string }
   | {
       type: "changeList";
-      payload: { next: string; previous: string; count: number; list: L[] };
+      payload: { next: string; previous: string; count: number };
     };
 
 export const paginatorInitial = {
-  list: [],
   count: 0,
   limit: TABLE_PAGINATOR.LIMIT,
   next: null,
@@ -32,11 +30,11 @@ export const paginatorInitial = {
   params: {},
 };
 
-export const reducerPagination = <T>() => {
-  const reducer: React.Reducer<PaginatorState<T>, PaginationActions<T>> = (
+export const reducerPagination = () => {
+  const reducer: React.Reducer<PaginatorState, PaginationActions> = (
     state,
     action
-  ): PaginatorState<T> => {
+  ): PaginatorState => {
     switch (action.type) {
       case "changePage":
         return {
@@ -62,7 +60,6 @@ export const reducerPagination = <T>() => {
           next: action.payload.next,
           previous: action.payload.previous,
           count: action.payload.count,
-          list: action.payload.list,
         };
       default:
         throw new Error();
@@ -73,24 +70,30 @@ export const reducerPagination = <T>() => {
 
 interface ElementActionsState<E> {
   element: E | null;
-  objectId: number | null;
+  elementId: number | null;
   openDeleteDialog: boolean;
-  openSaveEditDialog: boolean;
+  openCreateEditDialog: boolean;
+  fetchingForDelete: boolean;
+  fetchingForEdit: boolean;
 }
 
 export const elementActionsStateInitial = {
-  objectId: null,
   element: null,
+  elementId: null,
   openDeleteDialog: false,
-  openSaveEditDialog: false,
+  openCreateEditDialog: false,
+  fetchingForDelete: false,
+  fetchingForEdit: false,
 };
 
-type ElementActions<E> =
-  | { type: "openDeleteDialog"; element: E }
-  | { type: "openEditDialog"; element: E }
-  | { type: "openNewDialog" }
+type ElementActions<T> =
+  | { type: "openDeleteDialog"; elementId: number; element: T }
+  | { type: "openCreateDialog" }
+  | { type: "openEditDialog"; elementId: number; element: T }
   | { type: "closeDeleteDialog" }
-  | { type: "closeSaveEditDialog" };
+  | { type: "fetchElementForEdit"; elementId: number }
+  | { type: "fetchElementForDelete"; elementId: number }
+  | { type: "closeCreateEditDialog" };
 
 export const reducerElementActions = <T>() => {
   const reducer: React.Reducer<ElementActionsState<T>, ElementActions<T>> = (
@@ -98,36 +101,41 @@ export const reducerElementActions = <T>() => {
     action
   ): ElementActionsState<T> => {
     switch (action.type) {
+      case "fetchElementForDelete":
+        return {
+          ...elementActionsStateInitial,
+          elementId: action.elementId,
+          fetchingForDelete: true,
+        };
+      case "fetchElementForEdit":
+        return {
+          ...elementActionsStateInitial,
+          elementId: action.elementId,
+          fetchingForEdit: true,
+        };
       case "openDeleteDialog":
         return {
-          ...state,
+          ...elementActionsStateInitial,
           openDeleteDialog: true,
+          elementId: action.elementId,
           element: action.element,
         };
       case "openEditDialog":
         return {
-          ...state,
-          openSaveEditDialog: true,
+          ...elementActionsStateInitial,
+          openCreateEditDialog: true,
+          elementId: action.elementId,
           element: action.element,
         };
-      case "openNewDialog":
+      case "openCreateDialog":
         return {
-          ...state,
-          openSaveEditDialog: true,
-          element: null,
-        };
-      case "closeSaveEditDialog":
-        return {
-          ...state,
-          openSaveEditDialog: false,
-          element: null,
+          ...elementActionsStateInitial,
+          openCreateEditDialog: true,
         };
       case "closeDeleteDialog":
-        return {
-          ...state,
-          openDeleteDialog: false,
-          objectId: null,
-        };
+        return elementActionsStateInitial;
+      case "closeCreateEditDialog":
+        return elementActionsStateInitial;
       default:
         throw new Error();
     }

@@ -1,17 +1,11 @@
 import React from "react";
 import { FORMATS } from "@utils/index";
 import { format } from "date-fns";
-
-interface FilterParams {
-  date?: string;
-  dateTo?: string;
-  dateFrom?: string;
-  search?: string;
-}
+import { FetchSignInOutLogsParams } from "@api/signInControl";
 
 export interface FilterState {
   filterType: "range" | "date" | string;
-  params: FilterParams;
+  params: FetchSignInOutLogsParams;
 }
 
 export type FilterActions =

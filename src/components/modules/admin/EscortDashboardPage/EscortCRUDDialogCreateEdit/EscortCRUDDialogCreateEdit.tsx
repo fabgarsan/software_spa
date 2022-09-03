@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import {
   TextField,
   DialogActions,
@@ -28,17 +28,19 @@ import {
   instancesDescriptor,
 } from "@utils/index";
 
-import { CRUDDefaultFormProps } from "@hoc/index";
+import { CRUDDefaultFormProps } from "@hoc/withCRUDReactQuery";
 import { Theme } from "@mui/material/styles";
 import createStyles from "@mui/styles/createStyles";
 import makeStyles from "@mui/styles/makeStyles";
-import { useCRUDGenericApiCall } from "@hooks/index";
+import { useReactQueryCRUDGenericApiCall } from "@api/reactQueryApi";
 import useValidation from "./EscortCRUDDialogCreateEdit.hooks";
 
-const { escort, escortCategory } = InstancesDescriptorKeys;
+const {
+  escort: escortDescriptorKey,
+  escortCategory: escortCategoryDescriptorKey,
+} = InstancesDescriptorKeys;
 
-const instanceDescriptorEscort = instancesDescriptor[escort];
-const instanceDescriptorEscortCategory = instancesDescriptor[escortCategory];
+const instanceDescriptorEscort = instancesDescriptor[escortDescriptorKey];
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -54,13 +56,23 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const EscortCRUDDialogCreateEdit: React.FunctionComponent<
   CRUDDefaultFormProps<Escort>
-> = ({ open, handleClose, onSave, instance }: CRUDDefaultFormProps<Escort>) => {
+> = ({
+  open,
+  error: mutationErrors,
+  handleClose,
+  onSave,
+  instance,
+}: CRUDDefaultFormProps<Escort>) => {
   const resolver = useValidation();
   const classes = useStyles();
-  const { fetchAllPagination } = useCRUDGenericApiCall<EscortCategory>(
-    instanceDescriptorEscortCategory.apiRoute || ""
-  );
-  const [categories, setCategories] = useState<EscortCategory[]>();
+  //TODO: AVOID USING CRUD GENERIC API CALLS
+  const { useFetchAll: fetchAllCategoriesQuery } =
+    useReactQueryCRUDGenericApiCall<EscortCategory>(
+      escortCategoryDescriptorKey
+    );
+
+  const { data: categoriesData } = fetchAllCategoriesQuery({});
+
   const {
     handleSubmit,
     control,
@@ -68,18 +80,16 @@ export const EscortCRUDDialogCreateEdit: React.FunctionComponent<
     setValue,
     setError,
   } = useForm<Escort>({ resolver });
-  useEffect(() => {
-    (async () => {
-      const response = await fetchAllPagination(10, 0, {});
-      setCategories(response.results);
-    })();
-  }, [fetchAllPagination]);
 
   useEffect(() => {
     if (instance) {
       setFormValue<Escort>(setValue, instance);
     }
   }, [instance, setValue]);
+
+  useEffect(() => {
+    setFormError<Escort>(setError, mutationErrors);
+  }, [setError, mutationErrors]);
 
   const handleOnBlur = (
     dateOfBirth: Date,
@@ -105,22 +115,19 @@ export const EscortCRUDDialogCreateEdit: React.FunctionComponent<
         instanceDescriptorEscort.singular,
         Boolean(instance)
       )}
+      nonFieldErrors={mutationErrors.nonFieldErrors}
     >
       <Box
         component="form"
         onSubmit={handleSubmit(async (data) => {
-          try {
-            await onSave({
-              ...data,
-              gender: "F",
-              userType: "A",
-              alias: data.alias.toUpperCase(),
-              firstName: data.firstName.toUpperCase(),
-              lastName: data.lastName.toUpperCase(),
-            });
-          } catch (errors) {
-            setFormError<Escort>(setError, errors);
-          }
+          onSave({
+            ...data,
+            gender: "F",
+            userType: "A",
+            alias: data.alias.toUpperCase(),
+            firstName: data.firstName.toUpperCase(),
+            lastName: data.lastName.toUpperCase(),
+          });
         })}
       >
         <IDScanner onBlur={handleOnBlur}>
@@ -169,7 +176,7 @@ export const EscortCRUDDialogCreateEdit: React.FunctionComponent<
                       }}
                     >
                       <option value={undefined}>-----</option>
-                      {categories?.map((category) => (
+                      {categoriesData?.map((category) => (
                         <option key={category.id} value={category.id}>
                           {category.name}
                         </option>

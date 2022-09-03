@@ -1,6 +1,6 @@
 import React, { useEffect, useCallback, Suspense } from "react";
 import { AxiosError } from "axios";
-import { mainAxiosClientManager } from "@clients/axios";
+import { mainAxiosClient } from "@clients/axios";
 import { useAuth, useNotifications } from "@hooks/index";
 import { FormSignIn } from "@components/index";
 import { LoadingOverlay, BackdropLoading, Notify } from "@components/shared";
@@ -18,7 +18,7 @@ declare module "@mui/styles/defaultTheme" {
   interface DefaultTheme extends Theme {}
 }
 
-const { client, removeToken } = mainAxiosClientManager;
+const client = mainAxiosClient.getInstance();
 
 type WithInterceptorHandlerProps = {
   loading?: boolean;
@@ -58,7 +58,7 @@ const withInterceptorHandler = <P extends WithInterceptorHandlerProps>(
           401: (errorDetail: string) => {
             setIsNotAuthenticated();
             createErrorNotification(errorDetail);
-            removeToken();
+            mainAxiosClient.removeToken();
           },
           403: (errorDetail: string) => {
             createErrorNotification(errorDetail);
@@ -70,8 +70,16 @@ const withInterceptorHandler = <P extends WithInterceptorHandlerProps>(
             createErrorNotification(errorDetail);
           },
           0: (errorDetail: string, status) => {
-            if (errorDetail) createErrorNotification(errorDetail);
-            console.log(`Error ${status}`, errorDetail);
+            if (errorDetail) {
+              if (errorDetail === "Token inválido.") {
+                createErrorNotification(errorDetail, 15000);
+                mainAxiosClient.removeToken();
+                setIsNotAuthenticated();
+              } else {
+                createErrorNotification(errorDetail);
+              }
+              console.log(`Error ${status}`, errorDetail);
+            }
           },
         };
 

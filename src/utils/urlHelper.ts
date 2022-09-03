@@ -9,6 +9,7 @@ export const Paths = {
   moduleAdminEscorts: `acompanantes`,
   moduleAdminEmployees: `colaboradores`,
   moduleAdminCompanies: `empresas`,
+  moduleAdminRoom: `habitaciones`,
 };
 
 export default Paths;
