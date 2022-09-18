@@ -1,20 +1,21 @@
 import React from "react";
 import { CRUDDefaultTableProps } from "@hoc/index";
-import { ExtendedUser } from "@dto/users";
+import { ParkingRate } from "@dto/parking";
 import { TableGenericCRUD } from "@components/shared";
 import { TABLE_HEADERS } from "@utils/index";
+import { formatIntoMoney } from "@utils/functions";
 
-export const Table: React.FunctionComponent<
-  CRUDDefaultTableProps<ExtendedUser>
+export const ParkingRateCRUDTable: React.FunctionComponent<
+  CRUDDefaultTableProps<ParkingRate>
 > = ({
   onOpenDelete,
   onOpenEdit,
   list,
   canDelete,
   canEdit,
-}: CRUDDefaultTableProps<ExtendedUser>) => {
+}: CRUDDefaultTableProps<ParkingRate>) => {
   return (
-    <TableGenericCRUD<ExtendedUser>
+    <TableGenericCRUD<ParkingRate>
       idField="id"
       headers={[
         {
@@ -24,22 +25,17 @@ export const Table: React.FunctionComponent<
           styleHeader: { width: "50px" },
         },
         {
-          field: "fullName",
-          headerName: TABLE_HEADERS.EXTENDED_USER.ALIAS,
+          field: "minutes",
+          headerName: TABLE_HEADERS.PARKING_RATE.MINUTES,
           style: { maxWidth: "200px" },
           styleHeader: { maxWidth: "200px" },
         },
         {
-          field: "username",
-          headerName: TABLE_HEADERS.USER.USERNAME,
-          style: { maxWidth: "100px" },
-          styleHeader: { maxWidth: "100px" },
-        },
-        {
-          field: "isActive",
-          headerName: TABLE_HEADERS.USER.IS_ACTIVE,
-          style: { width: "70px", textAlign: "center" },
-          styleHeader: { width: "70px" },
+          field: "value",
+          headerName: TABLE_HEADERS.PARKING_RATE.VALUE,
+          style: { maxWidth: "100px", textAlign: "center" },
+          styleHeader: { maxWidth: "100px", textAlign: "center" },
+          formatNumber: formatIntoMoney,
         },
       ]}
       canEdit={canEdit}

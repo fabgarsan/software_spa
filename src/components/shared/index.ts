@@ -1,6 +1,7 @@
 export * from "./AlertTimer";
 export * from "./AutocompleteCities";
 export * from "./BackdropLoading";
+export * from "./BooleanIcon";
 export * from "./CommonLayout";
 export * from "./DatePickerRange";
 export * from "./DetailViewGeneric";

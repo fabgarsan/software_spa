@@ -54,7 +54,6 @@ export const EscortCategoryRateCRUDTable: React.FunctionComponent<
           headerName: TABLE_HEADERS.ESCORT_CATEGORIES_RATES.PUBLISHED_WEB,
           style: { minWidth: "50px", textAlign: "center" },
           styleHeader: { minWidth: "50px", textAlign: "center" },
-          isBoolean: true,
         },
       ]}
       canEdit={canEdit}

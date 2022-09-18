@@ -47,7 +47,6 @@ export const EscortCRUDTable: React.FunctionComponent<
           headerName: TABLE_HEADERS.USER.IS_ACTIVE,
           style: { width: "70px", textAlign: "center" },
           styleHeader: { width: "70px" },
-          isBoolean: true,
         },
       ]}
       canEdit={canEdit}

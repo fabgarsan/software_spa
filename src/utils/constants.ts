@@ -75,7 +75,11 @@ export const PERMISSION_MODULES = {
 export const FORMATS = {
   DATE_TIME_TO_SEND: "yyyy-MM-dd",
   DATE_TIME_TO_SHOW: "MM/dd/yyyy",
+  TIME_TO_SEND: "hh:mm:ss",
+  TIME_TO_SHOW: "yyyy-MM-dd",
 };
+
+//YYYY-MM-DDThh:mm:ss.uuuuuuZ
 
 export const SYSTEM_CONFIGURATION = {
   TIMEZONE: "America/Bogota",

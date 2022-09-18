@@ -1,6 +1,5 @@
 import React from "react";
 import { CRUDDefaultTableProps } from "@hoc/index";
-import { Room } from "@dto/room";
 import { TableGenericCRUD } from "@components/shared";
 import { TABLE_HEADERS } from "@utils/index";
 import { GetRoomApiResponse } from "@api/room";
@@ -47,7 +46,6 @@ export const RoomCRUDTable: React.FunctionComponent<
           headerName: TABLE_HEADERS.ROOM.IS_ACTIVE,
           style: { minWidth: "50px", textAlign: "center" },
           styleHeader: { minWidth: "50px", textAlign: "center" },
-          isBoolean: true,
         },
       ]}
       canEdit={canEdit}

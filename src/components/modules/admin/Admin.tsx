@@ -15,6 +15,8 @@ import { UserCRUDPage } from "./UserCRUDPage";
 import { EscortDashboardPage } from "./EscortDashboardPage";
 import { RoomDashboardPage } from "./RoomDashboardPage";
 import { EscortDetailViewPage } from "./EscortDetailViewPage";
+import { ParkingPlanDetailViewPage } from "./ParkingPlanDetailViewPage";
+import { ParkingDashboardPage } from "./ParkingDashboardPage";
 import {
   useCheckGenericUserPermissions,
   useCheckPermissions,
@@ -34,6 +36,9 @@ const instanceDescriptorEmployee =
 
 const instanceDescriptorCompany =
   instancesDescriptor[InstancesDescriptorKeys.company];
+
+const instanceDescriptorParking =
+  instancesDescriptor[InstancesDescriptorKeys.parkingPlan];
 
 const Admin: React.FunctionComponent = () => {
   const navigate = useNavigate();
@@ -72,6 +77,14 @@ const Admin: React.FunctionComponent = () => {
       ).HAS_ANY,
     },
     {
+      text: DRAWER.MODULE_ADMIN_MENU_PARKING,
+      icon: "car",
+      onClick: () => navigate(Paths.moduleAdminParking),
+      show: useCheckGenericUserPermissions(
+        instanceDescriptorParking.permissions.generic
+      ).HAS_ANY,
+    },
+    {
       text: DRAWER.MODULE_ADMIN_MENU_ROOM,
       icon: "bed",
       onClick: () => navigate(Paths.moduleAdminRoom),
@@ -98,6 +111,10 @@ const Admin: React.FunctionComponent = () => {
           <Route path={":id"} element={<EscortDetailViewPage />} />
           <Route index element={<EscortDashboardPage />} />
         </Route>
+        <Route path={Paths.moduleAdminParking}>
+          <Route path={":id"} element={<ParkingPlanDetailViewPage />} />
+          <Route index element={<ParkingDashboardPage />} />
+        </Route>
         <Route
           path={Paths.moduleAdminCompanies}
           element={<CompanyCRUDPage />}
@@ -107,5 +124,7 @@ const Admin: React.FunctionComponent = () => {
     </Drawer>
   );
 };
+
+//ParkingPlanViewPage
 
 export default Admin;

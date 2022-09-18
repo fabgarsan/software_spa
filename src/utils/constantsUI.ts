@@ -15,6 +15,7 @@ export const DRAWER = {
   MODULE_ADMIN_MENU_ESCORTS: "Acompañantes",
   MODULE_ADMIN_MENU_EMPLOYEES: "Colaboradores",
   MODULE_ADMIN_MENU_COMPANIES: "Empresas",
+  MODULE_ADMIN_MENU_PARKING: "Parqueadero",
   MODULE_ADMIN_MENU_ROOM: "Habitaciones",
   MODULE_ADMIN_MENU_USERS: "Usuarios",
   MENU_SIGN_OUT: "Cerrar Sessión",
@@ -88,6 +89,26 @@ export const FORM_FIELDS = {
     LABEL_LAST_NAME: "Apellidos",
     LABEL_EMAIL: "Email",
     LABEL_IS_ACTIVE: "Activo",
+  },
+  PARKING_PLAN: {
+    LABEL_NAME: "Nombres",
+    LABEL_TIME_FROM: "Hora de Inicio",
+    LABEL_VEHICLE_TYPE: "Típo de Vehículo",
+    LABEL_MONDAY: "Lúnes",
+    LABEL_TUESDAY: "Mártes",
+    LABEL_WEDNESDAY: "Miércoles",
+    LABEL_THURSDAY: "Jueves",
+    LABEL_FRIDAY: "Viernes",
+    LABEL_SATURDAY: "Sábado",
+    LABEL_SUNDAY: "Domingo",
+  },
+  PARKING_RATE: {
+    LABEL_MINUTES: "Minutos",
+    LABEL_VALUE: "Valor",
+  },
+  VEHICLE_TYPE: {
+    LABEL_NAME: "Nombres",
+    LABEL_HAS_LICENSE_PLATE: "Tiene Placa?",
   },
   EXTENDED_USER: {
     BLOOD_TYPE: [
@@ -176,6 +197,26 @@ export const TABLE_HEADERS = {
     IS_ACTIVE: "Activo",
     EMAIL: "Email",
     USERNAME: "Nombre Usuario",
+  },
+  PARKING_PLAN: {
+    NAME: "Nombre",
+    VEHICLE_TYPE: "Tipo de Vehículo",
+    TIME_FROM: "Hora de Inicio",
+    MONDAY: "Lúnes",
+    TUESDAY: "Mártes",
+    WEDNESDAY: "Miércoles",
+    THURSDAY: "Jueves",
+    FRIDAY: "Viernes",
+    SATURDAY: "Sábado",
+    SUNDAY: "Domingo",
+  },
+  PARKING_RATE: {
+    MINUTES: "Minutos",
+    VALUE: "Valor",
+  },
+  VEHICLE_TYPE: {
+    NAME: "Nombre",
+    HAS_LICENSE_PLATE: "Tiene Placa?",
   },
 };
 export const TABLE_PAGINATOR = {

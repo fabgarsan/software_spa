@@ -1,6 +1,9 @@
 import { ExtendedUser } from "@dto/users";
 import { Escort } from "@dto/escorts";
 
+export const isBoolean = (idField: unknown): idField is boolean =>
+  typeof idField === "boolean";
+
 export const isNumber = (idField: unknown): idField is number =>
   typeof idField === "number";
 

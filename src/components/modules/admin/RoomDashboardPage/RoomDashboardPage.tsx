@@ -11,18 +11,16 @@ const getTabName = (descriptorKey: InstancesDescriptorKeys) =>
 
 const tabManagerName = instancesDescriptor[room].plural;
 
-export const RoomDashboardPage = () => {
-  return (
-    <TabManager
-      labels={[getTabName(room), getTabName(roomType)]}
-      title={tabManagerName}
-    >
-      {({ tabIndex }) => (
-        <>
-          {tabIndex === 0 && <RoomCRUDTab />}
-          {tabIndex === 1 && <RoomTypeCRUDTab />}
-        </>
-      )}
-    </TabManager>
-  );
-};
+export const RoomDashboardPage = () => (
+  <TabManager
+    labels={[getTabName(room), getTabName(roomType)]}
+    title={tabManagerName}
+  >
+    {({ tabIndex }) => (
+      <>
+        {tabIndex === 0 && <RoomCRUDTab />}
+        {tabIndex === 1 && <RoomTypeCRUDTab />}
+      </>
+    )}
+  </TabManager>
+);

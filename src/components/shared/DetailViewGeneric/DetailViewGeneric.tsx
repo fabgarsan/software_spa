@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 type Attribute = {
   label: string;
-  value: string;
+  value: string | React.ReactNode;
 };
 
 interface DetailViewGenericProps {

@@ -13,25 +13,23 @@ const getTabName = (descriptorKey: InstancesDescriptorKeys) =>
   instancesDescriptor[descriptorKey]?.tab || "";
 const tabManagerName = instancesDescriptor[escort].plural;
 
-export const EscortDashboardPage = () => {
-  return (
-    <TabManager
-      labels={[
-        getTabName(escort),
-        getTabName(escortCategory),
-        getTabName(escortCategoryRate),
-        getTabName(escortService),
-      ]}
-      title={tabManagerName}
-    >
-      {({ tabIndex }) => (
-        <>
-          {tabIndex === 0 && <EscortCRUDTab />}
-          {tabIndex === 1 && <EscortCategoryCRUDTab />}
-          {tabIndex === 2 && <EscortCategoryRateCRUDTab />}
-          {tabIndex === 3 && <EscortServiceCRUDTab />}
-        </>
-      )}
-    </TabManager>
-  );
-};
+export const EscortDashboardPage = () => (
+  <TabManager
+    labels={[
+      getTabName(escort),
+      getTabName(escortCategory),
+      getTabName(escortCategoryRate),
+      getTabName(escortService),
+    ]}
+    title={tabManagerName}
+  >
+    {({ tabIndex }) => (
+      <>
+        {tabIndex === 0 && <EscortCRUDTab />}
+        {tabIndex === 1 && <EscortCategoryCRUDTab />}
+        {tabIndex === 2 && <EscortCategoryRateCRUDTab />}
+        {tabIndex === 3 && <EscortServiceCRUDTab />}
+      </>
+    )}
+  </TabManager>
+);

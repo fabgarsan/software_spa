@@ -14,6 +14,8 @@ import { CRUDDefaultTableProps } from "@hoc/index";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { TABLE_HEADERS, setIfNotString, isNumber } from "@utils/index";
 import IconButton from "@mui/material/IconButton";
+import { isBoolean } from "@utils/typeGuards";
+import { BooleanIcon } from "@components/shared";
 
 interface TableConfig<DataTableInterface> {
   headerName: string;
@@ -22,7 +24,6 @@ interface TableConfig<DataTableInterface> {
   align?: "inherit" | "left" | "center" | "right" | "justify";
   styleHeader?: CSSProperties;
   style?: CSSProperties;
-  isBoolean?: boolean;
   openViewUrl?: string | null;
   formatNumber?: (value: number) => string;
 }
@@ -144,14 +145,8 @@ export const TableGenericCRUD = <DataTableInterface,>({
                     style={cellConfig.style || {}}
                   >
                     <>
-                      {cellConfig.isBoolean ? (
-                        <FontAwesomeIcon
-                          icon={[
-                            "fal",
-                            value ? "check-circle" : "times-circle",
-                          ]}
-                          size="lg"
-                        />
+                      {isBoolean(value) ? (
+                        <BooleanIcon value={value} />
                       ) : (
                         (cellConfig.formatNumber &&
                           isNumber(value) &&
