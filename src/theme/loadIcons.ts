@@ -26,6 +26,7 @@ import {
   faEye,
   faBed,
   faCar,
+  faCashRegister,
 } from "@fortawesome/pro-light-svg-icons";
 
 const loadIcons = (): void => {
@@ -55,6 +56,7 @@ const loadIcons = (): void => {
   library.add(faEye);
   library.add(faBed);
   library.add(faCar);
+  library.add(faCashRegister);
 };
 
 export default loadIcons;

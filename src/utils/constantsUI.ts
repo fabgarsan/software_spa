@@ -18,6 +18,7 @@ export const DRAWER = {
   MODULE_ADMIN_MENU_PARKING: "Parqueadero",
   MODULE_ADMIN_MENU_ROOM: "Habitaciones",
   MODULE_ADMIN_MENU_USERS: "Usuarios",
+  MODULE_ADMIN_MENU_POINTS_OF_SALE: "Puntos de Venta",
   MENU_SIGN_OUT: "Cerrar Sessión",
   MENU_HOME: "Principal",
 };
@@ -79,6 +80,10 @@ export const FORM_FIELDS = {
   COMPANY: {
     LABEL_NAME: "Nombre",
     LABEL_NIT: "Nit",
+  },
+  POINT_OF_SALE: {
+    LABEL_NAME: "Nombre",
+    LABEL_IS_ACTIVE: "Esta activo?",
   },
   ESCORT: {
     LABEL_ALIAS: "Nombre Artístico",
@@ -217,6 +222,10 @@ export const TABLE_HEADERS = {
   VEHICLE_TYPE: {
     NAME: "Nombre",
     HAS_LICENSE_PLATE: "Tiene Placa?",
+  },
+  POINT_OF_SALE: {
+    NAME: "Nombre",
+    IS_ACTIVE: "Esta Activo?",
   },
 };
 export const TABLE_PAGINATOR = {

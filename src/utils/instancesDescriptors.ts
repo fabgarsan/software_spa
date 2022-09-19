@@ -11,6 +11,7 @@ export enum InstancesDescriptorKeys {
   parkingPlan,
   parkingPlanRate,
   vehicleType,
+  pointOfSale,
 }
 
 export type InstancesDescriptorValue = {
@@ -139,6 +140,14 @@ export const instancesDescriptor: Record<
     },
     tab: "Tipos de Vehiculos",
     apiRoute: "parking-lot-vehicles-types/",
+  },
+  [InstancesDescriptorKeys.pointOfSale]: {
+    plural: "Puntos de Venta",
+    singular: "Punto de Venta",
+    permissions: {
+      generic: buildGenericPermissionInstanceDescriptor("pointofsale"),
+    },
+    apiRoute: "points-of-sales/",
   },
 };
 export type GenericPermission = {

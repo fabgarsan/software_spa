@@ -8,6 +8,7 @@ const useValidation = () => {
   const validationSchema = useMemo(
     () =>
       yup.object({
+        isActive: yup.boolean(),
         firstName: yup.string().required(FORM_VALIDATIONS.REQUIRED_FIELD),
         lastName: yup.string().required(FORM_VALIDATIONS.REQUIRED_FIELD),
         idNumber: yup.string().required(FORM_VALIDATIONS.REQUIRED_FIELD),

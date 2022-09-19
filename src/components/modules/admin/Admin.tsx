@@ -12,6 +12,8 @@ import {
 import { CompanyCRUDPage } from "./CompanyCRUDPage";
 import { EmployeeCRUDPage } from "./EmployeeCRUDPage";
 import { UserCRUDPage } from "./UserCRUDPage";
+import { PointOfSaleCRUDPage } from "./PointOfSaleCRUDPage";
+import { PointOfSaleDetailViewPage } from "./PointOfSaleDetailViewPage";
 import { EscortDashboardPage } from "./EscortDashboardPage";
 import { RoomDashboardPage } from "./RoomDashboardPage";
 import { EscortDetailViewPage } from "./EscortDetailViewPage";
@@ -39,6 +41,9 @@ const instanceDescriptorCompany =
 
 const instanceDescriptorParking =
   instancesDescriptor[InstancesDescriptorKeys.parkingPlan];
+
+const instanceDescriptorPointOfSale =
+  instancesDescriptor[InstancesDescriptorKeys.pointOfSale];
 
 const Admin: React.FunctionComponent = () => {
   const navigate = useNavigate();
@@ -92,6 +97,14 @@ const Admin: React.FunctionComponent = () => {
         instanceDescriptorRoom.permissions.generic
       ).HAS_ANY,
     },
+    {
+      text: DRAWER.MODULE_ADMIN_MENU_POINTS_OF_SALE,
+      icon: "cash-register",
+      onClick: () => navigate(Paths.moduleAdminPointOfSale),
+      show: useCheckGenericUserPermissions(
+        instanceDescriptorPointOfSale.permissions.generic
+      ).HAS_ANY,
+    },
   ];
 
   const hasPermission = useCheckPermissions([PERMISSION_MODULES.ADMIN], "all");
@@ -114,6 +127,10 @@ const Admin: React.FunctionComponent = () => {
         <Route path={Paths.moduleAdminParking}>
           <Route path={":id"} element={<ParkingPlanDetailViewPage />} />
           <Route index element={<ParkingDashboardPage />} />
+        </Route>
+        <Route path={Paths.moduleAdminPointOfSale}>
+          <Route path={":id"} element={<PointOfSaleDetailViewPage />} />
+          <Route index element={<PointOfSaleCRUDPage />} />
         </Route>
         <Route
           path={Paths.moduleAdminCompanies}

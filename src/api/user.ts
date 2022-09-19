@@ -1,8 +1,28 @@
 import { mainAxiosClient } from "@clients/axios";
-import { API_ROUTES } from "@utils/index";
+import { instancesDescriptor, InstancesDescriptorKeys } from "@utils/index";
 import { useMutation } from "@tanstack/react-query";
+import { AxiosResponse } from "axios";
+import { ExtendedUser } from "@dto/users";
 
 const client = mainAxiosClient.getInstance();
+
+const instancesDescriptorEmployee =
+  instancesDescriptor[InstancesDescriptorKeys.employee];
+
+const instancesDescriptorEscort =
+  instancesDescriptor[InstancesDescriptorKeys.escort];
+
+export const fetchEmployees = ({
+  params,
+}: {
+  params?: { isActive: boolean };
+}): Promise<AxiosResponse<ExtendedUser[]>> =>
+  client.get<ExtendedUser[]>(`${instancesDescriptorEmployee.apiRoute}` || "", {
+    params: {
+      extended_user__user_type: "T",
+      ...params,
+    },
+  });
 
 export const useAddEscortServiceMutation = ({
   escortId,
@@ -14,7 +34,9 @@ export const useAddEscortServiceMutation = ({
   useMutation(
     (serviceId: number) =>
       client
-        .put(`${API_ROUTES.USER}${escortId}/services/`, { serviceId })
+        .put(`${instancesDescriptorEscort.apiRoute}${escortId}/services/`, {
+          serviceId,
+        })
         .then((res) => res.data),
     {
       onSuccess: () => {
@@ -33,7 +55,9 @@ export const useRemoveEscortServiceMutation = ({
   useMutation(
     (serviceId: number) =>
       client
-        .delete(`${API_ROUTES.USER}${escortId}/services/${serviceId}`)
+        .delete(
+          `${instancesDescriptorEscort.apiRoute}${escortId}/services/${serviceId}`
+        )
         .then((res) => res.data),
     {
       onSuccess: () => {
@@ -56,7 +80,7 @@ export const useUploadEscortImageMutation = ({
       data.append("image", file, `prueba.${extension}`);
       data.append("type", type);
       return client.post(
-        `${API_ROUTES.USER}${escortId}/upload-escort-image/`,
+        `${instancesDescriptorEscort.apiRoute}${escortId}/upload-escort-image/`,
         data,
         {
           headers: {
