@@ -12,6 +12,7 @@ export const Paths = {
   moduleAdminRoom: `habitaciones`,
   moduleAdminParking: `parqueadero`,
   moduleAdminPointOfSale: `puntos-venta`,
+  moduleParkingPointOfSale: `parqueadero`,
 };
 
 export default Paths;

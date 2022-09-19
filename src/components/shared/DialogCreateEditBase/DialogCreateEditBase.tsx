@@ -16,7 +16,7 @@ interface DialogCreateEditBaseProps {
   open: boolean;
   children: React.ReactNode;
   title: string;
-  nonFieldErrors: string[];
+  nonFieldErrors: string[] | unknown;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -49,7 +49,7 @@ export const DialogCreateEditBase: React.FunctionComponent<
       <DialogTitle id="form-dialog-title">{title}</DialogTitle>
       <DialogContent className={classes.root}>
         {children}
-        {nonFieldErrors && (
+        {Array.isArray(nonFieldErrors) && nonFieldErrors && (
           <Box>
             <Grid item xs={12}>
               {nonFieldErrors.map((nonFieldError) => (

@@ -106,6 +106,84 @@ export const DialogCreateEdit: React.FunctionComponent<
               }
               label={FORM_FIELDS.POINT_OF_SALE.LABEL_IS_ACTIVE}
             />
+          </Grid>{" "}
+          <Grid container item xs={12}>
+            <Grid item xs={12} md={6}>
+              <FormControlLabel
+                control={
+                  <Controller
+                    name="hasIncomeOperations"
+                    defaultValue
+                    control={control}
+                    render={({ field }) => (
+                      <Checkbox
+                        {...field}
+                        checked={field.value}
+                        onChange={(e) => field.onChange(e.target.checked)}
+                      />
+                    )}
+                  />
+                }
+                label={FORM_FIELDS.POINT_OF_SALE.LABEL_HAS_INCOME_OPERATIONS}
+              />
+            </Grid>{" "}
+            <Grid item xs={12} md={6}>
+              <FormControlLabel
+                control={
+                  <Controller
+                    name="hasOutcomesOperations"
+                    defaultValue
+                    control={control}
+                    render={({ field }) => (
+                      <Checkbox
+                        {...field}
+                        checked={field.value}
+                        onChange={(e) => field.onChange(e.target.checked)}
+                      />
+                    )}
+                  />
+                }
+                label={FORM_FIELDS.POINT_OF_SALE.LABEL_HAS_OUTCOME_OPERATIONS}
+              />
+            </Grid>{" "}
+            <Grid item xs={12} md={6}>
+              <FormControlLabel
+                control={
+                  <Controller
+                    name="hasParkingLotServicesSales"
+                    defaultValue
+                    control={control}
+                    render={({ field }) => (
+                      <Checkbox
+                        {...field}
+                        checked={field.value}
+                        onChange={(e) => field.onChange(e.target.checked)}
+                      />
+                    )}
+                  />
+                }
+                label={FORM_FIELDS.POINT_OF_SALE.LABEL_HAS_PARKING_LOT}
+              />
+            </Grid>{" "}
+            <Grid item xs={12} md={6}>
+              <FormControlLabel
+                control={
+                  <Controller
+                    name="hasEscortServicesSales"
+                    defaultValue
+                    control={control}
+                    render={({ field }) => (
+                      <Checkbox
+                        {...field}
+                        checked={field.value}
+                        onChange={(e) => field.onChange(e.target.checked)}
+                      />
+                    )}
+                  />
+                }
+                label={FORM_FIELDS.POINT_OF_SALE.LABEL_HAS_ESCORT_SERVICES}
+              />
+            </Grid>
           </Grid>
         </Grid>
         <DialogActions>

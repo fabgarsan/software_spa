@@ -29,6 +29,30 @@ export const Table: React.FunctionComponent<
           style: { minWidth: "70px" },
           styleHeader: { minWidth: "70px" },
         },
+        {
+          field: "hasEscortServicesSales",
+          headerName: TABLE_HEADERS.POINT_OF_SALE.HAS_ESCORT_SERVICES,
+          style: { minWidth: "70px" },
+          styleHeader: { minWidth: "70px" },
+        },
+        {
+          field: "hasParkingLotServicesSales",
+          headerName: TABLE_HEADERS.POINT_OF_SALE.HAS_PARKING_LOT,
+          style: { minWidth: "70px" },
+          styleHeader: { minWidth: "70px" },
+        },
+        {
+          field: "hasIncomeOperations",
+          headerName: TABLE_HEADERS.POINT_OF_SALE.HAS_INCOME_OPERATIONS,
+          style: { minWidth: "70px" },
+          styleHeader: { minWidth: "70px" },
+        },
+        {
+          field: "hasOutcomesOperations",
+          headerName: TABLE_HEADERS.POINT_OF_SALE.HAS_OUTCOME_OPERATIONS,
+          style: { minWidth: "70px" },
+          styleHeader: { minWidth: "70px" },
+        },
       ]}
       canEdit={canEdit}
       canDelete={canDelete}

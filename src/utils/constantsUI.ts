@@ -8,6 +8,7 @@ export const DRAWER = {
   MAIN_DASHBOARD_TITLE: "Principal",
   MAIN_DASHBOARD_MENU_ADMIN: "Admin",
   MODULE_RECEPTION_TITLE: "Recepción",
+  MODULE_PARKING_LOT_TITLE: "Parqueadero",
   MODULE_RECEPTION_MENU_SIGN_IN: "Entrada",
   MODULE_RECEPTION_MENU_SIGN_OUT: "Salida",
   MODULE_RECEPTION_MENU_LOG_BOOK: "Bitacora Entradas",
@@ -84,6 +85,10 @@ export const FORM_FIELDS = {
   POINT_OF_SALE: {
     LABEL_NAME: "Nombre",
     LABEL_IS_ACTIVE: "Esta activo?",
+    LABEL_HAS_INCOME_OPERATIONS: "Hace operaciones de ingreso de dinero?",
+    LABEL_HAS_OUTCOME_OPERATIONS: "Hace operaciones de salida de dinero?",
+    LABEL_HAS_PARKING_LOT: "Vende servicios de parqueadero?",
+    LABEL_HAS_ESCORT_SERVICES: "Vende servicios de habitaciones?",
   },
   ESCORT: {
     LABEL_ALIAS: "Nombre Artístico",
@@ -226,6 +231,10 @@ export const TABLE_HEADERS = {
   POINT_OF_SALE: {
     NAME: "Nombre",
     IS_ACTIVE: "Esta Activo?",
+    HAS_INCOME_OPERATIONS: "Ope. Ingreso",
+    HAS_OUTCOME_OPERATIONS: "Ope. Egreso",
+    HAS_PARKING_LOT: "Parqueadero",
+    HAS_ESCORT_SERVICES: "Habitaciones",
   },
 };
 export const TABLE_PAGINATOR = {

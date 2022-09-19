@@ -3,6 +3,7 @@ import { instancesDescriptor, InstancesDescriptorKeys } from "@utils/index";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosResponse } from "axios";
 import { ExtendedUser } from "@dto/users";
+import { PointOfSale, PointOfSaleWorkShift } from "@dto/pointOfSale";
 
 const client = mainAxiosClient.getInstance();
 
@@ -11,6 +12,18 @@ const instancesDescriptorEmployee =
 
 const instancesDescriptorEscort =
   instancesDescriptor[InstancesDescriptorKeys.escort];
+
+export interface GetPointOfSaleAccess {
+  authorizedPointsOfSale: PointOfSale[];
+  openWorkShift?: PointOfSaleWorkShift;
+}
+
+export const fetchEmployeePointOfSaleAccess = (): Promise<
+  AxiosResponse<GetPointOfSaleAccess>
+> =>
+  client.get<GetPointOfSaleAccess>(
+    `${instancesDescriptorEmployee.apiRoute}point-of-sale-access/` || ""
+  );
 
 export const fetchEmployees = ({
   params,

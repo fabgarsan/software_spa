@@ -1,15 +1,28 @@
-import React from "react";
-import { Drawer } from "@components/shared";
+import React, { useState } from "react";
+import { Drawer, QueryErrorBoundary } from "@components/shared";
 import { IconList } from "@components/shared/Drawer";
 import { Paths, DRAWER, PERMISSION_MODULES } from "@utils/index";
 import { useNavigate } from "react-router-dom";
 import { useCheckPermissions } from "@hooks/index";
-import { Box } from "@mui/material";
+import { Box, Grid, Paper, Typography } from "@mui/material";
 import printJS from "print-js";
 import axios from "axios";
+import { usePointOfSaleAccessQuery } from "@api/pointOfSale";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { styled } from "@mui/material/styles";
+import { OpenPointOfSaleModal } from "@components/modules/Root/OpenPointOfSaleModal";
+import { PointOfSale } from "@dto/pointOfSale";
+
+const Item = styled(Paper)(() => ({
+  textAlign: "center",
+  paddingTop: "20px",
+  paddingBottom: "20px",
+}));
 
 const Root: React.FunctionComponent = () => {
   const navigate = useNavigate();
+  const [openPointOfSaleDialog, setOpenPointOfSaleDialog] =
+    useState<PointOfSale | null>(null);
 
   // const downloadPDF = (pdf: string) => {
   //   const linkSource = `data:application/pdf;base64,${pdf}`;
@@ -50,6 +63,8 @@ const Root: React.FunctionComponent = () => {
       show: useCheckPermissions([PERMISSION_MODULES.RECEPTION], "all"),
     },
   ];
+  const pointOfSaleAccessQuery = usePointOfSaleAccessQuery();
+  const { data: pointOfSaleAccessData, isSuccess } = pointOfSaleAccessQuery;
   return (
     <Drawer
       canShowContent
@@ -57,10 +72,50 @@ const Root: React.FunctionComponent = () => {
       items={itemsMenu}
       withMainIcon={false}
     >
+      {openPointOfSaleDialog && (
+        <OpenPointOfSaleModal
+          open={!!openPointOfSaleDialog}
+          instance={openPointOfSaleDialog}
+          handleClose={() => {
+            setOpenPointOfSaleDialog(null);
+          }}
+        />
+      )}
       <Box>Bienvenidos</Box>
       <button type="button" onClick={algo}>
         PDF
       </button>
+      <QueryErrorBoundary queries={[pointOfSaleAccessQuery]}>
+        <Grid container spacing={2}>
+          {isSuccess &&
+            !pointOfSaleAccessData.openWorkShift?.pointOfSale &&
+            pointOfSaleAccessData.authorizedPointsOfSale.map((pointOfSale) => (
+              <Grid
+                item
+                key={pointOfSale.id}
+                xs={12}
+                sm={6}
+                md={3}
+                lg={2}
+                onClick={() => setOpenPointOfSaleDialog(pointOfSale)}
+              >
+                <Item elevation={3}>
+                  <Box>
+                    <FontAwesomeIcon
+                      icon={["fal", "cash-register"]}
+                      size="3x"
+                    />
+                  </Box>
+                  <Box>
+                    <Typography variant="caption">
+                      {pointOfSale.name}
+                    </Typography>
+                  </Box>
+                </Item>
+              </Grid>
+            ))}
+        </Grid>
+      </QueryErrorBoundary>
     </Drawer>
   );
 };

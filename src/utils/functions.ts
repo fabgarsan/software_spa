@@ -4,14 +4,16 @@ import { FieldValues } from "react-hook-form/dist/types/fields";
 
 export const setFormError = <T extends FieldValues>(
   setError: UseFormSetError<T>,
-  errors: { [name: string]: string[] }
+  errors: { [name: string]: string[] } | unknown
 ) => {
-  Object.entries(errors).forEach(([key, value]) => {
-    setError(key as keyof UseFormSetError<T>, {
-      type: "manual",
-      message: getFormFieldError(value),
+  if (errors) {
+    Object.entries(errors).forEach(([key, value]) => {
+      setError(key as keyof UseFormSetError<T>, {
+        type: "manual",
+        message: getFormFieldError(value),
+      });
     });
-  });
+  }
 };
 
 export const setFormValue = <T extends FieldValues>(

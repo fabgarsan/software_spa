@@ -9,6 +9,10 @@ const useValidation = () => {
       yup.object({
         name: yup.string().required(FORM_VALIDATIONS.REQUIRED_FIELD),
         active: yup.boolean(),
+        hasIncomeOperations: yup.boolean(),
+        hasOutcomesOperations: yup.boolean(),
+        hasParkingLotServicesSales: yup.boolean(),
+        hasEscortServicesSales: yup.boolean(),
       }),
     []
   );
