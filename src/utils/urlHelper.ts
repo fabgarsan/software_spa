@@ -1,18 +1,30 @@
-export const Paths = {
-  moduleRoot: "/",
-  moduleReception: "recepcion/*",
-  moduleReceptionSingOut: `sign-out/`,
-  moduleReceptionSingIn: `sign-in/`,
-  moduleReceptionSingOutInLogBook: `sign-out-in-log-book/`,
-  moduleAdmin: "admin/*",
-  moduleAdminUsers: `usuarios`,
-  moduleAdminEscorts: `acompanantes`,
-  moduleAdminEmployees: `colaboradores`,
-  moduleAdminCompanies: `empresas`,
-  moduleAdminRoom: `habitaciones`,
-  moduleAdminParking: `parqueadero`,
-  moduleAdminPointOfSale: `puntos-venta`,
-  moduleParkingPointOfSale: `parqueadero`,
+const mainPath = {
+  admin: "admin/",
+  reception: "recepcion/",
+  pointOfSale: "punto-venta/",
 };
 
-export default Paths;
+export const Paths = {
+  root: "/",
+  moduleAdmin: {
+    main: mainPath.admin,
+    users: `usuarios/`,
+    escorts: `acompanantes/`,
+    employees: `colaboradores/`,
+    companies: `empresas/`,
+    room: `habitaciones/`,
+    parking: `parqueadero/`,
+    pointOfSale: `puntos-venta/`,
+  },
+  moduleReception: {
+    main: mainPath.reception,
+    signOut: `sign-out/`,
+    signIn: `sign-in/`,
+    signOutInLogBook: `sign-out-in-log-book/`,
+  },
+  modulePointOfSale: {
+    main: mainPath.pointOfSale,
+    parkingLot: `parqueadero/`,
+    close: `cerrar/`,
+  },
+};

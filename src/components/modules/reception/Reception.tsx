@@ -13,13 +13,17 @@ import {
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { useCheckPermissions } from "@hooks/index";
 
+const {
+  moduleReception: { signIn, signOut, signOutInLogBook },
+} = Paths;
+
 const Reception: React.FunctionComponent = () => {
   const navigate = useNavigate();
   const itemsMenu: IconList[] = [
     {
       text: DRAWER.MODULE_RECEPTION_MENU_SIGN_IN,
       icon: "sign-in",
-      onClick: () => navigate(Paths.moduleReceptionSingIn),
+      onClick: () => navigate(signIn),
       show: useCheckPermissions([
         PERMISSION_INSTANCES.SIGN_IN_CONTROL.MADE_SIGN_IN_OTHERS,
       ]),
@@ -27,7 +31,7 @@ const Reception: React.FunctionComponent = () => {
     {
       text: DRAWER.MODULE_RECEPTION_MENU_SIGN_OUT,
       icon: "sign-out",
-      onClick: () => navigate(Paths.moduleReceptionSingOut),
+      onClick: () => navigate(signOut),
       show: useCheckPermissions([
         PERMISSION_INSTANCES.SIGN_IN_CONTROL.MADE_SIGN_OUT_OTHERS,
       ]),
@@ -35,7 +39,7 @@ const Reception: React.FunctionComponent = () => {
     {
       text: DRAWER.MODULE_RECEPTION_MENU_LOG_BOOK,
       icon: "address-book",
-      onClick: () => navigate(Paths.moduleReceptionSingOutInLogBook),
+      onClick: () => navigate(signOutInLogBook),
       show: true,
     },
   ];
@@ -50,16 +54,10 @@ const Reception: React.FunctionComponent = () => {
       canShowContent={hasPermission}
     >
       <Routes>
+        <Route path={signIn} element={<SignInControlPage />} />
+        <Route path={signOut} element={<SignOutControlPage />} />
         <Route
-          path={Paths.moduleReceptionSingIn}
-          element={<SignInControlPage />}
-        />
-        <Route
-          path={Paths.moduleReceptionSingOut}
-          element={<SignOutControlPage />}
-        />
-        <Route
-          path={Paths.moduleReceptionSingOutInLogBook}
+          path={signOutInLogBook}
           element={<SignInOutControlLogBookPage />}
         />
       </Routes>

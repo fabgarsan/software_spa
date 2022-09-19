@@ -45,6 +45,18 @@ const instanceDescriptorParking =
 const instanceDescriptorPointOfSale =
   instancesDescriptor[InstancesDescriptorKeys.pointOfSale];
 
+const {
+  moduleAdmin: {
+    employees,
+    escorts,
+    companies,
+    room,
+    parking,
+    pointOfSale,
+    users,
+  },
+} = Paths;
+
 const Admin: React.FunctionComponent = () => {
   const navigate = useNavigate();
 
@@ -52,7 +64,7 @@ const Admin: React.FunctionComponent = () => {
     {
       text: DRAWER.MODULE_ADMIN_MENU_USERS,
       icon: "users",
-      onClick: () => navigate(Paths.moduleAdminUsers),
+      onClick: () => navigate(users),
       show: useCheckGenericUserPermissions(
         instanceDescriptorUser.permissions.generic
       ).HAS_ANY,
@@ -60,7 +72,7 @@ const Admin: React.FunctionComponent = () => {
     {
       text: DRAWER.MODULE_ADMIN_MENU_ESCORTS,
       icon: "user-nurse",
-      onClick: () => navigate(Paths.moduleAdminEscorts),
+      onClick: () => navigate(escorts),
       show: useCheckGenericUserPermissions(
         instanceDescriptorEscortCategory.permissions.generic
       ).HAS_ANY,
@@ -68,7 +80,7 @@ const Admin: React.FunctionComponent = () => {
     {
       text: DRAWER.MODULE_ADMIN_MENU_EMPLOYEES,
       icon: "user-hard-hat",
-      onClick: () => navigate(Paths.moduleAdminEmployees),
+      onClick: () => navigate(employees),
       show: useCheckGenericUserPermissions(
         instanceDescriptorEmployee.permissions.generic
       ).HAS_ANY,
@@ -76,7 +88,7 @@ const Admin: React.FunctionComponent = () => {
     {
       text: DRAWER.MODULE_ADMIN_MENU_COMPANIES,
       icon: "building",
-      onClick: () => navigate(Paths.moduleAdminCompanies),
+      onClick: () => navigate(companies),
       show: useCheckGenericUserPermissions(
         instanceDescriptorCompany.permissions.generic
       ).HAS_ANY,
@@ -84,7 +96,7 @@ const Admin: React.FunctionComponent = () => {
     {
       text: DRAWER.MODULE_ADMIN_MENU_PARKING,
       icon: "car",
-      onClick: () => navigate(Paths.moduleAdminParking),
+      onClick: () => navigate(parking),
       show: useCheckGenericUserPermissions(
         instanceDescriptorParking.permissions.generic
       ).HAS_ANY,
@@ -92,7 +104,7 @@ const Admin: React.FunctionComponent = () => {
     {
       text: DRAWER.MODULE_ADMIN_MENU_ROOM,
       icon: "bed",
-      onClick: () => navigate(Paths.moduleAdminRoom),
+      onClick: () => navigate(room),
       show: useCheckGenericUserPermissions(
         instanceDescriptorRoom.permissions.generic
       ).HAS_ANY,
@@ -100,7 +112,7 @@ const Admin: React.FunctionComponent = () => {
     {
       text: DRAWER.MODULE_ADMIN_MENU_POINTS_OF_SALE,
       icon: "cash-register",
-      onClick: () => navigate(Paths.moduleAdminPointOfSale),
+      onClick: () => navigate(pointOfSale),
       show: useCheckGenericUserPermissions(
         instanceDescriptorPointOfSale.permissions.generic
       ).HAS_ANY,
@@ -115,33 +127,25 @@ const Admin: React.FunctionComponent = () => {
       canShowContent={hasPermission}
     >
       <Routes>
-        <Route path={Paths.moduleAdminUsers} element={<UserCRUDPage />} />
-        <Route
-          path={Paths.moduleAdminEmployees}
-          element={<EmployeeCRUDPage />}
-        />
-        <Route path={Paths.moduleAdminEscorts}>
+        <Route path={users} element={<UserCRUDPage />} />
+        <Route path={employees} element={<EmployeeCRUDPage />} />
+        <Route path={escorts}>
           <Route path={":id"} element={<EscortDetailViewPage />} />
           <Route index element={<EscortDashboardPage />} />
         </Route>
-        <Route path={Paths.moduleAdminParking}>
+        <Route path={parking}>
           <Route path={":id"} element={<ParkingPlanDetailViewPage />} />
           <Route index element={<ParkingDashboardPage />} />
         </Route>
-        <Route path={Paths.moduleAdminPointOfSale}>
+        <Route path={pointOfSale}>
           <Route path={":id"} element={<PointOfSaleDetailViewPage />} />
           <Route index element={<PointOfSaleCRUDPage />} />
         </Route>
-        <Route
-          path={Paths.moduleAdminCompanies}
-          element={<CompanyCRUDPage />}
-        />
-        <Route path={Paths.moduleAdminRoom} element={<RoomDashboardPage />} />
+        <Route path={companies} element={<CompanyCRUDPage />} />
+        <Route path={room} element={<RoomDashboardPage />} />
       </Routes>
     </Drawer>
   );
 };
-
-//ParkingPlanViewPage
 
 export default Admin;

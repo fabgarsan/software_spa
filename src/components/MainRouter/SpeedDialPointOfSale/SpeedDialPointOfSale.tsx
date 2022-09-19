@@ -22,6 +22,10 @@ const StyledSpeedDial = styled(SpeedDial)(({ theme }) => ({
   },
 }));
 
+const {
+  modulePointOfSale: { main, close, parkingLot },
+} = Paths;
+
 export const SpeedDialPointOfSale = () => {
   const navigate = useNavigate();
   const pointOfSaleAccessQuery = usePointOfSaleAccessQuery();
@@ -44,13 +48,13 @@ export const SpeedDialPointOfSale = () => {
         </Badge>
       ),
       name: "Cerrar Punto de Venta",
-      onClick: () => console.log("Cerrar Punto de Venta"),
+      onClick: () => navigate(`${main}${close}`),
     },
     {
       hidden: !hasParkingLotServicesSales,
       icon: <FontAwesomeIcon icon={["fal", "car"]} size="2x" />,
       name: "Parqueadero",
-      onClick: () => navigate(Paths.moduleParkingPointOfSale),
+      onClick: () => navigate(`${main}${parkingLot}`),
     },
   ];
   return (

@@ -168,7 +168,7 @@ const MiniDrawer: React.FunctionComponent<MiniDrawerProps> = ({
   };
 
   const goLogOut = () => store.dispatch(logOutThunk());
-  const goHome = () => navigate(Paths.moduleRoot);
+  const goHome = () => navigate(Paths.root);
 
   return (
     <Box sx={{ display: "flex" }}>

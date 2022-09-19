@@ -1,4 +1,4 @@
-export { default as Paths } from "./urlHelper";
+export { Paths } from "./urlHelper";
 export {
   ERROR_MESSAGES,
   DIALOG_MESSAGES,

@@ -13,20 +13,25 @@ const DashboardRoot = React.lazy(() => import("@components/modules/Root"));
 
 import { SpeedDialPointOfSale } from "../MainRouter/SpeedDialPointOfSale";
 
-const PointOfSaleParkingLot = React.lazy(
-  () => import("@components/modules/parkingLot/PointOfSaleParking")
+const DashboardPointOfSale = React.lazy(
+  () => import("@components/modules/pointOfSale/PointOfSale")
 );
+
+const { moduleAdmin, moduleReception, modulePointOfSale, root } = Paths;
 
 export const MainRouter: React.FunctionComponent = () => {
   return (
     <>
       <Routes>
-        <Route path={Paths.moduleAdmin} element={<DashboardAdmin />} />
-        <Route path={Paths.moduleReception} element={<DashboardReception />} />
-        <Route path={Paths.moduleRoot} element={<DashboardRoot />} />
+        <Route path={`${moduleAdmin.main}*`} element={<DashboardAdmin />} />
         <Route
-          path={Paths.moduleParkingPointOfSale}
-          element={<PointOfSaleParkingLot />}
+          path={`${moduleReception.main}*`}
+          element={<DashboardReception />}
+        />
+        <Route path={`${root}*`} element={<DashboardRoot />} />
+        <Route
+          path={`${modulePointOfSale.main}*`}
+          element={<DashboardPointOfSale />}
         />
       </Routes>
       <SpeedDialPointOfSale />

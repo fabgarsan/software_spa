@@ -34,6 +34,8 @@ const Root: React.FunctionComponent = () => {
   //   downloadLink.click();
   // };
 
+  const { moduleAdmin, moduleReception } = Paths;
+
   const printPDF = (base64: string) => {
     printJS({ printable: base64, type: "pdf", base64: true });
   };
@@ -53,13 +55,13 @@ const Root: React.FunctionComponent = () => {
     {
       text: DRAWER.MAIN_DASHBOARD_MENU_ADMIN,
       icon: "cogs",
-      onClick: () => navigate(Paths.moduleAdmin),
+      onClick: () => navigate(moduleAdmin.main),
       show: useCheckPermissions([PERMISSION_MODULES.ADMIN], "all"),
     },
     {
       text: DRAWER.MODULE_RECEPTION_TITLE,
       icon: "door-open",
-      onClick: () => navigate(Paths.moduleReception),
+      onClick: () => navigate(moduleReception.main),
       show: useCheckPermissions([PERMISSION_MODULES.RECEPTION], "all"),
     },
   ];
