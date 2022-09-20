@@ -88,7 +88,7 @@ export const EscortCategoryRateCRUDDialogCreateEdit: React.FunctionComponent<
         instanceDescriptor.singular,
         Boolean(instance)
       )}
-      nonFieldErrors={mutationErrors.nonFieldErrors}
+      nonFieldErrors={mutationErrors?.nonFieldErrors}
     >
       <QueryErrorBoundary queries={[categoriesQuery]}>
         <Box component="form" onSubmit={handleSubmit(onSave)}>

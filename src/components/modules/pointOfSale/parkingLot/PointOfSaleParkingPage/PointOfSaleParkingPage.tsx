@@ -3,6 +3,7 @@ import {
   usePointOfSaleAccessQuery,
   getPointOfSaleOpen,
 } from "@api/pointOfSale";
+import { Box, Typography } from "@mui/material";
 
 export const PointOfSaleParkingPage: React.FunctionComponent = () => {
   const pointOfSaleAccessQuery = usePointOfSaleAccessQuery();
@@ -14,5 +15,11 @@ export const PointOfSaleParkingPage: React.FunctionComponent = () => {
   const hasParkingLotServicesSales =
     openPointOfSale?.hasParkingLotServicesSales || false;
   if (!hasParkingLotServicesSales) return <></>;
-  return <div>EL PARQUEADERO</div>;
+  return (
+    <Box>
+      <Typography variant="h5" gutterBottom color="primary">
+        Parqueadero
+      </Typography>
+    </Box>
+  );
 };

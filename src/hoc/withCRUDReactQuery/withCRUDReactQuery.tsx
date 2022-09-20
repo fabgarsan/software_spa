@@ -33,6 +33,7 @@ import {
 import { useReactQueryCRUDGenericApiCall } from "@api/reactQueryApi";
 
 import { QueryErrorBoundary } from "@components/shared";
+import { DjangoSerializerFormError } from "@dto/common";
 
 export interface CRUDDefaultTableProps<ApiResponseDataType> {
   list: ApiResponseDataType[];
@@ -54,7 +55,10 @@ export interface CRUDDefaultFormProps<
     formValues: ApiRequestCreateDataType | ApiRequestEditDataType
   ) => void;
   handleClose: () => void;
-  error: any;
+  error:
+    | DjangoSerializerFormError<ApiRequestCreateDataType>
+    | DjangoSerializerFormError<ApiRequestEditDataType>
+    | undefined;
   open: boolean;
 }
 
@@ -362,7 +366,7 @@ export const withCRUDReactQuery = <
             error={
               createMutationError?.response?.data ||
               editMutationError?.response?.data ||
-              []
+              undefined
             }
             handleClose={() => {
               dispatchElementActions({ type: "closeCreateEditDialog" });

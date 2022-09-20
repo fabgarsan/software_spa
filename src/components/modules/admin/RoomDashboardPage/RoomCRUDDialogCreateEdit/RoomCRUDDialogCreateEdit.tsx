@@ -90,7 +90,7 @@ export const RoomCRUDDialogCreateEdit: React.FunctionComponent<
         instanceDescriptor.singular,
         Boolean(instance)
       )}
-      nonFieldErrors={mutationErrors.nonFieldErrors}
+      nonFieldErrors={mutationErrors?.nonFieldErrors}
     >
       <Box component="form" onSubmit={handleSubmit(onSave)}>
         <Grid container>

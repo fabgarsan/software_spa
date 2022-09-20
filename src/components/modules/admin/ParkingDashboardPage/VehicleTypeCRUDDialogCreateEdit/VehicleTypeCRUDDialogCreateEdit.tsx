@@ -63,7 +63,7 @@ export const VehicleTypeCRUDDialogCreateEdit: React.FunctionComponent<
         instanceDescriptor.singular,
         Boolean(instance)
       )}
-      nonFieldErrors={mutationErrors.nonFieldErrors}
+      nonFieldErrors={mutationErrors?.nonFieldErrors}
     >
       <Box
         component="form"
@@ -107,10 +107,7 @@ export const VehicleTypeCRUDDialogCreateEdit: React.FunctionComponent<
                   )}
                 />
               }
-              label={
-                // @ts-ignore
-                FORM_FIELDS.VEHICLE_TYPE.LABEL_HAS_LICENSE_PLATE
-              }
+              label={FORM_FIELDS.VEHICLE_TYPE.LABEL_HAS_LICENSE_PLATE}
             />
           </Grid>
         </Grid>

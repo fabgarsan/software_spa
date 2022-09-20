@@ -8,7 +8,10 @@ import {
   patchGenericApiCall,
   fetchAllGenericApiCall,
 } from "@api/reactQueryApi";
-import { AxiosResponseListPaginationData } from "@dto/common";
+import {
+  AxiosDjangoSerializerFormError,
+  AxiosResponseListPaginationData,
+} from "@dto/common";
 import { InstancesDescriptorKeys, instancesDescriptor } from "@utils/index";
 
 const buildTimeInSeconds = (seconds: number) => seconds * 1000;
@@ -38,7 +41,11 @@ export const useReactQueryCRUDGenericApiCall = <
   }: {
     onSuccessCallBack?: () => void;
   }) =>
-    useMutation(
+    useMutation<
+      ApiResponseDataType,
+      AxiosDjangoSerializerFormError<ApiResponseDataType>,
+      number | string
+    >(
       (id: number | string) =>
         deleteGenericApiCall(url, id).then((res) => res.data),
       {
@@ -79,7 +86,7 @@ export const useReactQueryCRUDGenericApiCall = <
   }) =>
     useMutation<
       ApiResponseDataType,
-      AxiosError,
+      AxiosDjangoSerializerFormError<ApiRequestCreateDataType>,
       ApiRequestCreateDataType,
       () => void
     >(
@@ -102,7 +109,7 @@ export const useReactQueryCRUDGenericApiCall = <
   }) =>
     useMutation<
       ApiResponseDataType,
-      AxiosError,
+      AxiosDjangoSerializerFormError<ApiRequestEditDataType>,
       EditType<ApiRequestEditDataType>,
       () => void
     >(

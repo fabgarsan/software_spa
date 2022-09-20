@@ -1,5 +1,4 @@
-import { PointOfSale, PointOfSaleWorkShift } from "@dto/pointOfSale";
-import { AxiosError, AxiosResponse } from "axios";
+import { PointOfSale } from "@dto/pointOfSale";
 import { mainAxiosClient } from "@clients/axios";
 import {
   instancesDescriptor,
@@ -10,6 +9,7 @@ import {
   fetchEmployeePointOfSaleAccess,
   GetPointOfSaleAccess,
 } from "@api/user";
+import { AxiosDjangoSerializerFormError } from "@dto/common";
 
 const client = mainAxiosClient.getInstance();
 
@@ -25,30 +25,40 @@ export interface GetPointOfSale extends PointOfSale {
 
 export interface OpenPointOfSaleWorkShiftRequest {
   initialCash: number;
-  PointOfSaleId: number;
+  pointOfSale: number;
+}
+
+export interface ClosePointOfSaleWorkShiftRequest {
+  finalCash: number;
+  finalCashUsd: number;
+  pointOfSaleWorkShiftId: number;
 }
 
 export const openPointOfSale = ({
   pointOfSale,
   initialCash,
-}: {
-  pointOfSale: number;
-  initialCash: number;
-}): Promise<AxiosResponse<PointOfSaleWorkShift>> =>
-  client.post<
-    OpenPointOfSaleWorkShiftRequest,
-    AxiosResponse<PointOfSaleWorkShift>
-  >(`${instancesDescriptorPointOfSaleWorkShift.apiRoute}/` || "", {
+}: OpenPointOfSaleWorkShiftRequest) =>
+  client.post(`${instancesDescriptorPointOfSaleWorkShift.apiRoute}/` || "", {
     initialCash,
-    pointOfSale,
+    pointOfSaleId: pointOfSale,
   });
 
-export const fetchPointOfSaleById = (
-  id: number
-): Promise<AxiosResponse<GetPointOfSale>> =>
-  client.get<GetPointOfSale>(
-    `${instancesDescriptorPointOfSale.apiRoute}/${id}` || ""
+export const closePointOfSaleWorkShift = ({
+  pointOfSaleWorkShiftId,
+  finalCash,
+  finalCashUsd,
+}: ClosePointOfSaleWorkShiftRequest) =>
+  client.post(
+    `${instancesDescriptorPointOfSaleWorkShift.apiRoute}${pointOfSaleWorkShiftId}/close/` ||
+      "",
+    {
+      finalCash,
+      finalCashUsd,
+    }
   );
+
+export const fetchPointOfSaleById = (id: number) =>
+  client.get(`${instancesDescriptorPointOfSale.apiRoute}/${id}` || "");
 
 export const addAuthorizedUserToPointOfSaleId = ({
   pointOfSaleId,
@@ -56,8 +66,8 @@ export const addAuthorizedUserToPointOfSaleId = ({
 }: {
   pointOfSaleId: number;
   employeeId: number;
-}): Promise<AxiosResponse<GetPointOfSale>> =>
-  client.post<GetPointOfSale>(
+}) =>
+  client.post(
     `${instancesDescriptorPointOfSale.apiRoute}/${pointOfSaleId}/users/` || "",
     { userId }
   );
@@ -68,21 +78,11 @@ export const removeAuthorizedUserToPointOfSaleId = ({
 }: {
   pointOfSaleId: number;
   employeeId: number;
-}): Promise<AxiosResponse<GetPointOfSale>> =>
-  client.delete<GetPointOfSale>(
+}) =>
+  client.delete(
     `${instancesDescriptorPointOfSale.apiRoute}/${pointOfSaleId}/users/${userId}/` ||
       ""
   );
-
-export const usePointOfSaleAccessQuery = () => {
-  return useQuery<GetPointOfSaleAccess, AxiosError>(
-    ["current-user", "point-of-sale-access"],
-    () => fetchEmployeePointOfSaleAccess().then((response) => response.data),
-    {
-      refetchInterval: 50000,
-    }
-  );
-};
 
 export const getPointOfSaleOpen = (
   getPointOfSaleAccessResponse: GetPointOfSaleAccess
@@ -94,3 +94,16 @@ export const getPointOfSaleOpen = (
         getPointOfSaleAccessResponse?.openWorkShift?.pointOfSale
     )) ||
   undefined;
+
+export const usePointOfSaleAccessQuery = () => {
+  return useQuery<
+    GetPointOfSaleAccess,
+    AxiosDjangoSerializerFormError<GetPointOfSaleAccess>
+  >(
+    ["current-user", "point-of-sale-access"],
+    () => fetchEmployeePointOfSaleAccess().then((response) => response.data),
+    {
+      refetchInterval: 50000,
+    }
+  );
+};

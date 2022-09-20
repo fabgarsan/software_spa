@@ -4,7 +4,7 @@ import { FieldValues } from "react-hook-form/dist/types/fields";
 
 export const setFormError = <T extends FieldValues>(
   setError: UseFormSetError<T>,
-  errors: { [name: string]: string[] } | unknown
+  errors: Record<keyof T, string[]> | undefined
 ) => {
   if (errors) {
     Object.entries(errors).forEach(([key, value]) => {
@@ -31,9 +31,9 @@ export const setFormValue = <T extends FieldValues>(
   });
 };
 
-export const formatIntoMoney = (value: number) =>
+export const formatIntoMoney = (value: number, currency = "COP") =>
   new Intl.NumberFormat("es-CO", {
     style: "currency",
-    currency: "COP",
+    currency,
     maximumSignificantDigits: 10,
   }).format(value);

@@ -43,15 +43,17 @@ export const OpenPointOfSaleModal: React.FunctionComponent<
     });
 
   useEffect(() => {
-    setFormError<OpenPointOfSaleWorkShiftRequest>(setError, mutationErrors);
+    setFormError<OpenPointOfSaleWorkShiftRequest>(
+      setError,
+      mutationErrors?.response?.data
+    );
   }, [setError, mutationErrors]);
 
   return (
     <DialogCreateEditBase
       open={open}
       title={`Abrir punto de venta ${instance.name}`}
-      // @ts-ignore
-      nonFieldErrors={mutationErrors?.nonFieldErrors}
+      nonFieldErrors={mutationErrors?.response?.data?.nonFieldErrors}
     >
       <Box
         component="form"

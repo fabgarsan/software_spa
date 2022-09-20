@@ -3,12 +3,9 @@ import * as yup from "yup";
 import { useYupValidationResolver } from "@hooks/index";
 import { FORM_VALIDATIONS } from "@utils/index";
 import { useMutation } from "@tanstack/react-query";
-import {
-  openPointOfSale,
-  OpenPointOfSaleWorkShiftRequest,
-} from "@api/pointOfSale";
+import { openPointOfSale } from "@api/pointOfSale";
 import { PointOfSaleWorkShift } from "@dto/pointOfSale";
-import { AxiosError } from "axios";
+import { AxiosDjangoSerializerFormError } from "@dto/common";
 
 export const useValidation = () => {
   const validationSchema = useMemo(
@@ -31,7 +28,11 @@ export const useOpenPointOfSaleWorkShiftMutation = ({
   pointOfSale: number;
   onSuccessCallBack?: () => void;
 }) =>
-  useMutation(
+  useMutation<
+    PointOfSaleWorkShift,
+    AxiosDjangoSerializerFormError<PointOfSaleWorkShift>,
+    number
+  >(
     (initialCash: number) =>
       openPointOfSale({ initialCash, pointOfSale }).then((res) => res.data),
     {

@@ -12,6 +12,8 @@ import {
 } from "@mui/material/styles";
 import { camelizeKeys, decamelizeKeys } from "humps";
 import { BrowserRouter } from "react-router-dom";
+import { isString } from "@utils/typeGuards";
+import { AxiosDjangoSerializerDetailError } from "@dto/common";
 
 declare module "@mui/styles/defaultTheme" {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface
@@ -22,10 +24,6 @@ const client = mainAxiosClient.getInstance();
 
 type WithInterceptorHandlerProps = {
   loading?: boolean;
-};
-
-type DjangoResponseDataError = {
-  detail: string;
 };
 
 const withInterceptorHandler = <P extends WithInterceptorHandlerProps>(
@@ -41,9 +39,8 @@ const withInterceptorHandler = <P extends WithInterceptorHandlerProps>(
     } = useAuth();
 
     const handleResponseError = useCallback(
-      (error: AxiosError<DjangoResponseDataError>) => {
+      (error: AxiosDjangoSerializerDetailError) => {
         const { response, message } = error;
-
         if (!response) {
           return (
             (message && alert(message)) || console.log("ANOTHER ERROR", error)
@@ -83,17 +80,23 @@ const withInterceptorHandler = <P extends WithInterceptorHandlerProps>(
           },
         };
 
-        const {
-          status,
-          data: { detail: errorDetail },
-        } = response;
+        const { status, statusText, data } = response;
 
         let errorResponseFunction = errorResponseMapper[status];
 
-        if (errorResponseFunction)
+        if (!errorResponseFunction)
           errorResponseFunction = errorResponseMapper[0];
 
-        return errorResponseFunction && errorResponseFunction(errorDetail);
+        const displayedMessage =
+          data?.detail ||
+          (isString(data) && `${statusText} ${status}`) ||
+          undefined;
+
+        return (
+          errorResponseFunction &&
+          displayedMessage &&
+          errorResponseFunction(displayedMessage)
+        );
       },
       [createErrorNotification, setIsNotAuthenticated]
     );
@@ -134,7 +137,7 @@ const withInterceptorHandler = <P extends WithInterceptorHandlerProps>(
             return { ...response, data: camelizeKeys(data) };
           return response;
         },
-        async (error: AxiosError<DjangoResponseDataError>) => {
+        async (error: AxiosDjangoSerializerDetailError) => {
           await handleResponseError(error);
           // eslint-disable-next-line @typescript-eslint/no-throw-literal
           throw camelizeKeys(error);
