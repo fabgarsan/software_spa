@@ -14,7 +14,10 @@ export const useValidation = () => {
   const validationSchema = useMemo(
     () =>
       yup.object({
-        finalCash: yup.number().required(FORM_VALIDATIONS.REQUIRED_FIELD),
+        finalCash: yup
+          .number()
+          .min(0)
+          .required(FORM_VALIDATIONS.REQUIRED_FIELD),
         finalCashUsd: yup
           .number()
           .min(0)

@@ -8,14 +8,17 @@ import { Box, Grid, TextField, Typography } from "@mui/material";
 import {
   useClosePointOfSaleWorkShiftMutation,
   useValidation,
-} from "@components/modules/pointOfSale/parkingLot/ClosePointOfSalePage/ClosePointOfSalePage.hooks";
+} from "@components/modules/pointOfSale/ClosePointOfSalePage/ClosePointOfSalePage.hooks";
 import { Controller, useForm } from "react-hook-form";
 import { formatIntoMoney, setFormError } from "@utils/functions";
 import Button from "@mui/material/Button";
 import { UI } from "@utils/constantsUI";
+import { useNavigate } from "react-router-dom";
+import { Paths } from "@utils/urlHelper";
 
 export const ClosePointOfSalePage: React.FunctionComponent = () => {
   const resolver = useValidation();
+  const navigate = useNavigate();
   const {
     handleSubmit,
     control,
@@ -35,7 +38,10 @@ export const ClosePointOfSalePage: React.FunctionComponent = () => {
   const { mutate: closePointOfSaleWorkShiftMutation, error: mutationErrors } =
     useClosePointOfSaleWorkShiftMutation({
       pointOfSaleWorkShiftId: pointOfSaleAccessData?.openWorkShift?.id || 0,
-      onSuccessCallBack: () => refetch(),
+      onSuccessCallBack: () => {
+        refetch();
+        navigate(Paths.root);
+      },
     });
 
   useEffect(() => {

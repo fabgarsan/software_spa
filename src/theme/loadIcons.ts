@@ -28,6 +28,7 @@ import {
   faCar,
   faCashRegister,
   faCircleXmark,
+  faHandHoldingDollar,
 } from "@fortawesome/pro-light-svg-icons";
 
 const loadIcons = (): void => {
@@ -59,6 +60,7 @@ const loadIcons = (): void => {
   library.add(faCar);
   library.add(faCashRegister);
   library.add(faCircleXmark);
+  library.add(faHandHoldingDollar);
 };
 
 export default loadIcons;

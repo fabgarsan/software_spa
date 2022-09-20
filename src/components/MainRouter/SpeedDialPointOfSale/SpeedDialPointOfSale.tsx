@@ -23,7 +23,13 @@ const StyledSpeedDial = styled(SpeedDial)(({ theme }) => ({
 }));
 
 const {
-  modulePointOfSale: { main, close, parkingLot },
+  modulePointOfSale: {
+    main,
+    close,
+    parkingLot,
+    escortServices,
+    moneyOperations,
+  },
 } = Paths;
 
 export const SpeedDialPointOfSale = () => {
@@ -40,6 +46,14 @@ export const SpeedDialPointOfSale = () => {
   const hasParkingLotServicesSales =
     openPointOfSale?.hasParkingLotServicesSales || false;
 
+  const hasEscortServicesSales =
+    openPointOfSale?.hasEscortServicesSales || false;
+
+  const hasMoneyOperations =
+    openPointOfSale?.hasIncomeOperations ||
+    openPointOfSale?.hasOutcomesOperations ||
+    false;
+
   const actions = [
     {
       icon: (
@@ -55,6 +69,18 @@ export const SpeedDialPointOfSale = () => {
       icon: <FontAwesomeIcon icon={["fal", "car"]} size="2x" />,
       name: "Parqueadero",
       onClick: () => navigate(`${main}${parkingLot}`),
+    },
+    {
+      hidden: !hasEscortServicesSales,
+      icon: <FontAwesomeIcon icon={["fal", "bed"]} size="2x" />,
+      name: "Servicios",
+      onClick: () => navigate(`${main}${escortServices}`),
+    },
+    {
+      hidden: !hasMoneyOperations,
+      icon: <FontAwesomeIcon icon={["fal", "hand-holding-dollar"]} size="2x" />,
+      name: "Ingresos - Egresos",
+      onClick: () => navigate(`${main}${moneyOperations}`),
     },
   ];
   return (

@@ -40,7 +40,7 @@ export const openPointOfSale = ({
 }: OpenPointOfSaleWorkShiftRequest) =>
   client.post(`${instancesDescriptorPointOfSaleWorkShift.apiRoute}/` || "", {
     initialCash,
-    pointOfSaleId: pointOfSale,
+    pointOfSale,
   });
 
 export const closePointOfSaleWorkShift = ({

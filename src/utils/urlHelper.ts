@@ -25,6 +25,8 @@ export const Paths = {
   modulePointOfSale: {
     main: mainPath.pointOfSale,
     parkingLot: `parqueadero/`,
+    escortServices: `servicios/`,
+    moneyOperations: `operaciones-dinero/`,
     close: `cerrar/`,
   },
 };

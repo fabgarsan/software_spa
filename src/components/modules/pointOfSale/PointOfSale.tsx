@@ -1,12 +1,14 @@
 import React from "react";
 import { Drawer } from "@components/shared";
-import { PointOfSaleParkingPage } from "./parkingLot/PointOfSaleParkingPage";
-import { ClosePointOfSalePage } from "./parkingLot/ClosePointOfSalePage";
+import { PointOfSaleParkingPage } from "./PointOfSaleParkingPage";
+import { ClosePointOfSalePage } from "./ClosePointOfSalePage";
+import { MoneyOperationPointOfSalePage } from "./MoneyOperationPointOfSalePage";
+import { PointOfSaleEscortServices } from "./PointOfSaleEscortServices";
 import { DRAWER, Paths } from "@utils/index";
 import { Route, Routes } from "react-router-dom";
 
 const {
-  modulePointOfSale: { parkingLot, close },
+  modulePointOfSale: { parkingLot, close, escortServices, moneyOperations },
 } = Paths;
 
 const Reception: React.FunctionComponent = () => {
@@ -19,6 +21,11 @@ const Reception: React.FunctionComponent = () => {
       <Routes>
         <Route path={parkingLot} element={<PointOfSaleParkingPage />} />
         <Route path={close} element={<ClosePointOfSalePage />} />
+        <Route path={escortServices} element={<PointOfSaleEscortServices />} />
+        <Route
+          path={moneyOperations}
+          element={<MoneyOperationPointOfSalePage />}
+        />
       </Routes>
     </Drawer>
   );
