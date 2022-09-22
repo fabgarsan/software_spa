@@ -26,6 +26,7 @@ interface TableConfig<DataTableInterface> {
   style?: CSSProperties;
   openViewUrl?: string | null;
   formatNumber?: (value: number) => string;
+  format?: (value: unknown) => string | null;
 }
 
 interface TableGenericProps<DataTableInterface>
@@ -136,6 +137,16 @@ export const TableGenericCRUD = <DataTableInterface,>({
                 const field = setIfNotString(fieldName);
                 const cellConfig = configMap[field];
                 const value = row[fieldName];
+                const formatters = (columnValue: unknown) => {
+                  let formatted = columnValue;
+                  if (isNumber(formatted) && cellConfig.formatNumber) {
+                    formatted = cellConfig.formatNumber(formatted);
+                  }
+                  if (cellConfig.format) {
+                    formatted = cellConfig.format(formatted);
+                  }
+                  return formatted;
+                };
                 return (
                   <TableCell
                     padding="none"
@@ -148,10 +159,7 @@ export const TableGenericCRUD = <DataTableInterface,>({
                       {isBoolean(value) ? (
                         <BooleanIcon value={value} />
                       ) : (
-                        (cellConfig.formatNumber &&
-                          isNumber(value) &&
-                          cellConfig.formatNumber(value)) ||
-                        value
+                        formatters(value)
                       )}
                     </>
                   </TableCell>

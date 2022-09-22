@@ -1,11 +1,13 @@
 import React from "react";
 import { CRUDDefaultTableProps } from "@hoc/index";
-import { GetParkingPlan } from "@api/parking";
+import { GetParkingPlanResponse } from "@api/parking";
 import { TableGenericCRUD } from "@components/shared";
-import { TABLE_HEADERS } from "@utils/index";
+import { isString, TABLE_HEADERS } from "@utils/index";
+import { toHoursMinutesFormatFromDate } from "@utils/functions";
+import { isDate } from "@utils/typeGuards";
 
 export const ParkingPlanCRUDTable: React.FunctionComponent<
-  CRUDDefaultTableProps<GetParkingPlan>
+  CRUDDefaultTableProps<GetParkingPlanResponse>
 > = ({
   onOpenDelete,
   onOpenEdit,
@@ -13,9 +15,9 @@ export const ParkingPlanCRUDTable: React.FunctionComponent<
   canDelete,
   canEdit,
   canView,
-}: CRUDDefaultTableProps<GetParkingPlan>) => {
+}: CRUDDefaultTableProps<GetParkingPlanResponse>) => {
   return (
-    <TableGenericCRUD<GetParkingPlan>
+    <TableGenericCRUD<GetParkingPlanResponse>
       idField="id"
       headers={[
         {
@@ -39,8 +41,24 @@ export const ParkingPlanCRUDTable: React.FunctionComponent<
         {
           field: "timeFrom",
           headerName: TABLE_HEADERS.PARKING_PLAN.TIME_FROM,
-          style: { maxWidth: "100px" },
-          styleHeader: { maxWidth: "100px" },
+          style: { maxWidth: "100px", textAlign: "center" },
+          styleHeader: { maxWidth: "100px", textAlign: "center" },
+          format: (value) =>
+            (isString(value) &&
+              isDate(new Date(value)) &&
+              toHoursMinutesFormatFromDate(new Date(value))) ||
+            null,
+        },
+        {
+          field: "timeTo",
+          headerName: TABLE_HEADERS.PARKING_PLAN.TIME_TO,
+          style: { maxWidth: "100px", textAlign: "center" },
+          styleHeader: { maxWidth: "100px", textAlign: "center" },
+          format: (value) =>
+            (isString(value) &&
+              isDate(new Date(value)) &&
+              toHoursMinutesFormatFromDate(new Date(value))) ||
+            null,
         },
         {
           field: "monday",

@@ -16,7 +16,9 @@ interface DialogCreateEditBaseProps {
   open: boolean;
   children: React.ReactNode;
   title: string;
-  nonFieldErrors: string[] | unknown;
+  nonFieldErrors?: string[] | unknown;
+  fullWidth?: boolean;
+  maxWidth?: "lg" | "xs" | "sm" | "md" | "xl";
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -34,7 +36,14 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export const DialogCreateEditBase: React.FunctionComponent<
   DialogCreateEditBaseProps
-> = ({ children, open, title, nonFieldErrors }: DialogCreateEditBaseProps) => {
+> = ({
+  children,
+  open,
+  title,
+  nonFieldErrors,
+  maxWidth,
+  fullWidth = true,
+}: DialogCreateEditBaseProps) => {
   const classes = useStyles();
   if (!open) {
     return <></>;
@@ -43,8 +52,8 @@ export const DialogCreateEditBase: React.FunctionComponent<
     <Dialog
       open={open}
       aria-labelledby="form-dialog-title"
-      maxWidth="lg"
-      fullWidth
+      maxWidth={maxWidth || "lg"}
+      fullWidth={fullWidth}
     >
       <DialogTitle id="form-dialog-title">{title}</DialogTitle>
       <DialogContent className={classes.root}>

@@ -1,13 +1,6 @@
 import React, { useEffect } from "react";
 import Button from "@mui/material/Button";
-import {
-  DialogActions,
-  Box,
-  Grid,
-  Checkbox,
-  FormControlLabel,
-  TextField,
-} from "@mui/material";
+import { DialogActions, Box, Grid, TextField } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import { VehicleType } from "@dto/parking";
 import { DialogCreateEditBase } from "@components/shared";
@@ -36,7 +29,6 @@ export const VehicleTypeCRUDDialogCreateEdit: React.FunctionComponent<
   onSave,
   instance,
 }: CRUDDefaultFormProps<VehicleType>) => {
-  console.log(instance, "AQUIIII");
   const resolver = useValidation();
   const {
     handleSubmit,
@@ -89,25 +81,6 @@ export const VehicleTypeCRUDDialogCreateEdit: React.FunctionComponent<
                   value={field.value?.toUpperCase()}
                 />
               )}
-            />
-          </Grid>
-          <Grid item xs={12} sm={3} md={2} lg={2}>
-            <FormControlLabel
-              control={
-                <Controller
-                  name="hasLicensePlate"
-                  defaultValue
-                  control={control}
-                  render={({ field }) => (
-                    <Checkbox
-                      {...field}
-                      checked={field.value}
-                      onChange={(e) => field.onChange(e.target.checked)}
-                    />
-                  )}
-                />
-              }
-              label={FORM_FIELDS.VEHICLE_TYPE.LABEL_HAS_LICENSE_PLATE}
             />
           </Grid>
         </Grid>

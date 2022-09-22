@@ -33,9 +33,12 @@ export const UI = {
   BUTTON_TEXT_EDIT: "Editar",
   BUTTON_TEXT_ADD: "Nuevo",
   BUTTON_TEXT_SAVE: "Guardar",
+  BUTTON_TEXT_START: "Iniciar",
   BUTTON_TEXT_CANCEL: "Cancelar",
   BUTTON_TEXT_SEARCH: "Buscar",
   BUTTON_TEXT_ACCEPT: "Aceptar",
+  BUTTON_TEXT_PAY: "Pagar",
+  BUTTON_REGISTER_SIGN_OUT: "Registrar Salida",
 };
 export const FORM_FIELDS = {
   GENERAL: {
@@ -104,6 +107,7 @@ export const FORM_FIELDS = {
   PARKING_PLAN: {
     LABEL_NAME: "Nombres",
     LABEL_TIME_FROM: "Hora de Inicio",
+    LABEL_TIME_TO: "Hora de Cierre",
     LABEL_VEHICLE_TYPE: "Típo de Vehículo",
     LABEL_MONDAY: "Lúnes",
     LABEL_TUESDAY: "Mártes",
@@ -213,6 +217,7 @@ export const TABLE_HEADERS = {
     NAME: "Nombre",
     VEHICLE_TYPE: "Tipo de Vehículo",
     TIME_FROM: "Hora de Inicio",
+    TIME_TO: "Hora Fin",
     MONDAY: "Lúnes",
     TUESDAY: "Mártes",
     WEDNESDAY: "Miércoles",

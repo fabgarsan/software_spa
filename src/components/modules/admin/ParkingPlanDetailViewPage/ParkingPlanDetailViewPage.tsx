@@ -2,7 +2,7 @@ import React from "react";
 import { InstancesDescriptorKeys, instancesDescriptor } from "@utils/index";
 import { useReactQueryCRUDGenericApiCall } from "@api/reactQueryApi";
 import { DetailViewGeneric, BooleanIcon } from "@components/shared";
-import { GetParkingPlan } from "@api/parking";
+import { GetParkingPlanResponse } from "@api/parking";
 import { useParams } from "react-router-dom";
 import { withCRUDReactQuery } from "@hoc/withCRUDReactQuery";
 import { ParkingRate } from "@dto/parking";
@@ -24,7 +24,7 @@ export const ParkingPlanDetailViewPage: React.FunctionComponent = () => {
   const { id: parkingPlanId } = useParams();
 
   const { useFetch: fetchParkingPlan } =
-    useReactQueryCRUDGenericApiCall<GetParkingPlan>(
+    useReactQueryCRUDGenericApiCall<GetParkingPlanResponse>(
       parkingPlanKeyDescriptorKey
     );
 

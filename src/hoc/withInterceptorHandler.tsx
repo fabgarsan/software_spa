@@ -47,33 +47,44 @@ const withInterceptorHandler = <P extends WithInterceptorHandlerProps>(
           );
         }
 
+        const showNotificationError = (
+          errorDetail: string | string[],
+          time?: number
+        ) => {
+          if (Array.isArray(errorDetail)) {
+            errorDetail.forEach((errorItem) =>
+              createErrorNotification(errorItem, time)
+            );
+          } else {
+            createErrorNotification(errorDetail, time);
+          }
+        };
+
         const errorResponseMapper: Record<
           number,
-          (error: string, status?: number) => void
+          (error: string | string[], status?: number) => void
         > = {
-          400: (errorDetail: string) => createErrorNotification(errorDetail),
-          401: (errorDetail: string) => {
+          400: (errorDetail: string | string[]) =>
+            showNotificationError(errorDetail),
+          401: (errorDetail: string | string[]) => {
             setIsNotAuthenticated();
-            createErrorNotification(errorDetail);
+            showNotificationError(errorDetail);
             mainAxiosClient.removeToken();
           },
-          403: (errorDetail: string) => {
-            createErrorNotification(errorDetail);
-          },
-          404: (errorDetail: string) => {
-            createErrorNotification(errorDetail);
-          },
-          500: (errorDetail: string) => {
-            createErrorNotification(errorDetail);
-          },
-          0: (errorDetail: string, status) => {
+          403: (errorDetail: string | string[]) =>
+            showNotificationError(errorDetail),
+          404: (errorDetail: string | string[]) =>
+            showNotificationError(errorDetail),
+          500: (errorDetail: string | string[]) =>
+            showNotificationError(errorDetail),
+          0: (errorDetail: string | string[], status) => {
             if (errorDetail) {
               if (errorDetail === "Token inválido.") {
-                createErrorNotification(errorDetail, 15000);
+                showNotificationError(errorDetail, 15000);
                 mainAxiosClient.removeToken();
                 setIsNotAuthenticated();
               } else {
-                createErrorNotification(errorDetail);
+                showNotificationError(errorDetail);
               }
               console.log(`Error ${status}`, errorDetail);
             }
@@ -90,6 +101,7 @@ const withInterceptorHandler = <P extends WithInterceptorHandlerProps>(
         const displayedMessage =
           data?.detail ||
           (isString(data) && `${statusText} ${status}`) ||
+          (Array.isArray(data) && data) ||
           undefined;
 
         return (

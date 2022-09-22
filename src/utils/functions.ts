@@ -37,3 +37,21 @@ export const formatIntoMoney = (value: number, currency = "COP") =>
     currency,
     maximumSignificantDigits: 10,
   }).format(value);
+
+export const removeNonAlphanumericCharactersFromString = (value: string) =>
+  value.replace(/ /g, "").replace(/[^a-z0-9]/gi, "");
+
+export const removeSpacesFromString = (value: string) =>
+  value.replace(/ /g, "");
+
+export const displayHoursAndMinutesFromMinutes = (totalMinutes: number) => {
+  const minutes = Math.floor(totalMinutes % 60);
+  const hours = Math.floor(totalMinutes / 60);
+
+  return `${hours} Horas y ${minutes} Minutos`;
+};
+
+export const toHoursMinutesFormatFromDate = (datetime: Date) => {
+  const dateText = datetime.toTimeString();
+  return dateText.split(" ")[0].split(":").slice(0, 2).join(":");
+};

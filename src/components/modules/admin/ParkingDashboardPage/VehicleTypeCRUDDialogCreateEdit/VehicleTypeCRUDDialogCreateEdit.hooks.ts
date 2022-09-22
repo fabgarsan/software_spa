@@ -8,7 +8,6 @@ export const useValidation = () => {
     () =>
       yup.object({
         name: yup.string().required(FORM_VALIDATIONS.REQUIRED_FIELD),
-        hasLicensePlate: yup.boolean(),
       }),
     []
   );

@@ -1,6 +1,14 @@
 import { ExtendedUser } from "@dto/users";
 import { Escort } from "@dto/escorts";
 
+export const isDate = (idField: unknown): idField is Date => {
+  return (
+    idField instanceof Date ||
+    (typeof idField === "object" &&
+      Object.prototype.toString.call(idField) === "[object Date]")
+  );
+};
+
 export const isBoolean = (idField: unknown): idField is boolean =>
   typeof idField === "boolean";
 

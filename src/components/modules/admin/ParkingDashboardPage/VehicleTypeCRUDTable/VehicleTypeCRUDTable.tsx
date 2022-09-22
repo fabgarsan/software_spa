@@ -29,12 +29,6 @@ export const VehicleTypeCRUDTable: React.FunctionComponent<
           style: { maxWidth: "200px" },
           styleHeader: { maxWidth: "200px" },
         },
-        {
-          field: "hasLicensePlate",
-          headerName: TABLE_HEADERS.VEHICLE_TYPE.HAS_LICENSE_PLATE,
-          style: { maxWidth: "100px", textAlign: "center" },
-          styleHeader: { maxWidth: "100px", textAlign: "center" },
-        },
       ]}
       canEdit={canEdit}
       canDelete={canDelete}

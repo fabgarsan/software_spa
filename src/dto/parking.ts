@@ -3,6 +3,7 @@ export interface ParkingPlan {
   name: string;
   vehicleType: string;
   timeFrom: Date;
+  timeTo: Date;
   monday: boolean;
   tuesday: boolean;
   wednesday: boolean;
@@ -15,7 +16,6 @@ export interface ParkingPlan {
 export interface VehicleType {
   id: number;
   name: string;
-  hasLicensePlate: boolean;
 }
 
 export interface ParkingRate {
@@ -23,4 +23,12 @@ export interface ParkingRate {
   parking_plan: number;
   minutes: number;
   value: number;
+}
+
+export interface ParkingService {
+  id: number;
+  parkingPlan: number;
+  initialTime: string;
+  paymentTime: string;
+  finalTime: string;
 }

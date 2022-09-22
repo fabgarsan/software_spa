@@ -23,7 +23,6 @@ import {
   InstancesDescriptorKeys,
   instancesDescriptor,
   FORM_FIELDS,
-  SYSTEM_CONFIGURATION,
 } from "@utils/index";
 
 import { CRUDDefaultFormProps } from "@hoc/withCRUDReactQuery";
@@ -36,8 +35,8 @@ import { Theme } from "@mui/material/styles";
 import createStyles from "@mui/styles/createStyles";
 import { DesktopTimePicker } from "@mui/x-date-pickers";
 
-import { zonedTimeToUtc } from "date-fns-tz";
-import { GetParkingPlan } from "@api/parking";
+import { CreateParkingPlanRequest, GetParkingPlanResponse } from "@api/parking";
+import { toHoursMinutesFormatFromDate } from "@utils/functions";
 
 const instanceDescriptor =
   instancesDescriptor[InstancesDescriptorKeys.parkingPlan];
@@ -73,7 +72,7 @@ const weekDays: (
 ];
 
 export const ParkingPlanCRUDDialogCreateEdit: React.FunctionComponent<
-  CRUDDefaultFormProps<GetParkingPlan, ParkingPlan>
+  CRUDDefaultFormProps<GetParkingPlanResponse, CreateParkingPlanRequest>
 > = ({ open, error: mutationErrors, handleClose, onSave, instance }) => {
   const resolver = useValidation();
   const classes = useStyles();
@@ -111,11 +110,8 @@ export const ParkingPlanCRUDDialogCreateEdit: React.FunctionComponent<
         onSubmit={handleSubmit((data) =>
           onSave({
             ...data,
-            // @ts-ignore
-            timeFrom: zonedTimeToUtc(
-              data.timeFrom,
-              SYSTEM_CONFIGURATION.TIMEZONE
-            ).toISOString(),
+            timeFrom: toHoursMinutesFormatFromDate(data.timeFrom),
+            timeTo: toHoursMinutesFormatFromDate(data.timeTo),
             name: data.name.toUpperCase(),
           })
         )}
@@ -174,23 +170,42 @@ export const ParkingPlanCRUDDialogCreateEdit: React.FunctionComponent<
               )}
             />
           </Grid>
-          <FormControlLabel
-            control={
-              <Controller
-                name="timeFrom"
-                control={control}
-                render={({ field }) => (
-                  <DesktopTimePicker
-                    label="For desktop"
-                    value={field.value}
-                    onChange={(e) => field.onChange(e)}
-                    renderInput={(params) => <TextField {...params} />}
-                  />
-                )}
-              />
-            }
-            label={FORM_FIELDS.PARKING_PLAN.LABEL_TIME_FROM}
-          />
+          <Grid item container xs={12}>
+            <FormControlLabel
+              control={
+                <Controller
+                  name="timeFrom"
+                  control={control}
+                  render={({ field }) => (
+                    <DesktopTimePicker
+                      label="Tiempo de Inicio"
+                      value={field.value}
+                      onChange={(e) => field.onChange(e)}
+                      renderInput={(params) => <TextField {...params} />}
+                    />
+                  )}
+                />
+              }
+              label={FORM_FIELDS.PARKING_PLAN.LABEL_TIME_FROM}
+            />
+            <FormControlLabel
+              control={
+                <Controller
+                  name="timeTo"
+                  control={control}
+                  render={({ field }) => (
+                    <DesktopTimePicker
+                      label="Tiempo de Cierre"
+                      value={field.value}
+                      onChange={(e) => field.onChange(e)}
+                      renderInput={(params) => <TextField {...params} />}
+                    />
+                  )}
+                />
+              }
+              label={FORM_FIELDS.PARKING_PLAN.LABEL_TIME_TO}
+            />
+          </Grid>
           <Grid item container xs={12}>
             {weekDays.map((day) => {
               return (

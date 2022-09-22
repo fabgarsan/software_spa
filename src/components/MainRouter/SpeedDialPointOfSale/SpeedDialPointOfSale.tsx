@@ -2,7 +2,6 @@ import * as React from "react";
 import { styled } from "@mui/material/styles";
 import { Box, Badge } from "@mui/material";
 import SpeedDial from "@mui/material/SpeedDial";
-import SpeedDialIcon from "@mui/material/SpeedDialIcon";
 import SpeedDialAction from "@mui/material/SpeedDialAction";
 import { usePointOfSaleAccessQuery } from "@api/pointOfSale";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -89,7 +88,7 @@ export const SpeedDialPointOfSale = () => {
         <StyledSpeedDial
           ariaLabel="SpeedDial playground example"
           hidden={!isSuccess || !pointOfSaleAccessData.openWorkShift}
-          icon={<SpeedDialIcon />}
+          icon={<FontAwesomeIcon icon={["fal", "ellipsis-stroke"]} size="2x" />}
           direction="left"
         >
           {actions
