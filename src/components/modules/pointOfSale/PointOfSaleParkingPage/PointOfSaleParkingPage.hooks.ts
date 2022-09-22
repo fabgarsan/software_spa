@@ -5,7 +5,7 @@ import {
 } from "@api/parking";
 import { AxiosDjangoSerializerDetailError } from "@dto/common";
 
-export const useParkingPlansQuery = () =>
+export const useParkingPlansAvailableQuery = () =>
   useQuery<GetParkingPlanResponse[], AxiosDjangoSerializerDetailError>(
     ["parking-plans"],
     () => fetchAvailableParkingPlans().then((res) => res.data),

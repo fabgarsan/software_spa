@@ -4,7 +4,7 @@ import {
   getPointOfSaleOpen,
 } from "@api/pointOfSale";
 import { Box, Button, Grid, Typography } from "@mui/material";
-import { useParkingPlansQuery } from "@components/modules/pointOfSale/PointOfSaleParkingPage/PointOfSaleParkingPage.hooks";
+import { useParkingPlansAvailableQuery } from "@components/modules/pointOfSale/PointOfSaleParkingPage/PointOfSaleParkingPage.hooks";
 
 import {
   GetParkingPlanResponse,
@@ -27,7 +27,7 @@ export const PointOfSaleParkingPage: React.FunctionComponent = () => {
 
   const pointOfSaleAccessQuery = usePointOfSaleAccessQuery();
   const { data: pointOfSaleAccessData, isSuccess } = pointOfSaleAccessQuery;
-  const { data: parkingPlansData } = useParkingPlansQuery();
+  const { data: parkingPlansData } = useParkingPlansAvailableQuery();
   const [selectedParkingPlan, setSelectedParkingPlan] =
     useState<GetParkingPlanResponse | null>(null);
   const [selectedParkingService, setSelectedParkingService] =

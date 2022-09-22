@@ -47,7 +47,7 @@ export const fetchAvailableParkingPlans = (): Promise<
   AxiosResponse<GetParkingPlanResponse[]>
 > =>
   client.get<GetParkingPlanResponse[]>(
-    `${instancesDescriptorParkingPlan.apiRoute}` || ""
+    `${instancesDescriptorParkingPlan.apiRoute}available/` || ""
   );
 
 export const createParkingService = (
