@@ -17,6 +17,10 @@ import {
 import { CRUDDefaultFormProps } from "@hoc/withCRUDReactQuery";
 import { useValidation } from "./ParkingRateCRUDDialogCreateEdit.hooks";
 import { useParams } from "react-router-dom";
+import {
+  displayHoursAndMinutesFromMinutes,
+  formatIntoMoney,
+} from "@utils/functions";
 
 const instanceDescriptor =
   instancesDescriptor[InstancesDescriptorKeys.vehicleType];
@@ -80,7 +84,10 @@ export const ParkingRateCRUDDialogCreateEdit: React.FunctionComponent<
                   fullWidth
                   label={FORM_FIELDS.PARKING_RATE.LABEL_MINUTES}
                   variant="outlined"
-                  helperText={formErrors?.minutes?.message}
+                  helperText={
+                    formErrors?.minutes?.message ||
+                    displayHoursAndMinutesFromMinutes(field.value)
+                  }
                   error={Boolean(formErrors?.minutes)}
                   autoComplete="off"
                   value={field.value}
@@ -99,7 +106,9 @@ export const ParkingRateCRUDDialogCreateEdit: React.FunctionComponent<
                   fullWidth
                   label={FORM_FIELDS.PARKING_RATE.LABEL_VALUE}
                   variant="outlined"
-                  helperText={formErrors?.value?.message}
+                  helperText={
+                    formErrors?.value?.message || formatIntoMoney(field.value)
+                  }
                   error={Boolean(formErrors?.value)}
                   autoComplete="off"
                   value={field.value}

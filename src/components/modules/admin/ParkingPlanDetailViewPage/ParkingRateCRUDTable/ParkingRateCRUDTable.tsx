@@ -2,8 +2,11 @@ import React from "react";
 import { CRUDDefaultTableProps } from "@hoc/index";
 import { ParkingRate } from "@dto/parking";
 import { TableGenericCRUD } from "@components/shared";
-import { TABLE_HEADERS } from "@utils/index";
-import { formatIntoMoney } from "@utils/functions";
+import { isNumber, TABLE_HEADERS } from "@utils/index";
+import {
+  displayHoursAndMinutesFromMinutes,
+  formatIntoMoney,
+} from "@utils/functions";
 
 export const ParkingRateCRUDTable: React.FunctionComponent<
   CRUDDefaultTableProps<ParkingRate>
@@ -27,8 +30,10 @@ export const ParkingRateCRUDTable: React.FunctionComponent<
         {
           field: "minutes",
           headerName: TABLE_HEADERS.PARKING_RATE.MINUTES,
-          style: { maxWidth: "200px" },
-          styleHeader: { maxWidth: "200px" },
+          style: { maxWidth: "80px" },
+          styleHeader: { maxWidth: "80px" },
+          format: (value) =>
+            (isNumber(value) && displayHoursAndMinutesFromMinutes(value)) || "",
         },
         {
           field: "value",

@@ -10,6 +10,7 @@ export const useParkingPlansAvailableQuery = () =>
     ["parking-plans"],
     () => fetchAvailableParkingPlans().then((res) => res.data),
     {
-      staleTime: 1000 * 60 * 60,
+      staleTime: 1000 * 60 * 30,
+      refetchOnWindowFocus: true,
     }
   );
