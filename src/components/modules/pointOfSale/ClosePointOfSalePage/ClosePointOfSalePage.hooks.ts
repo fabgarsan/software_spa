@@ -27,6 +27,7 @@ export const useValidation = () => {
   );
   return useYupValidationResolver(validationSchema);
 };
+
 export const useClosePointOfSaleWorkShiftMutation = ({
   pointOfSaleWorkShiftId,
   onSuccessCallBack,

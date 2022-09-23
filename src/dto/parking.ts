@@ -28,6 +28,7 @@ export interface ParkingRate {
 export interface ParkingService {
   id: number;
   parkingPlan: number;
+  payment: number;
   initialTime: string;
   paymentTime: string;
   finalTime: string;

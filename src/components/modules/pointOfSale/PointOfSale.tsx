@@ -1,9 +1,9 @@
 import React from "react";
 import { Drawer } from "@components/shared";
-import { PointOfSaleParkingPage } from "./PointOfSaleParkingPage";
-import { ClosePointOfSalePage } from "./ClosePointOfSalePage";
-import { MoneyOperationPointOfSalePage } from "./MoneyOperationPointOfSalePage";
-import { PointOfSaleEscortServices } from "./PointOfSaleEscortServices";
+import { PointOfSaleParkingPage } from "@components/modules/pointOfSale//PointOfSaleParkingPage";
+import { ClosePointOfSalePage } from "@components/modules/pointOfSale//ClosePointOfSalePage";
+import { MoneyOperationPointOfSalePage } from "@components/modules/pointOfSale//MoneyOperationPointOfSalePage";
+import { PointOfSaleEscortServices } from "@components/modules/pointOfSale//PointOfSaleEscortServices";
 import { DRAWER, Paths } from "@utils/index";
 import { Route, Routes } from "react-router-dom";
 
@@ -11,7 +11,7 @@ const {
   modulePointOfSale: { parkingLot, close, escortServices, moneyOperations },
 } = Paths;
 
-const Reception: React.FunctionComponent = () => {
+const PointOfSale: React.FunctionComponent = () => {
   return (
     <Drawer
       title={DRAWER.MODULE_POINT_OF_SALE_TITLE}
@@ -31,4 +31,4 @@ const Reception: React.FunctionComponent = () => {
   );
 };
 
-export default Reception;
+export default PointOfSale;

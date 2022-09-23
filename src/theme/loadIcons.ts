@@ -31,6 +31,8 @@ import {
   faHandHoldingDollar,
   faEllipsisStroke,
   faCancel,
+  faFileChartPie,
+  faFlaskVial,
 } from "@fortawesome/pro-light-svg-icons";
 
 const loadIcons = (): void => {
@@ -65,6 +67,8 @@ const loadIcons = (): void => {
   library.add(faHandHoldingDollar);
   library.add(faEllipsisStroke);
   library.add(faCancel);
+  library.add(faFileChartPie);
+  library.add(faFlaskVial);
 };
 
 export default loadIcons;

@@ -29,6 +29,7 @@ export interface CreateParkingPlanRequest
 export interface GetParkingServiceResponse extends ParkingService {
   readonly licensePlate: string;
   readonly vehicleTypeName: string;
+  readonly lengthOfServiceMinutes: number;
 }
 
 export interface CreateParkingServiceRequest {
@@ -38,6 +39,14 @@ export interface CreateParkingServiceRequest {
 
 export interface PayParkingServiceRequest {
   value: number;
+}
+
+export interface FetchParkingServicesParams {
+  date?: string;
+  dateTo?: string;
+  dateFrom?: string;
+  search?: string;
+  finished?: boolean;
 }
 
 export const fetchVehicleTypes = (): Promise<AxiosResponse<VehicleType[]>> =>
@@ -59,9 +68,9 @@ export const createParkingService = (
     CreateParkingServiceRequest
   >(instancesDescriptorParkingService.apiRoute || "", data);
 
-export const fetchParkingServices = (params?: {
-  finished: boolean;
-}): Promise<AxiosResponse<GetParkingServiceResponse[]>> =>
+export const fetchParkingServices = (
+  params?: FetchParkingServicesParams
+): Promise<AxiosResponse<GetParkingServiceResponse[]>> =>
   client.get<GetParkingServiceResponse[]>(
     instancesDescriptorParkingService.apiRoute || "",
     { params }

@@ -23,7 +23,7 @@ export const useParkingServiceValueToPayQuery = (parkingServiceId: number) =>
         (response) => response.data
       ),
     {
-      staleTime: 3000,
+      cacheTime: 0,
     }
   );
 

@@ -7,8 +7,8 @@ import { CommonLayout } from "@components/shared";
 import {
   reducerFilter,
   filterInitial,
-} from "@components/modules/reception/SignInOutControlLogBookPage/SignInOutControlLogBookContainer.reducer";
-import { usePresentUsersQuery } from "@components/modules/reception/SignInOutControlLogBookPage/SignInOutControlLogBookPage.hooks";
+} from "@components/modules/reports/signControl/SignInOutControlLogBookPage/SignInOutControlLogBookContainer.reducer";
+import { usePresentUsersQuery } from "@components/modules/reports/signControl/SignInOutControlLogBookPage/SignInOutControlLogBookPage.hooks";
 import { useQueryClient } from "@tanstack/react-query";
 
 export const SignInOutControlLogBookPage = () => {

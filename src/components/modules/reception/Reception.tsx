@@ -2,7 +2,6 @@ import React from "react";
 import { Drawer } from "@components/shared";
 import { SignInControlPage } from "./SignInControlPage";
 import { SignOutControlPage } from "./SignOutControlPage";
-import { SignInOutControlLogBookPage } from "./SignInOutControlLogBookPage";
 import { IconList } from "@components/shared/Drawer";
 import {
   DRAWER,
@@ -14,7 +13,7 @@ import { Route, Routes, useNavigate } from "react-router-dom";
 import { useCheckPermissions } from "@hooks/index";
 
 const {
-  moduleReception: { signIn, signOut, signOutInLogBook },
+  moduleReception: { signIn, signOut },
 } = Paths;
 
 const Reception: React.FunctionComponent = () => {
@@ -36,12 +35,6 @@ const Reception: React.FunctionComponent = () => {
         PERMISSION_INSTANCES.SIGN_IN_CONTROL.MADE_SIGN_OUT_OTHERS,
       ]),
     },
-    {
-      text: DRAWER.MODULE_RECEPTION_MENU_LOG_BOOK,
-      icon: "address-book",
-      onClick: () => navigate(signOutInLogBook),
-      show: true,
-    },
   ];
   const hasPermission = useCheckPermissions(
     [PERMISSION_MODULES.RECEPTION],
@@ -56,10 +49,6 @@ const Reception: React.FunctionComponent = () => {
       <Routes>
         <Route path={signIn} element={<SignInControlPage />} />
         <Route path={signOut} element={<SignOutControlPage />} />
-        <Route
-          path={signOutInLogBook}
-          element={<SignInOutControlLogBookPage />}
-        />
       </Routes>
     </Drawer>
   );

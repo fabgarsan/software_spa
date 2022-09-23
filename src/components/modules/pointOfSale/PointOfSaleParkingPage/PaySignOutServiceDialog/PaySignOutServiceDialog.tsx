@@ -14,6 +14,7 @@ import {
   Button,
   Box,
 } from "@mui/material";
+import { LoadingButton } from "@mui/lab";
 import { UI } from "@utils/constantsUI";
 import { GetParkingServiceResponse } from "@api/parking";
 import {
@@ -21,6 +22,7 @@ import {
   displayHoursAndMinutesFromMinutes,
 } from "@utils/functions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { BackdropLoading } from "@components/shared";
 
 type PayServiceDialogProps = {
   parkingService: GetParkingServiceResponse;
@@ -28,7 +30,15 @@ type PayServiceDialogProps = {
   onClose: () => void;
 };
 
-const renderButtonsForPayment = (onClose: () => void) => (
+const renderButtonsForPayment = ({
+  disabledPayButton,
+  disabledCancelButton,
+  onClose,
+}: {
+  onClose: () => void;
+  disabledPayButton: boolean;
+  disabledCancelButton: boolean;
+}) => (
   <Grid container textAlign="center" spacing={3} height={120}>
     <Grid item xs={6}>
       <Button
@@ -37,13 +47,16 @@ const renderButtonsForPayment = (onClose: () => void) => (
         variant="contained"
         fullWidth
         style={{ height: "100%" }}
+        disabled={disabledCancelButton}
         endIcon={<FontAwesomeIcon icon={["fal", "cancel"]} />}
       >
         {UI.BUTTON_TEXT_CANCEL}
       </Button>
     </Grid>
     <Grid item xs={6}>
-      <Button
+      <LoadingButton
+        loading={disabledPayButton}
+        loadingPosition="start"
         color="secondary"
         type="submit"
         variant="contained"
@@ -52,12 +65,20 @@ const renderButtonsForPayment = (onClose: () => void) => (
         endIcon={<FontAwesomeIcon icon={["fal", "hand-holding-dollar"]} />}
       >
         {UI.BUTTON_TEXT_PAY}
-      </Button>
+      </LoadingButton>
     </Grid>
   </Grid>
 );
 
-const renderButtonsForSignOut = (onClose: () => void) => (
+const renderButtonsForSignOut = ({
+  disabledSignOutButton,
+  disabledCancelButton,
+  onClose,
+}: {
+  onClose: () => void;
+  disabledSignOutButton: boolean;
+  disabledCancelButton: boolean;
+}) => (
   <Grid container textAlign="center" spacing={3} height={120}>
     <Grid item xs={6}>
       <Button
@@ -66,22 +87,25 @@ const renderButtonsForSignOut = (onClose: () => void) => (
         variant="contained"
         fullWidth
         style={{ height: "100%" }}
+        disabled={disabledCancelButton}
         endIcon={<FontAwesomeIcon icon={["fal", "cancel"]} />}
       >
         {UI.BUTTON_TEXT_CANCEL}
       </Button>
     </Grid>
     <Grid item xs={6}>
-      <Button
+      <LoadingButton
         color="secondary"
         type="submit"
         variant="contained"
         fullWidth
         style={{ height: "100%" }}
+        loading={disabledSignOutButton}
+        loadingPosition="start"
         endIcon={<FontAwesomeIcon icon={["fal", "sign-out"]} />}
       >
         {UI.BUTTON_REGISTER_SIGN_OUT}
-      </Button>
+      </LoadingButton>
     </Grid>
   </Grid>
 );
@@ -97,17 +121,23 @@ export const PaySignOutServiceDialog = ({
     data: parkingServiceValueToPayData,
     isSuccess: parkingServiceValueToPayQueryIsSuccess,
   } = parkingServiceValueToPayQuery;
-  const { mutate: payParkingServiceMutate } = usePayParkingServiceMutation({
+  const {
+    mutate: payParkingServiceMutate,
+    isSuccess: payParkingServiceMutateIsSuccess,
+    isLoading: payParkingServiceMutateIsLoading,
+  } = usePayParkingServiceMutation({
     parkingServiceId,
     onSuccessCallBack: () => onClose(),
   });
-  const { mutate: finishParkingServiceMutate } =
-    useFinishParkingServiceMutation({
-      parkingServiceId,
-      onSuccessCallBack: () => onClose(),
-    });
+  const {
+    mutate: finishParkingServiceMutate,
+    isLoading: finishParkingServiceMutateIsLoading,
+  } = useFinishParkingServiceMutation({
+    parkingServiceId,
+    onSuccessCallBack: () => onClose(),
+  });
   if (!parkingServiceValueToPayQueryIsSuccess) {
-    return <></>;
+    return <BackdropLoading isOpen />;
   }
   const { rateValue, timeElapsed } = parkingServiceValueToPayData;
   return (
@@ -133,8 +163,17 @@ export const PaySignOutServiceDialog = ({
           </Typography>
         </DialogContent>
         <DialogActions>
-          {(!paymentTime && renderButtonsForPayment(onClose)) ||
-            renderButtonsForSignOut(onClose)}
+          {(!paymentTime &&
+            renderButtonsForPayment({
+              onClose,
+              disabledPayButton: payParkingServiceMutateIsLoading,
+              disabledCancelButton: payParkingServiceMutateIsLoading,
+            })) ||
+            renderButtonsForSignOut({
+              onClose,
+              disabledSignOutButton: finishParkingServiceMutateIsLoading,
+              disabledCancelButton: finishParkingServiceMutateIsLoading,
+            })}
         </DialogActions>
       </Box>
     </Dialog>

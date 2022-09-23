@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { permissions as statePermissions } from "@stores/permissionSlice";
 
-const useCheckPermissions = (
+export const useCheckPermissions = (
   permissionsToCheck: string[],
   checkType: "any" | "all" = "all"
 ): boolean => {
@@ -18,5 +18,3 @@ const useCheckPermissions = (
     permissionsList.includes(permission)
   );
 };
-
-export default useCheckPermissions;

@@ -4,4 +4,4 @@ export { default as useAuth } from "./useAuth";
 export { default as useYupValidationResolver } from "./useYupValidationResolver";
 export { default as useDebounce } from "./useDebounce";
 export { default as useCheckGenericUserPermissions } from "./useCheckGenericUserPermission";
-export { default as useCheckPermissions } from "./useCheckPermissions";
+export * from "./useCheckPermissions";

@@ -5,8 +5,6 @@ import { Paths, DRAWER, PERMISSION_MODULES } from "@utils/index";
 import { useNavigate } from "react-router-dom";
 import { useCheckPermissions } from "@hooks/index";
 import { Box, Grid, Paper, Typography } from "@mui/material";
-import printJS from "print-js";
-import axios from "axios";
 import { usePointOfSaleAccessQuery } from "@api/pointOfSale";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { styled } from "@mui/material/styles";
@@ -24,33 +22,8 @@ const Root: React.FunctionComponent = () => {
   const [openPointOfSaleDialog, setOpenPointOfSaleDialog] =
     useState<PointOfSale | null>(null);
 
-  // const downloadPDF = (pdf: string) => {
-  //   const linkSource = `data:application/pdf;base64,${pdf}`;
-  //   const downloadLink = document.createElement("a");
-  //   const fileName = "vct_illustration.pdf";
-  //
-  //   downloadLink.href = linkSource;
-  //   downloadLink.download = fileName;
-  //   downloadLink.click();
-  // };
+  const { moduleAdmin, moduleReception, moduleReports, moduleLabs } = Paths;
 
-  const { moduleAdmin, moduleReception } = Paths;
-
-  const printPDF = (base64: string) => {
-    printJS({ printable: base64, type: "pdf", base64: true });
-  };
-  const algo = async () => {
-    const response = await axios.post(
-      "https://awvry2tdw5.execute-api.us-east-1.amazonaws.com/dev/generate-pdf-ticket-parking",
-      {
-        licencePlate: "CPX010",
-        timeStart: "1561399553000",
-        type: "Carro",
-        createdBy: "Fernando Ramos",
-      }
-    );
-    printPDF(response.data);
-  };
   const itemsMenu: IconList[] = [
     {
       text: DRAWER.MAIN_DASHBOARD_MENU_ADMIN,
@@ -63,6 +36,18 @@ const Root: React.FunctionComponent = () => {
       icon: "door-open",
       onClick: () => navigate(moduleReception.main),
       show: useCheckPermissions([PERMISSION_MODULES.RECEPTION], "all"),
+    },
+    {
+      text: DRAWER.MODULE_REPORTS_TITLE,
+      icon: "file-chart-pie",
+      onClick: () => navigate(moduleReports.main),
+      show: useCheckPermissions([PERMISSION_MODULES.REPORTS], "all"),
+    },
+    {
+      text: "Pruebas",
+      icon: "flask-vial",
+      onClick: () => navigate(moduleLabs.main),
+      show: useCheckPermissions([PERMISSION_MODULES.LABS], "all"),
     },
   ];
   const pointOfSaleAccessQuery = usePointOfSaleAccessQuery();
@@ -84,9 +69,6 @@ const Root: React.FunctionComponent = () => {
         />
       )}
       <Box>Bienvenidos</Box>
-      <button type="button" onClick={algo}>
-        PDF
-      </button>
       <QueryErrorBoundary queries={[pointOfSaleAccessQuery]}>
         <Grid container spacing={2}>
           {isSuccess &&

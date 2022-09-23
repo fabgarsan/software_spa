@@ -16,8 +16,20 @@ import { SpeedDialPointOfSale } from "../MainRouter/SpeedDialPointOfSale";
 const DashboardPointOfSale = React.lazy(
   () => import("@components/modules/pointOfSale/PointOfSale")
 );
+const DashboardReports = React.lazy(
+  () => import("@components/modules/reports/Reports")
+);
 
-const { moduleAdmin, moduleReception, modulePointOfSale, root } = Paths;
+const DashboardLabs = React.lazy(() => import("@components/modules/labs/Labs"));
+
+const {
+  moduleAdmin,
+  moduleReception,
+  modulePointOfSale,
+  moduleReports,
+  root,
+  moduleLabs,
+} = Paths;
 
 export const MainRouter: React.FunctionComponent = () => {
   return (
@@ -33,6 +45,8 @@ export const MainRouter: React.FunctionComponent = () => {
           path={`${modulePointOfSale.main}*`}
           element={<DashboardPointOfSale />}
         />
+        <Route path={`${moduleReports.main}*`} element={<DashboardReports />} />
+        <Route path={`${moduleLabs.main}*`} element={<DashboardLabs />} />
       </Routes>
       <SpeedDialPointOfSale />
     </>

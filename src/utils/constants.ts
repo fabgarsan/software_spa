@@ -64,12 +64,20 @@ export const PERMISSION_INSTANCES = {
     MADE_SIGN_IN_OTHERS: "made_sign_in_others_signincontrol",
     MADE_SIGN_OUT_OTHERS: "made_sign_out_others_signincontrol",
     FILTER_LOG_BOOK: "filter_log_book_signincontrol",
+    CAN_SEE_SIGN_OUT_SIGN_IN_HISTORY_REPORT:
+      "can_see_sign_out_sign_in_history_report",
+  },
+  PARKING_SERVICE: {
+    CAN_SEE_PARKING_SERVICE_HISTORY_REPORT:
+      "can_see_parking_service_history_report",
   },
 };
 
 export const PERMISSION_MODULES = {
   ADMIN: "module_admin",
   RECEPTION: "module_reception",
+  REPORTS: "module_report",
+  LABS: "module_labs",
 };
 
 export const FORMATS = {
@@ -78,8 +86,6 @@ export const FORMATS = {
   TIME_TO_SEND: "hh:mm:ss",
   TIME_TO_SHOW: "yyyy-MM-dd",
 };
-
-//YYYY-MM-DDThh:mm:ss.uuuuuuZ
 
 export const SYSTEM_CONFIGURATION = {
   TIMEZONE: "America/Bogota",

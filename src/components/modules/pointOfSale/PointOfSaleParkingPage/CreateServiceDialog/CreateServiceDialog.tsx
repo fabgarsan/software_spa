@@ -15,6 +15,7 @@ import {
   setFormError,
 } from "@utils/functions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { LoadingButton } from "@mui/lab";
 
 type CreateParkingServiceRequest = {
   writeLicensePlate: string;
@@ -37,11 +38,14 @@ export const CreateServiceDialog: React.FunctionComponent<
     setError,
   } = useForm<CreateParkingServiceRequest>({ resolver });
 
-  const { mutate: createParkingServiceMutate, error: mutationErrors } =
-    useCreateParkingServiceMutation({
-      parkingPlan: selectedPlan.id,
-      onSuccessCallBack: () => onClose(),
-    });
+  const {
+    mutate: createParkingServiceMutate,
+    error: mutationErrors,
+    isLoading: createParkingServiceMutateIsLoading,
+  } = useCreateParkingServiceMutation({
+    parkingPlan: selectedPlan.id,
+    onSuccessCallBack: () => onClose(),
+  });
 
   useEffect(() => {
     setFormError<CreateParkingServiceRequest>(
@@ -97,21 +101,24 @@ export const CreateServiceDialog: React.FunctionComponent<
                 variant="contained"
                 fullWidth
                 style={{ height: "100%" }}
+                disabled={createParkingServiceMutateIsLoading}
               >
                 {UI.BUTTON_TEXT_CANCEL}
               </Button>
             </Grid>
             <Grid item xs={6}>
-              <Button
+              <LoadingButton
                 color="secondary"
                 type="submit"
                 variant="contained"
                 fullWidth
                 style={{ height: "100%" }}
+                loading={createParkingServiceMutateIsLoading}
+                loadingPosition="start"
                 endIcon={<FontAwesomeIcon icon={["fal", "sign-in"]} />}
               >
                 {UI.BUTTON_TEXT_START}
-              </Button>
+              </LoadingButton>
             </Grid>
           </Grid>
         </DialogActions>
