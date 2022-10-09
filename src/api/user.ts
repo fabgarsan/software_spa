@@ -3,9 +3,14 @@ import { instancesDescriptor, InstancesDescriptorKeys } from "@utils/index";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosResponse } from "axios";
 import { ExtendedUser } from "@dto/users";
-import { PointOfSale, PointOfSaleWorkShift } from "@dto/pointOfSale";
+import { GetPointOfSale } from "@api/pointOfSale";
+import { GetParkingServiceResponse } from "@api/parking";
+import { PointOfSaleWorkShift } from "@dto/pointOfSale";
 
 const client = mainAxiosClient.getInstance();
+
+const instancesDescriptorUser =
+  instancesDescriptor[InstancesDescriptorKeys.user];
 
 const instancesDescriptorEmployee =
   instancesDescriptor[InstancesDescriptorKeys.employee];
@@ -14,9 +19,27 @@ const instancesDescriptorEscort =
   instancesDescriptor[InstancesDescriptorKeys.escort];
 
 export interface GetPointOfSaleAccess {
-  authorizedPointsOfSale: PointOfSale[];
+  authorizedPointsOfSale: GetPointOfSale[];
   openWorkShift?: PointOfSaleWorkShift;
 }
+
+export interface ChangePasswordCurrentUserRequest {
+  oldPassword: string;
+  newPassword: string;
+  newPasswordConfirmation: string;
+}
+
+export const changePasswordCurrentUser = (
+  data: ChangePasswordCurrentUserRequest
+): Promise<void> =>
+  client.post<
+    GetParkingServiceResponse,
+    void,
+    ChangePasswordCurrentUserRequest
+  >(
+    `${instancesDescriptorUser.apiRoute}set-new-password-current-user/` || "",
+    data
+  );
 
 export const fetchEmployeePointOfSaleAccess = (): Promise<
   AxiosResponse<GetPointOfSaleAccess>

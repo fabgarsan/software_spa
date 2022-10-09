@@ -18,7 +18,7 @@ import {
 } from "@utils/index";
 
 import { CRUDDefaultFormProps } from "@hoc/withCRUDReactQuery";
-import useValidation from "./DialogCreateEdit.hooks";
+import { useValidation } from "./DialogCreateEdit.hooks";
 
 const instanceDescriptor =
   instancesDescriptor[InstancesDescriptorKeys.employee];

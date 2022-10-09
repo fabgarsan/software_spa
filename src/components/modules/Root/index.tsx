@@ -22,7 +22,14 @@ const Root: React.FunctionComponent = () => {
   const [openPointOfSaleDialog, setOpenPointOfSaleDialog] =
     useState<PointOfSale | null>(null);
 
-  const { moduleAdmin, moduleReception, moduleReports, moduleLabs } = Paths;
+  const {
+    moduleAdmin,
+    moduleReception,
+    moduleReports,
+    moduleLabs,
+    moduleAccounting,
+    moduleMyAccount,
+  } = Paths;
 
   const itemsMenu: IconList[] = [
     {
@@ -42,6 +49,18 @@ const Root: React.FunctionComponent = () => {
       icon: "file-chart-pie",
       onClick: () => navigate(moduleReports.main),
       show: useCheckPermissions([PERMISSION_MODULES.REPORTS], "all"),
+    },
+    {
+      text: DRAWER.MODULE_ACCOUNTING_TITLE,
+      icon: "abacus",
+      onClick: () => navigate(moduleAccounting.main),
+      show: useCheckPermissions([PERMISSION_MODULES.ACCOUNTING], "all"),
+    },
+    {
+      text: DRAWER.MODULE_MY_ACCOUNT_TITLE,
+      icon: "id-card",
+      onClick: () => navigate(moduleMyAccount.main),
+      show: true,
     },
     {
       text: "Pruebas",

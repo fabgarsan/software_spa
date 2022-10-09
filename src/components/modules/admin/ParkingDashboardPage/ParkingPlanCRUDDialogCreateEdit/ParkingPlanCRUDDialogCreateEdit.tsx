@@ -37,6 +37,7 @@ import { DesktopTimePicker } from "@mui/x-date-pickers";
 
 import { CreateParkingPlanRequest, GetParkingPlanResponse } from "@api/parking";
 import { toHoursMinutesFormatFromDate } from "@utils/functions";
+import { useUniqueInvoiceNumbersQuery } from "@api/accounting";
 
 const instanceDescriptor =
   instancesDescriptor[InstancesDescriptorKeys.parkingPlan];
@@ -86,6 +87,9 @@ export const ParkingPlanCRUDDialogCreateEdit: React.FunctionComponent<
 
   const { data: vehicleTypesData } = useVehiclesTypesQuery();
 
+  const uniqueInvoiceNumbersQuery = useUniqueInvoiceNumbersQuery();
+  const { data: uniqueInvoiceNumbersDataQuery } = uniqueInvoiceNumbersQuery;
+
   useEffect(() => {
     if (instance) {
       setFormValue<ParkingPlan>(setValue, instance);
@@ -117,7 +121,7 @@ export const ParkingPlanCRUDDialogCreateEdit: React.FunctionComponent<
         )}
       >
         <Grid container>
-          <Grid item xs={12}>
+          <Grid item xs={12} md={8}>
             <Controller
               name="name"
               control={control}
@@ -133,6 +137,50 @@ export const ParkingPlanCRUDDialogCreateEdit: React.FunctionComponent<
                   autoComplete="off"
                   value={field.value?.toUpperCase()}
                 />
+              )}
+            />
+          </Grid>
+          <Grid item xs={12} md={4}>
+            <Controller
+              name="uniqueInvoiceNumber"
+              control={control}
+              defaultValue={undefined}
+              render={({ field }) => (
+                <FormControl className={classes.formControl}>
+                  <InputLabel htmlFor="id-printer-select">
+                    {FORM_FIELDS.POINT_OF_SALE.LABEL_UNIQUE_INVOICE_NUMBER}
+                  </InputLabel>
+                  <Select
+                    fullWidth
+                    native
+                    value={field.value || undefined}
+                    onChange={field.onChange}
+                    inputProps={{
+                      id: "id-unique-invoice-number-select",
+                    }}
+                  >
+                    <option value={undefined}>-----</option>
+                    {uniqueInvoiceNumbersDataQuery?.map(
+                      ({
+                        id: uniqueInvoiceNumberId,
+                        companyName,
+                        dianResolutionNumber,
+                      }) => (
+                        <option
+                          key={uniqueInvoiceNumberId}
+                          value={uniqueInvoiceNumberId}
+                        >
+                          {companyName} ({dianResolutionNumber})
+                        </option>
+                      )
+                    )}
+                  </Select>
+                  {formErrors?.uniqueInvoiceNumber && (
+                    <FormHelperText className={classes.error}>
+                      {formErrors.uniqueInvoiceNumber.message}
+                    </FormHelperText>
+                  )}
+                </FormControl>
               )}
             />
           </Grid>

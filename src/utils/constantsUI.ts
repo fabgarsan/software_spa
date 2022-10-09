@@ -8,6 +8,8 @@ export const DRAWER = {
   MAIN_DASHBOARD_TITLE: "Principal",
   MAIN_DASHBOARD_MENU_ADMIN: "Admin",
   MODULE_RECEPTION_TITLE: "Recepción",
+  MODULE_ACCOUNTING_TITLE: "Contabilidad",
+  MODULE_ACCOUNTING_ELECTRONIC_INVOICE_TITLE: "Facturación",
   MODULE_REPORTS_TITLE: "Reportes",
   MODULE_REPORTS_PARKING_SERVICE_HISTORY: "Historico",
   MODULE_POINT_OF_SALE_TITLE: "Punto de Venta",
@@ -16,6 +18,7 @@ export const DRAWER = {
   MODULE_RECEPTION_MENU_SIGN_IN: "Entrada",
   MODULE_RECEPTION_MENU_SIGN_OUT: "Salida",
   MODULE_ADMIN_TITLE: "Admin",
+  MODULE_MY_ACCOUNT_TITLE: "Mi Cuenta",
   MODULE_ADMIN_MENU_ESCORTS: "Acompañantes",
   MODULE_ADMIN_MENU_EMPLOYEES: "Colaboradores",
   MODULE_ADMIN_MENU_COMPANIES: "Empresas",
@@ -23,6 +26,7 @@ export const DRAWER = {
   MODULE_ADMIN_MENU_ROOM: "Habitaciones",
   MODULE_ADMIN_MENU_USERS: "Usuarios",
   MODULE_ADMIN_MENU_POINTS_OF_SALE: "Puntos de Venta",
+  MODULE_ADMIN_PRINTER: "Impresoras",
   MENU_SIGN_OUT: "Cerrar Sessión",
   MENU_HOME: "Principal",
 };
@@ -40,6 +44,7 @@ export const UI = {
   BUTTON_TEXT_SEARCH: "Buscar",
   BUTTON_TEXT_ACCEPT: "Aceptar",
   BUTTON_TEXT_PAY: "Pagar",
+  BUTTON_TEXT_PRINT: "Imprimir",
   BUTTON_REGISTER_SIGN_OUT: "Registrar Salida",
 };
 export const FORM_FIELDS = {
@@ -76,6 +81,13 @@ export const FORM_FIELDS = {
     LABEL_CATEGORY: "Categoría",
     LABEL_PUBLISHED_WEB: "Publicar en la página",
   },
+  PRINTERS: {
+    LABEL_NAME: "Nombre",
+    LABEL_BRAND: "Marca",
+    LABEL_MODEL: "Modelo",
+    LABEL_IP_ADDRESS: "Dirección Ip",
+    LABEL_IS_ACTIVE: "Activa",
+  },
   ESCORT_SERVICES: {
     LABEL_NAME: `Nombre ${
       instancesDescriptor[InstancesDescriptorKeys.escortService].singular
@@ -95,6 +107,8 @@ export const FORM_FIELDS = {
     LABEL_HAS_OUTCOME_OPERATIONS: "Hace operaciones de salida de dinero?",
     LABEL_HAS_PARKING_LOT: "Vende servicios de parqueadero?",
     LABEL_HAS_ESCORT_SERVICES: "Vende servicios de habitaciones?",
+    LABEL_PRINTER: "Impresora",
+    LABEL_UNIQUE_INVOICE_NUMBER: "Resolución Facturación",
   },
   ESCORT: {
     LABEL_ALIAS: "Nombre Artístico",
@@ -126,6 +140,17 @@ export const FORM_FIELDS = {
   VEHICLE_TYPE: {
     LABEL_NAME: "Nombres",
     LABEL_HAS_LICENSE_PLATE: "Tiene Placa?",
+  },
+  UNIQUE_INVOICE_NUMBER: {
+    LABEL_DIAN_RESOLUTION_NUMBER: "Número Resolución DIAN",
+    LABEL_START: "Número Inicial",
+    LABEL_END: "Número Final",
+    LABEL_CURRENT_NUMBER: "Número Actual",
+    LABEL_START_DATE: "Fecha Autorización",
+    LABEL_END_DATE: "Fecha de Finalización",
+    LABEL_PREFIX: "Prefijo",
+    LABEL_IS_ACTIVE: "Activo",
+    LABEL_COMPANY: "Empresa",
   },
   EXTENDED_USER: {
     BLOOD_TYPE: [
@@ -220,13 +245,13 @@ export const TABLE_HEADERS = {
     VEHICLE_TYPE: "Tipo de Vehículo",
     TIME_FROM: "Hora de Inicio",
     TIME_TO: "Hora Fin",
-    MONDAY: "Lúnes",
-    TUESDAY: "Mártes",
-    WEDNESDAY: "Miércoles",
-    THURSDAY: "Jueves",
-    FRIDAY: "Viernes",
-    SATURDAY: "Sábado",
-    SUNDAY: "Domingo",
+    MONDAY: "LUN",
+    TUESDAY: "MAR",
+    WEDNESDAY: "MIE",
+    THURSDAY: "JUE",
+    FRIDAY: "VIE",
+    SATURDAY: "SAB",
+    SUNDAY: "DOM",
   },
   PARKING_RATE: {
     MINUTES: "Minutos",
@@ -236,6 +261,16 @@ export const TABLE_HEADERS = {
     NAME: "Nombre",
     HAS_LICENSE_PLATE: "Tiene Placa?",
   },
+  UNIQUE_INVOICE_NUMBER: {
+    RESOLUTION: "Resolución DIAN",
+    IS_ACTIVE: "Esta Activo?",
+    PREFIX: "Prefijo",
+    START: "Número Inicio",
+    END: "Número Final",
+    START_DATE: "Fecha de Autorización",
+    END_DATE: "Fecha de Vigencia",
+    CURRENT_NUMBER: "Número Actual",
+  },
   POINT_OF_SALE: {
     NAME: "Nombre",
     IS_ACTIVE: "Esta Activo?",
@@ -243,6 +278,13 @@ export const TABLE_HEADERS = {
     HAS_OUTCOME_OPERATIONS: "Ope. Egreso",
     HAS_PARKING_LOT: "Parqueadero",
     HAS_ESCORT_SERVICES: "Habitaciones",
+  },
+  PRINTER: {
+    NAME: "Nombre",
+    BRAND: "Marca",
+    MODEL: "Modelo",
+    IP_ADDRESS: "Ip",
+    IS_ACTIVE: "Activa",
   },
 };
 export const TABLE_PAGINATOR = {

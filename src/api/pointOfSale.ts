@@ -21,6 +21,8 @@ const instancesDescriptorPointOfSaleWorkShift =
 
 export interface GetPointOfSale extends PointOfSale {
   authorizedUsers: number[];
+  readonly printerIpAddress: string;
+  readonly printer: number;
 }
 
 export interface OpenPointOfSaleWorkShiftRequest {
@@ -86,7 +88,7 @@ export const removeAuthorizedUserToPointOfSaleId = ({
 
 export const getPointOfSaleOpen = (
   getPointOfSaleAccessResponse: GetPointOfSaleAccess
-): PointOfSale | undefined =>
+): GetPointOfSale | undefined =>
   (getPointOfSaleAccessResponse?.openWorkShift &&
     getPointOfSaleAccessResponse.authorizedPointsOfSale.find(
       (pointOfSale) =>

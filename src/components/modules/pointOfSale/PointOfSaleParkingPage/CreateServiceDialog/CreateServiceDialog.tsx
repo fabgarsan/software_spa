@@ -13,9 +13,11 @@ import { ParkingPlan } from "@dto/parking";
 import {
   removeNonAlphanumericCharactersFromString,
   setFormError,
+  toHumanDateTime,
 } from "@utils/functions";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { LoadingButton } from "@mui/lab";
+import { PrintParkingCarTicket } from "@printer/parking";
 
 type CreateParkingServiceRequest = {
   writeLicensePlate: string;
@@ -25,11 +27,12 @@ interface CreateServiceDialogProps {
   onClose: () => void;
   open: boolean;
   selectedPlan: ParkingPlan;
+  printSignIn: (data: PrintParkingCarTicket) => void;
 }
 
 export const CreateServiceDialog: React.FunctionComponent<
   CreateServiceDialogProps
-> = ({ onClose, open, selectedPlan }) => {
+> = ({ onClose, open, selectedPlan, printSignIn }) => {
   const resolver = useValidation();
   const {
     handleSubmit,
@@ -44,7 +47,14 @@ export const CreateServiceDialog: React.FunctionComponent<
     isLoading: createParkingServiceMutateIsLoading,
   } = useCreateParkingServiceMutation({
     parkingPlan: selectedPlan.id,
-    onSuccessCallBack: () => onClose(),
+    onSuccessCallBack: (data) => {
+      printSignIn({
+        licensePlate: data.licensePlate,
+        datetime: toHumanDateTime(data.initialTime),
+        type: data.vehicleTypeName,
+      });
+      onClose();
+    },
   });
 
   useEffect(() => {
@@ -62,13 +72,13 @@ export const CreateServiceDialog: React.FunctionComponent<
     >
       <Box
         component="form"
-        onSubmit={handleSubmit(async (data) =>
-          createParkingServiceMutate(
+        onSubmit={handleSubmit(async (data) => {
+          await createParkingServiceMutate(
             removeNonAlphanumericCharactersFromString(
               data.writeLicensePlate.toUpperCase()
             )
-          )
-        )}
+          );
+        })}
       >
         <Controller
           name="writeLicensePlate"

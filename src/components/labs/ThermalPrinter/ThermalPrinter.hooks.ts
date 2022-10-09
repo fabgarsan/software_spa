@@ -7,11 +7,7 @@ export const useValidation = () => {
   const validationSchema = useMemo(
     () =>
       yup.object({
-        printerPort: yup.number().required(FORM_VALIDATIONS.REQUIRED_FIELD),
         textToPrint: yup.string().required(FORM_VALIDATIONS.REQUIRED_FIELD),
-        printerIPAddress: yup
-          .string()
-          .required(FORM_VALIDATIONS.REQUIRED_FIELD),
       }),
     []
   );

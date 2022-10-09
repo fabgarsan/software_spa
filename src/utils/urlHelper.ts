@@ -3,7 +3,9 @@ const mainPath = {
   reports: "reportes/",
   reception: "recepcion/",
   pointOfSale: "punto-venta/",
+  accounting: "contabilidad/",
   labs: "laboratorio/",
+  myAccount: "mi-cuenta/",
 };
 
 export const Paths = {
@@ -17,6 +19,7 @@ export const Paths = {
     room: `habitaciones/`,
     parking: `parqueadero/`,
     pointOfSale: `puntos-venta/`,
+    printer: `impresoras/`,
   },
   moduleReception: {
     main: mainPath.reception,
@@ -39,5 +42,12 @@ export const Paths = {
     main: mainPath.labs,
     thermalPrinter: "probando-impresora-post/",
     pdfService: "probando-servicio-generacion-pdf/",
+  },
+  moduleAccounting: {
+    main: mainPath.accounting,
+    electronicInvoiceNumber: "consecutivos-facturacion/",
+  },
+  moduleMyAccount: {
+    main: mainPath.myAccount,
   },
 };

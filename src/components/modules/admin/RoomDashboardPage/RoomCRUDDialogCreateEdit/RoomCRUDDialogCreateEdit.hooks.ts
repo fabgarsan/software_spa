@@ -6,8 +6,6 @@ import { useQuery } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { fetchRoomTypes } from "@api/room";
 import { RoomType } from "@dto/room";
-import { fetchCompanies } from "@api/company";
-import { Company } from "@dto/companies";
 
 const useDialogCreateEditCRUDValidation = () => {
   const validationSchema = useMemo(
@@ -27,16 +25,6 @@ export const useRoomTypesQuery = () => {
   return useQuery<RoomType[], AxiosError>(
     ["room-types"],
     () => fetchRoomTypes().then((response) => response.data),
-    {
-      staleTime: 5000,
-    }
-  );
-};
-
-export const useCompaniesQuery = () => {
-  return useQuery<Company[], AxiosError>(
-    ["companies"],
-    () => fetchCompanies().then((response) => response.data),
     {
       staleTime: 5000,
     }

@@ -41,8 +41,8 @@ export const ParkingPlanCRUDTable: React.FunctionComponent<
         {
           field: "timeFrom",
           headerName: TABLE_HEADERS.PARKING_PLAN.TIME_FROM,
-          style: { maxWidth: "100px", textAlign: "center" },
-          styleHeader: { maxWidth: "100px", textAlign: "center" },
+          style: { maxWidth: "80px", textAlign: "center" },
+          styleHeader: { maxWidth: "80px", textAlign: "center" },
           format: (value) =>
             (isString(value) &&
               isDate(new Date(value)) &&
@@ -52,8 +52,8 @@ export const ParkingPlanCRUDTable: React.FunctionComponent<
         {
           field: "timeTo",
           headerName: TABLE_HEADERS.PARKING_PLAN.TIME_TO,
-          style: { maxWidth: "100px", textAlign: "center" },
-          styleHeader: { maxWidth: "100px", textAlign: "center" },
+          style: { maxWidth: "80px", textAlign: "center" },
+          styleHeader: { maxWidth: "80px", textAlign: "center" },
           format: (value) =>
             (isString(value) &&
               isDate(new Date(value)) &&
@@ -63,44 +63,44 @@ export const ParkingPlanCRUDTable: React.FunctionComponent<
         {
           field: "monday",
           headerName: TABLE_HEADERS.PARKING_PLAN.MONDAY,
-          style: { width: "60px", textAlign: "center" },
-          styleHeader: { width: "60px" },
+          style: { width: "40px", textAlign: "center" },
+          styleHeader: { width: "40px" },
         },
         {
           field: "tuesday",
           headerName: TABLE_HEADERS.PARKING_PLAN.TUESDAY,
-          style: { width: "60px", textAlign: "center" },
-          styleHeader: { width: "60px" },
+          style: { width: "40px", textAlign: "center" },
+          styleHeader: { width: "40px" },
         },
         {
           field: "wednesday",
           headerName: TABLE_HEADERS.PARKING_PLAN.WEDNESDAY,
-          style: { width: "60px", textAlign: "center" },
-          styleHeader: { width: "60px" },
+          style: { width: "40px", textAlign: "center" },
+          styleHeader: { width: "40px" },
         },
         {
           field: "thursday",
           headerName: TABLE_HEADERS.PARKING_PLAN.THURSDAY,
-          style: { width: "60px", textAlign: "center" },
-          styleHeader: { width: "60px" },
+          style: { width: "40px", textAlign: "center" },
+          styleHeader: { width: "40px" },
         },
         {
           field: "friday",
           headerName: TABLE_HEADERS.PARKING_PLAN.FRIDAY,
-          style: { width: "60px", textAlign: "center" },
-          styleHeader: { width: "60px" },
+          style: { width: "40px", textAlign: "center" },
+          styleHeader: { width: "40px" },
         },
         {
           field: "saturday",
           headerName: TABLE_HEADERS.PARKING_PLAN.SATURDAY,
-          style: { width: "60px", textAlign: "center" },
-          styleHeader: { width: "60px" },
+          style: { width: "40px", textAlign: "center" },
+          styleHeader: { width: "40px" },
         },
         {
           field: "sunday",
           headerName: TABLE_HEADERS.PARKING_PLAN.SUNDAY,
-          style: { width: "60px", textAlign: "center" },
-          styleHeader: { width: "60px" },
+          style: { width: "40px", textAlign: "center" },
+          styleHeader: { width: "40px" },
         },
       ]}
       canEdit={canEdit}

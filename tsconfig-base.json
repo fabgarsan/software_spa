@@ -46,6 +46,10 @@
       "@hoc/*": [
         "src/hoc/*",
         "src/hoc/*/index"
+      ],
+      "@printer/*": [
+        "src/printer/*",
+        "src/printer/*/index"
       ]
     },
     "allowJs": true,

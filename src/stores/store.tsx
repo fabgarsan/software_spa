@@ -3,7 +3,8 @@ import { useDispatch } from "react-redux";
 import authSlice from "@stores/authSlice";
 import notificationSlice from "@stores/notificationSlice";
 import drawerSlice from "@stores/drawerSlices";
-import permissionSlice from "@stores/./permissionSlice";
+import permissionSlice from "@stores/permissionSlice";
+import printerSlice from "@stores/printerSlice";
 
 import logger from "redux-logger";
 
@@ -13,6 +14,7 @@ const store = configureStore({
     notification: notificationSlice.reducer,
     drawer: drawerSlice.reducer,
     permission: permissionSlice.reducer,
+    printer: printerSlice.reducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger),
 });

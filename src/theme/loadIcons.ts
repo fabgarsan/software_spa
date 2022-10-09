@@ -1,38 +1,44 @@
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
-  faBars,
-  faAngleRight,
-  faAngleLeft,
-  faAngleDown,
-  faUsers,
-  faCogs,
-  faSignOut,
-  faSignIn,
-  faHome,
-  faUserNurse,
-  faGlobeAmericas,
-  faSpinner,
-  faPlus,
-  faTrash,
-  faEdit,
-  faDoorOpen,
-  faCheckCircle,
-  faTimesCircle,
-  faUserHardHat,
   faAddressBook,
-  faScanner,
-  faKeyboard,
-  faBuilding,
-  faEye,
+  faAngleDown,
+  faAngleLeft,
+  faAngleRight,
+  faBars,
   faBed,
+  faBuilding,
+  faCancel,
   faCar,
   faCashRegister,
+  faCheckCircle,
+  faCircle,
   faCircleXmark,
-  faHandHoldingDollar,
+  faCogs,
+  faDoorOpen,
+  faEdit,
   faEllipsisStroke,
-  faCancel,
+  faEye,
+  faEyeSlash,
   faFileChartPie,
   faFlaskVial,
+  faGlobeAmericas,
+  faHandHoldingDollar,
+  faHome,
+  faKeyboard,
+  faPlus,
+  faPrint,
+  faScanner,
+  faSignIn,
+  faSignOut,
+  faSpinner,
+  faTimesCircle,
+  faTrash,
+  faUserHardHat,
+  faUserNurse,
+  faUsers,
+  faAbacus,
+  faReceipt,
+  faIdCard,
 } from "@fortawesome/pro-light-svg-icons";
 
 const loadIcons = (): void => {
@@ -69,6 +75,12 @@ const loadIcons = (): void => {
   library.add(faCancel);
   library.add(faFileChartPie);
   library.add(faFlaskVial);
+  library.add(faPrint);
+  library.add(faCircle);
+  library.add(faAbacus);
+  library.add(faReceipt);
+  library.add(faIdCard);
+  library.add(faEyeSlash);
 };
 
 export default loadIcons;

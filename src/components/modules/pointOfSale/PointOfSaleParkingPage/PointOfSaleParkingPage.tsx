@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   usePointOfSaleAccessQuery,
   getPointOfSaleOpen,
@@ -9,6 +9,7 @@ import { useParkingPlansAvailableQuery } from "@components/modules/pointOfSale/P
 import {
   GetParkingPlanResponse,
   GetParkingServiceResponse,
+  PrintInvoiceResponse,
 } from "@api/parking";
 
 import { CreateServiceDialog } from "@components/modules/pointOfSale/PointOfSaleParkingPage/CreateServiceDialog";
@@ -16,6 +17,12 @@ import { useCurrentParkingServicesQuery } from "@components/modules/pointOfSale/
 import { ParkingServiceItem } from "@components/modules/pointOfSale/PointOfSaleParkingPage/ParkingServiceItem";
 import { PaySignOutServiceDialog } from "@components/modules/pointOfSale/PointOfSaleParkingPage/PaySignOutServiceDialog";
 import { QueryErrorBoundary } from "@components/shared";
+import { useEpsonPrinter } from "@hooks/useEpsonPrinter";
+import {
+  PrintParkingCarTicket,
+  printParkingCarTicket,
+  printPOSInvoice,
+} from "@printer/parking";
 
 export const PointOfSaleParkingPage: React.FunctionComponent = () => {
   const currentParkingServicesQuery = useCurrentParkingServicesQuery();
@@ -33,10 +40,44 @@ export const PointOfSaleParkingPage: React.FunctionComponent = () => {
   const [selectedParkingService, setSelectedParkingService] =
     useState<GetParkingServiceResponse | null>(null);
 
+  const { connect, printer, setPrinting } = useEpsonPrinter();
+
+  useEffect(() => {
+    const ipAddress =
+      (isSuccess &&
+        getPointOfSaleOpen(pointOfSaleAccessData)?.printerIpAddress) ||
+      null;
+    if (ipAddress) {
+      connect({ printerIPAddress: ipAddress, printerPort: 8008 });
+    }
+    // eslint-disable-next-line
+  }, [isSuccess]);
+
+  const printSignIn = (data: PrintParkingCarTicket) => {
+    if (printer) {
+      setPrinting();
+      printParkingCarTicket({
+        data,
+        printer,
+      });
+    }
+  };
+
+  const printInvoice = (data: PrintInvoiceResponse) => {
+    if (printer) {
+      setPrinting();
+      printPOSInvoice({
+        printer,
+        data,
+      });
+    }
+  };
+
   if (!isSuccess || !pointOfSaleAccessData.openWorkShift) {
     return <></>;
   }
   const openPointOfSale = getPointOfSaleOpen(pointOfSaleAccessData);
+
   const hasParkingLotServicesSales =
     openPointOfSale?.hasParkingLotServicesSales || false;
   const onCloseCreateParkingService = () => {
@@ -55,10 +96,12 @@ export const PointOfSaleParkingPage: React.FunctionComponent = () => {
           selectedPlan={selectedParkingPlan}
           open={!!setSelectedParkingPlan}
           onClose={onCloseCreateParkingService}
+          printSignIn={printSignIn}
         />
       )}
       {!!selectedParkingService && (
         <PaySignOutServiceDialog
+          printInvoice={printInvoice}
           parkingService={selectedParkingService}
           onClose={onClosePayParkingService}
           open={!!selectedParkingService}

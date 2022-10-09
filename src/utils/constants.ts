@@ -78,6 +78,7 @@ export const PERMISSION_MODULES = {
   RECEPTION: "module_reception",
   REPORTS: "module_report",
   LABS: "module_labs",
+  ACCOUNTING: "module_accounting",
 };
 
 export const FORMATS = {

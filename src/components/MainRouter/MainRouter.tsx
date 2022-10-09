@@ -20,6 +20,13 @@ const DashboardReports = React.lazy(
   () => import("@components/modules/reports/Reports")
 );
 
+const DashboardAccounting = React.lazy(
+  () => import("@components/modules/accounting/Accounting")
+);
+const DashboardMyAccount = React.lazy(
+  () => import("@components/modules/myAccount/MyAccount")
+);
+
 const DashboardLabs = React.lazy(() => import("@components/modules/labs/Labs"));
 
 const {
@@ -29,6 +36,8 @@ const {
   moduleReports,
   root,
   moduleLabs,
+  moduleAccounting,
+  moduleMyAccount,
 } = Paths;
 
 export const MainRouter: React.FunctionComponent = () => {
@@ -47,6 +56,14 @@ export const MainRouter: React.FunctionComponent = () => {
         />
         <Route path={`${moduleReports.main}*`} element={<DashboardReports />} />
         <Route path={`${moduleLabs.main}*`} element={<DashboardLabs />} />
+        <Route
+          path={`${moduleAccounting.main}*`}
+          element={<DashboardAccounting />}
+        />
+        <Route
+          path={`${moduleMyAccount.main}*`}
+          element={<DashboardMyAccount />}
+        />
       </Routes>
       <SpeedDialPointOfSale />
     </>

@@ -14,6 +14,8 @@ export enum InstancesDescriptorKeys {
   vehicleType,
   pointOfSale,
   pointOfSaleWorkShift,
+  printer,
+  uniqueInvoiceNumber,
 }
 
 export type InstancesDescriptorValue = {
@@ -27,13 +29,13 @@ export type InstancesDescriptorValue = {
   apiRoute?: string;
 };
 const buildGenericPermissionInstanceDescriptor = (
-  instance: string
+  permission: string
 ): GenericPermission => ({
-  LIST: `list_${instance}`,
-  ADD: `add_${instance}`,
-  CHANGE: `change_${instance}`,
-  DELETE: `delete_${instance}`,
-  VIEW: `view_${instance}`,
+  LIST: `list_${permission}`,
+  ADD: `add_${permission}`,
+  CHANGE: `change_${permission}`,
+  DELETE: `delete_${permission}`,
+  VIEW: `view_${permission}`,
 });
 export const instancesDescriptor: Record<
   InstancesDescriptorKeys,
@@ -97,6 +99,7 @@ export const instancesDescriptor: Record<
     permissions: {
       generic: buildGenericPermissionInstanceDescriptor("users"),
     },
+    apiRoute: "users/",
   },
   [InstancesDescriptorKeys.roomType]: {
     plural: "Tipos de Habitaciones",
@@ -124,6 +127,15 @@ export const instancesDescriptor: Record<
     },
     tab: "Planes",
     apiRoute: "parking-lot-plans/",
+  },
+  [InstancesDescriptorKeys.uniqueInvoiceNumber]: {
+    plural: "Consecutivos",
+    singular: "Consecutivo",
+    permissions: {
+      generic: buildGenericPermissionInstanceDescriptor("uniqueinvoicenumber"),
+    },
+    tab: "Consecutivos",
+    apiRoute: "accg-cash-flow-invoice-unique-invoice-number/",
   },
   [InstancesDescriptorKeys.parkingPlanRate]: {
     plural: "Tarifas",
@@ -166,6 +178,14 @@ export const instancesDescriptor: Record<
       generic: buildGenericPermissionInstanceDescriptor("parkingservice"),
     },
     apiRoute: "parking-lot-services/",
+  },
+  [InstancesDescriptorKeys.printer]: {
+    plural: "Impresoras",
+    singular: "Impresora",
+    permissions: {
+      generic: buildGenericPermissionInstanceDescriptor("printer"),
+    },
+    apiRoute: "sys-configuration-printers/",
   },
 };
 export type GenericPermission = {

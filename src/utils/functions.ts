@@ -1,6 +1,7 @@
 import { getFormFieldError } from "@utils/typeGuards";
 import { UseFormSetError, UseFormSetValue } from "react-hook-form";
 import { FieldValues } from "react-hook-form/dist/types/fields";
+import { format } from "date-fns";
 
 export const setFormError = <T extends FieldValues>(
   setError: UseFormSetError<T>,
@@ -54,4 +55,11 @@ export const displayHoursAndMinutesFromMinutes = (totalMinutes: number) => {
 export const toHoursMinutesFormatFromDate = (datetime: Date) => {
   const dateText = datetime.toTimeString();
   return dateText.split(" ")[0].split(":").slice(0, 2).join(":");
+};
+
+export const toHumanDateTime = (datetime: Date | string) =>
+  format(new Date(datetime), "LLLL dd, KK:mm:ss aaa");
+
+export const numberFormat = (value: number): string => {
+  return Intl.NumberFormat("es-CO").format(value);
 };

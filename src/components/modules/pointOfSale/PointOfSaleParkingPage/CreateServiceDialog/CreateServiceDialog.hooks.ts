@@ -28,7 +28,7 @@ export const useCreateParkingServiceMutation = ({
   onSuccessCallBack,
 }: {
   parkingPlan: number;
-  onSuccessCallBack?: () => void;
+  onSuccessCallBack?: (data: GetParkingServiceResponse) => void;
 }) =>
   useMutation<
     GetParkingServiceResponse,
@@ -41,8 +41,8 @@ export const useCreateParkingServiceMutation = ({
         writeLicensePlate,
       }).then((res) => res.data),
     {
-      onSuccess: () => {
-        if (onSuccessCallBack) onSuccessCallBack();
+      onSuccess: (data) => {
+        if (onSuccessCallBack) onSuccessCallBack(data);
       },
     }
   );

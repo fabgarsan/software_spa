@@ -19,6 +19,7 @@ import { RoomDashboardPage } from "./RoomDashboardPage";
 import { EscortDetailViewPage } from "./EscortDetailViewPage";
 import { ParkingPlanDetailViewPage } from "./ParkingPlanDetailViewPage";
 import { ParkingDashboardPage } from "./ParkingDashboardPage";
+import { PrinterCRUDPage } from "./PrinterCRUDPage";
 import {
   useCheckGenericUserPermissions,
   useCheckPermissions,
@@ -45,6 +46,9 @@ const instanceDescriptorParking =
 const instanceDescriptorPointOfSale =
   instancesDescriptor[InstancesDescriptorKeys.pointOfSale];
 
+const instanceDescriptorPrinter =
+  instancesDescriptor[InstancesDescriptorKeys.printer];
+
 const {
   moduleAdmin: {
     employees,
@@ -54,6 +58,7 @@ const {
     parking,
     pointOfSale,
     users,
+    printer,
   },
 } = Paths;
 
@@ -117,6 +122,14 @@ const Admin: React.FunctionComponent = () => {
         instanceDescriptorPointOfSale.permissions.generic
       ).HAS_ANY,
     },
+    {
+      text: DRAWER.MODULE_ADMIN_PRINTER,
+      icon: "print",
+      onClick: () => navigate(printer),
+      show: useCheckGenericUserPermissions(
+        instanceDescriptorPrinter.permissions.generic
+      ).HAS_ANY,
+    },
   ];
 
   const hasPermission = useCheckPermissions([PERMISSION_MODULES.ADMIN], "all");
@@ -143,6 +156,7 @@ const Admin: React.FunctionComponent = () => {
         </Route>
         <Route path={companies} element={<CompanyCRUDPage />} />
         <Route path={room} element={<RoomDashboardPage />} />
+        <Route path={printer} element={<PrinterCRUDPage />} />
       </Routes>
     </Drawer>
   );

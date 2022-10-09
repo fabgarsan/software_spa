@@ -1,5 +1,6 @@
 export interface ParkingPlan {
   id: number;
+  uniqueInvoiceNumber: number;
   name: string;
   vehicleType: string;
   timeFrom: Date;

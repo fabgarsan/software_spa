@@ -26,7 +26,6 @@ import {
 
 import { CRUDDefaultFormProps } from "@hoc/withCRUDReactQuery";
 import useDialogCreateEditCRUDValidation, {
-  useCompaniesQuery,
   useRoomTypesQuery,
 } from "./RoomCRUDDialogCreateEdit.hooks";
 import { Room } from "@dto/room";
@@ -34,6 +33,7 @@ import makeStyles from "@mui/styles/makeStyles";
 import { Theme } from "@mui/material/styles";
 import createStyles from "@mui/styles/createStyles";
 import { GetRoomApiResponse } from "@api/room";
+import { useCompaniesQuery } from "@api/company";
 
 const instanceDescriptor = instancesDescriptor[InstancesDescriptorKeys.room];
 

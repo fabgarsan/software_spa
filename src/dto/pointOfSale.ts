@@ -1,5 +1,6 @@
 export interface PointOfSale {
   id: number;
+  printer: number;
   name: string;
   active: boolean;
   hasIncomeOperations: boolean;
@@ -11,6 +12,7 @@ export interface PointOfSale {
 export interface PointOfSaleWorkShift {
   id: number;
   pointOfSale: number;
+  uniqueInvoiceNumber: number;
   previousWorkShift: number;
   initialCash: number;
   finalCash: number;

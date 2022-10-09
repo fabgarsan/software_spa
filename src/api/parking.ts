@@ -26,6 +26,22 @@ export interface CreateParkingPlanRequest
   timeTo: string;
 }
 
+export interface PrintInvoiceResponse {
+  uniqueInvoiceNumber: number;
+  companyName: string;
+  companyNit: string;
+  dianResolutionNumber: string;
+  automaticRange: string;
+  description: string;
+  printCount: number;
+  minutes: number;
+  startDatetime: Date;
+  paymentDatetime: Date;
+  cashierName: string;
+  cashierUsername: string;
+  total: number;
+}
+
 export interface GetParkingServiceResponse extends ParkingService {
   readonly licensePlate: string;
   readonly vehicleTypeName: string;
@@ -48,6 +64,14 @@ export interface FetchParkingServicesParams {
   search?: string;
   finished?: boolean;
 }
+
+export const printParkingInvoice = (
+  parkingServiceId: number
+): Promise<AxiosResponse<PrintInvoiceResponse>> =>
+  client.get<PrintInvoiceResponse>(
+    `${instancesDescriptorParkingService.apiRoute}${parkingServiceId}/print-invoice/` ||
+      ""
+  );
 
 export const fetchVehicleTypes = (): Promise<AxiosResponse<VehicleType[]>> =>
   client.get<VehicleType[]>(instancesDescriptorVehicleType.apiRoute || "");
