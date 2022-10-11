@@ -14,12 +14,13 @@ import {
   useCheckPermissions,
 } from "@hooks/index";
 import { ElectronicInvoiceDashboard } from "@components/modules/accounting/ElectronicInvoiceDashboard";
+import { TaxesDashboard } from "@components/modules/accounting/TaxesDashboard";
 
 const instanceDescriptorUniqueInvoiceNumber =
   instancesDescriptor[InstancesDescriptorKeys.uniqueInvoiceNumber];
 
 const {
-  moduleAccounting: { electronicInvoiceNumber },
+  moduleAccounting: { electronicInvoiceNumber, taxes },
 } = Paths;
 
 const Accounting: React.FunctionComponent = () => {
@@ -30,6 +31,14 @@ const Accounting: React.FunctionComponent = () => {
       text: DRAWER.MODULE_ACCOUNTING_ELECTRONIC_INVOICE_TITLE,
       icon: "receipt",
       onClick: () => navigate(electronicInvoiceNumber),
+      show: useCheckGenericUserPermissions(
+        instanceDescriptorUniqueInvoiceNumber.permissions.generic
+      ).HAS_ANY,
+    },
+    {
+      text: DRAWER.MODULE_ACCOUNTING_TAXES_TITLE,
+      icon: "building-columns",
+      onClick: () => navigate(taxes),
       show: useCheckGenericUserPermissions(
         instanceDescriptorUniqueInvoiceNumber.permissions.generic
       ).HAS_ANY,
@@ -51,6 +60,7 @@ const Accounting: React.FunctionComponent = () => {
           path={electronicInvoiceNumber}
           element={<ElectronicInvoiceDashboard />}
         />
+        <Route path={taxes} element={<TaxesDashboard />} />
       </Routes>
     </Drawer>
   );

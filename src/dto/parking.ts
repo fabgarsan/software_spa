@@ -3,6 +3,7 @@ export interface ParkingPlan {
   uniqueInvoiceNumber: number;
   name: string;
   vehicleType: string;
+  taxGroup: string;
   timeFrom: Date;
   timeTo: Date;
   monday: boolean;

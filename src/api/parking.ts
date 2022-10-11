@@ -39,6 +39,9 @@ export interface PrintInvoiceResponse {
   paymentDatetime: Date;
   cashierName: string;
   cashierUsername: string;
+  taxDescription: string;
+  tax: number;
+  base: number;
   total: number;
 }
 

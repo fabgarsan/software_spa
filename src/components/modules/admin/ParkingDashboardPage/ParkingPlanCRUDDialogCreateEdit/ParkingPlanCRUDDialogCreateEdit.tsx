@@ -36,6 +36,7 @@ import createStyles from "@mui/styles/createStyles";
 import { DesktopTimePicker } from "@mui/x-date-pickers";
 
 import { CreateParkingPlanRequest, GetParkingPlanResponse } from "@api/parking";
+import { useTaxesGroupsQuery } from "@api/accountingTax";
 import { toHoursMinutesFormatFromDate } from "@utils/functions";
 import { useUniqueInvoiceNumbersQuery } from "@api/accounting";
 
@@ -86,6 +87,7 @@ export const ParkingPlanCRUDDialogCreateEdit: React.FunctionComponent<
   } = useForm<ParkingPlan>({ resolver });
 
   const { data: vehicleTypesData } = useVehiclesTypesQuery();
+  const { data: taxesGroupsQueryData } = useTaxesGroupsQuery();
 
   const uniqueInvoiceNumbersQuery = useUniqueInvoiceNumbersQuery();
   const { data: uniqueInvoiceNumbersDataQuery } = uniqueInvoiceNumbersQuery;
@@ -190,7 +192,7 @@ export const ParkingPlanCRUDDialogCreateEdit: React.FunctionComponent<
               control={control}
               render={({ field }) => (
                 <FormControl className={classes.formControl}>
-                  <InputLabel htmlFor="id-category-select">
+                  <InputLabel htmlFor="id-vehicle-type-select">
                     {FORM_FIELDS.PARKING_PLAN.LABEL_VEHICLE_TYPE}
                   </InputLabel>
                   <Select
@@ -199,7 +201,7 @@ export const ParkingPlanCRUDDialogCreateEdit: React.FunctionComponent<
                     value={field.value}
                     onChange={field.onChange}
                     inputProps={{
-                      id: "id-category-select",
+                      id: "id-vehicle-type-select",
                     }}
                   >
                     <option value={undefined}>-----</option>
@@ -212,6 +214,40 @@ export const ParkingPlanCRUDDialogCreateEdit: React.FunctionComponent<
                   {formErrors?.vehicleType && (
                     <FormHelperText className={classes.error}>
                       {formErrors.vehicleType.message}
+                    </FormHelperText>
+                  )}
+                </FormControl>
+              )}
+            />
+          </Grid>
+          <Grid item xs={12} sm={6}>
+            <Controller
+              name="taxGroup"
+              control={control}
+              render={({ field }) => (
+                <FormControl className={classes.formControl}>
+                  <InputLabel htmlFor="id-tax-group-select">
+                    {FORM_FIELDS.PARKING_PLAN.LABEL_VEHICLE_TYPE}
+                  </InputLabel>
+                  <Select
+                    fullWidth
+                    native
+                    value={field.value}
+                    onChange={field.onChange}
+                    inputProps={{
+                      id: "id-tax-group-select",
+                    }}
+                  >
+                    <option value={undefined}>-----</option>
+                    {taxesGroupsQueryData?.map((taxGroup) => (
+                      <option key={taxGroup.id} value={taxGroup.id}>
+                        {taxGroup.name}
+                      </option>
+                    ))}
+                  </Select>
+                  {formErrors?.taxGroup && (
+                    <FormHelperText className={classes.error}>
+                      {formErrors.taxGroup.message}
                     </FormHelperText>
                   )}
                 </FormControl>

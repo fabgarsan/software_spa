@@ -16,6 +16,7 @@ export const useValidation = () => {
         timeTo: yup.date().required(FORM_VALIDATIONS.REQUIRED_FIELD),
         vehicleType: yup.number().required(FORM_VALIDATIONS.REQUIRED_FIELD),
         uniqueInvoiceNumber: yup.number(),
+        taxGroup: yup.string().required(FORM_VALIDATIONS.REQUIRED_FIELD),
         monday: yup.boolean(),
         tuesday: yup.boolean(),
         wednesday: yup.boolean(),

@@ -39,6 +39,7 @@ import {
   faAbacus,
   faReceipt,
   faIdCard,
+  faBuildingColumns,
 } from "@fortawesome/pro-light-svg-icons";
 
 const loadIcons = (): void => {
@@ -81,6 +82,7 @@ const loadIcons = (): void => {
   library.add(faReceipt);
   library.add(faIdCard);
   library.add(faEyeSlash);
+  library.add(faBuildingColumns);
 };
 
 export default loadIcons;

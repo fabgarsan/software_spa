@@ -10,6 +10,7 @@ export const DRAWER = {
   MODULE_RECEPTION_TITLE: "Recepción",
   MODULE_ACCOUNTING_TITLE: "Contabilidad",
   MODULE_ACCOUNTING_ELECTRONIC_INVOICE_TITLE: "Facturación",
+  MODULE_ACCOUNTING_TAXES_TITLE: "Impuestos",
   MODULE_REPORTS_TITLE: "Reportes",
   MODULE_REPORTS_PARKING_SERVICE_HISTORY: "Historico",
   MODULE_POINT_OF_SALE_TITLE: "Punto de Venta",
@@ -33,6 +34,7 @@ export const DRAWER = {
 export const FORM_VALIDATIONS = {
   REQUIRED_FIELD: "Campo Requerido",
   MUST_BE_AN_EMAIL_FIELD: "Debe ser un email válido",
+  MUST_BE_A_POSITIVE_NUMBER_FIELD: "El valor debe ser un número positivo",
 };
 export const UI = {
   BUTTON_TEXT_CREATE: "Crear",
@@ -124,6 +126,7 @@ export const FORM_FIELDS = {
     LABEL_NAME: "Nombres",
     LABEL_TIME_FROM: "Hora de Inicio",
     LABEL_TIME_TO: "Hora de Cierre",
+    LABEL_TAX_GROUP: "Grupo de Impuestos",
     LABEL_VEHICLE_TYPE: "Típo de Vehículo",
     LABEL_MONDAY: "Lúnes",
     LABEL_TUESDAY: "Mártes",
@@ -140,6 +143,16 @@ export const FORM_FIELDS = {
   VEHICLE_TYPE: {
     LABEL_NAME: "Nombres",
     LABEL_HAS_LICENSE_PLATE: "Tiene Placa?",
+  },
+  ACCOUNTING_TAXES: {
+    LABEL_NAME: "Nombre",
+    LABEL_AMOUNT_PERCENTAGE: "Porcentaje",
+    LABEL_AMOUNT_FIXED: "Valor",
+    LABEL_TYPE: "Tipo de Impuesto",
+  },
+  ACCOUNTING_TAXES_GROUP: {
+    LABEL_NAME: "Nombre",
+    LABEL_TAX: "Impuesto",
   },
   UNIQUE_INVOICE_NUMBER: {
     LABEL_DIAN_RESOLUTION_NUMBER: "Número Resolución DIAN",
@@ -270,6 +283,17 @@ export const TABLE_HEADERS = {
     START_DATE: "Fecha de Autorización",
     END_DATE: "Fecha de Vigencia",
     CURRENT_NUMBER: "Número Actual",
+  },
+  ACCOUNTING_TAXES: {
+    NAME: "Nombre",
+    TYPE: "Tipo de Impuesto",
+    AMOUNT: "Cantidad",
+  },
+  ACCOUNTING_TAXES_GROUP: {
+    NAME: "Nombre Grupo",
+    TAX_TYPE: "Tipo de Impuesto",
+    TAX_NAME: "Nombre Impuesto",
+    TAX_AMOUNT: "Cantidad de Impuesto",
   },
   POINT_OF_SALE: {
     NAME: "Nombre",

@@ -54,6 +54,9 @@ export const printPOSInvoice = ({
     total,
     dianResolutionNumber,
     automaticRange,
+    taxDescription,
+    tax,
+    base,
   },
 }: {
   printer: Printer;
@@ -92,9 +95,14 @@ export const printPOSInvoice = ({
   printer.addText("\n");
   printer.addTextAlign("center");
   printer.addText(`Tiempo: ${displayHoursAndMinutesFromMinutes(minutes)}\n`);
-  printer.addText(`Total: ${formatIntoMoney(total)}\n`);
-
+  printer.addText("\n");
   printer.addTextAlign("center");
+  printer.addText(`Base Impositiva: ${formatIntoMoney(base)}\n`);
+  printer.addText(`Iva ${taxDescription}: ${formatIntoMoney(tax)} \n`);
+  printer.addText("\n");
+  printer.addTextSize(2, 2);
+  printer.addText(`Total: ${formatIntoMoney(total)}\n`);
+  printer.addTextSize(1, 1);
   printer.addText("-----------------------------\n");
   printer.addTextAlign("right");
   printer.addText(`Número de impresión: ${printCount}\n`);

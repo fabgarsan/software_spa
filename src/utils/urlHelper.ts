@@ -46,6 +46,7 @@ export const Paths = {
   moduleAccounting: {
     main: mainPath.accounting,
     electronicInvoiceNumber: "consecutivos-facturacion/",
+    taxes: "impuestos/",
   },
   moduleMyAccount: {
     main: mainPath.myAccount,

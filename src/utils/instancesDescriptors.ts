@@ -16,6 +16,8 @@ export enum InstancesDescriptorKeys {
   pointOfSaleWorkShift,
   printer,
   uniqueInvoiceNumber,
+  tax,
+  taxGroup,
 }
 
 export type InstancesDescriptorValue = {
@@ -154,6 +156,24 @@ export const instancesDescriptor: Record<
     },
     tab: "Tipos de Vehiculos",
     apiRoute: "parking-lot-vehicles-types/",
+  },
+  [InstancesDescriptorKeys.tax]: {
+    plural: "Impuestos",
+    singular: "Impuesto",
+    permissions: {
+      generic: buildGenericPermissionInstanceDescriptor("tax"),
+    },
+    tab: "Impuestos",
+    apiRoute: "accg-tax-taxes/",
+  },
+  [InstancesDescriptorKeys.taxGroup]: {
+    plural: "Grupos de Impuestos",
+    singular: "Grupo de Impuesto",
+    permissions: {
+      generic: buildGenericPermissionInstanceDescriptor("taxgroup"),
+    },
+    tab: "Grupos",
+    apiRoute: "accg-tax-groups/",
   },
   [InstancesDescriptorKeys.pointOfSale]: {
     plural: "Puntos de Venta",
