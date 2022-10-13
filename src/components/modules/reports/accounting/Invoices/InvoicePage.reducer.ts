@@ -1,11 +1,11 @@
 import React from "react";
 import { FORMATS } from "@utils/index";
 import { format } from "date-fns";
-import { FetchSignInOutLogsParams } from "@api/signInControl";
+import { FetchInvoicesParams } from "@api/accounting";
 
 export interface FilterState {
   filterType: "range" | "date" | string;
-  params: FetchSignInOutLogsParams;
+  params: FetchInvoicesParams;
 }
 
 export type FilterActions =
@@ -21,7 +21,6 @@ export const filterInitial: FilterState = {
     date: format(new Date(), FORMATS.DATE_TIME_TO_SEND),
     dateFrom: format(new Date(), FORMATS.DATE_TIME_TO_SEND),
     dateTo: format(new Date(), FORMATS.DATE_TIME_TO_SEND),
-    search: "",
   },
 };
 
@@ -62,19 +61,11 @@ export const reducerFilter: React.Reducer<FilterState, FilterActions> = (
           dateFrom: state.params.dateFrom,
         },
       };
-    case "setSearchText":
-      return {
-        ...state,
-        params: {
-          ...state.params,
-          search: action.text,
-        },
-      };
     case "changeFilterType":
       return {
         ...state,
         filterType: action.mode,
-        params: { ...filterInitial.params, search: state.params.search },
+        params: { ...filterInitial.params },
       };
     default:
       throw new Error();

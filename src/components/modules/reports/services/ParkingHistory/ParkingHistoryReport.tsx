@@ -6,7 +6,7 @@ import { CommonLayout } from "@components/shared";
 import {
   reducerFilter,
   filterInitial,
-} from "@components/modules/reports/signControl/SignInOutControlLogBookPage/SignInOutControlLogBookContainer.reducer";
+} from "@components/modules/reports/services/ParkingHistory/ParkingHistoryReport.reducer";
 import { useParkingServicesQuery } from "@components/modules/reports/services/ParkingHistory/ParkingHistoryReport.hooks";
 
 export const ParkingHistoryReport = () => {
