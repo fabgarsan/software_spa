@@ -33,7 +33,7 @@ export const SignInOutControlLogBookPage = () => {
   };
 
   return (
-    <CommonLayout title={CONTAINERS.SIGN_IN_OUT_LOG_BOOK_TITLE} canView>
+    <CommonLayout title={CONTAINERS.REPORT_SIGN_IN_OUT_LOG_BOOK_TITLE} canView>
       {canFilter && (
         <LogBookFilter
           searchText={state.params.search || ""}

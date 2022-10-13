@@ -235,7 +235,7 @@ export const UniqueInvoiceNumberCRUDDialogCreateEdit: React.FunctionComponent<
                 <>
                   <DatePicker
                     maxDate={undefined}
-                    label={FORM_FIELDS.EXTENDED_USER.LABEL_DATE_OF_BIRTH}
+                    label={FORM_FIELDS.UNIQUE_INVOICE_NUMBER.LABEL_START_DATE}
                     inputFormat={FORMATS.DATE_TIME_TO_SHOW}
                     value={utcToZonedTime(
                       field.value,

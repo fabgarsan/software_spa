@@ -29,7 +29,8 @@ import { Theme } from "@mui/material/styles";
 import { TaxGroup } from "@dto/accountingTaxes";
 import { GetTaxGroupResponse, useTaxesQuery } from "@api/accountingTax";
 
-const instanceDescriptor = instancesDescriptor[InstancesDescriptorKeys.tax];
+const instanceDescriptor =
+  instancesDescriptor[InstancesDescriptorKeys.taxGroup];
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({

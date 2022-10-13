@@ -55,7 +55,8 @@ export const API_ROUTES = {
 export const CONTAINERS = {
   USER_SIGN_IN_TITLE: "Registro de Entrada",
   USER_SIGN_OUT_TITLE: "Registro de Salida",
-  SIGN_IN_OUT_LOG_BOOK_TITLE: "Bitacora",
+  REPORT_SIGN_IN_OUT_LOG_BOOK_TITLE: "Bitacora",
+  REPORT_INVOICES: "Facturas",
   WITHOUT_ANY_PERMISSION_TO_DISPLAY: "No tienes permisos para ver",
 };
 

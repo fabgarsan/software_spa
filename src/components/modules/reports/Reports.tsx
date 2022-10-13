@@ -1,13 +1,14 @@
 import React from "react";
 import { Drawer, IconList } from "@components/shared";
-import { HistoryPage } from "@components/modules/reports/services/parkingServices/HistoryPage";
+import { ParkingHistoryReport } from "@components/modules/reports/services";
+import { InvoicePage } from "@components/modules/reports/accounting";
 import { SignInOutControlLogBookPage } from "@components/modules/reports/signControl/SignInOutControlLogBookPage";
 import { DRAWER, Paths, PERMISSION_INSTANCES } from "@utils/index";
 import { Route, Routes, useNavigate } from "react-router-dom";
 import { useCheckPermissions } from "@hooks/index";
 
 const {
-  moduleReports: { parkingServicesHistory, signOutInLog },
+  moduleReports: { parkingServicesHistory, signOutInLog, invoices },
 } = Paths;
 
 const Reports: React.FunctionComponent = () => {
@@ -23,13 +24,19 @@ const Reports: React.FunctionComponent = () => {
       ]),
     },
     {
-      text: DRAWER.MODULE_RECEPTION_SIGN_IN_OUT_LOG,
+      text: DRAWER.MODULE_REPORTS_SIGN_IN_OUT_LOG,
       icon: "address-book",
       onClick: () => navigate(signOutInLog),
       show: useCheckPermissions([
         PERMISSION_INSTANCES.SIGN_IN_CONTROL
           .CAN_SEE_SIGN_OUT_SIGN_IN_HISTORY_REPORT,
       ]),
+    },
+    {
+      text: DRAWER.MODULE_REPORTS_INVOICES,
+      icon: "building-columns",
+      onClick: () => navigate(invoices),
+      show: true,
     },
   ];
   return (
@@ -39,8 +46,12 @@ const Reports: React.FunctionComponent = () => {
       canShowContent={true}
     >
       <Routes>
-        <Route path={parkingServicesHistory} element={<HistoryPage />} />
+        <Route
+          path={parkingServicesHistory}
+          element={<ParkingHistoryReport />}
+        />
         <Route path={signOutInLog} element={<SignInOutControlLogBookPage />} />
+        <Route path={invoices} element={<InvoicePage />} />
       </Routes>
     </Drawer>
   );

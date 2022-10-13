@@ -17,7 +17,7 @@ const instanceDescriptorParkingServices =
 
 const timeFormat = "LLLL dd, KK:mm:ss aaa";
 
-export const HistoryTable = ({ list }: ServicesHistoryListProps) => {
+export const ParkingHistoryTable = ({ list }: ServicesHistoryListProps) => {
   return (
     <Grid container>
       <Grid item xs={12}>

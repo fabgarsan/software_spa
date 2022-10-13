@@ -30,7 +30,7 @@ interface LogBookFilterProps {
   onSearch: () => void;
 }
 
-export const HistoryFilter = ({
+export const InvoiceFilter = ({
   date,
   dateTo,
   dateFrom,

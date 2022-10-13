@@ -3,29 +3,49 @@ import {
   InstancesDescriptorKeys,
 } from "@utils/instancesDescriptors";
 import { AxiosError, AxiosResponse } from "axios";
-import { UniqueInvoiceNumber } from "@dto/accountingInvoice";
+import { Invoice, UniqueInvoiceNumber } from "@dto/accountingInvoice";
 import { mainAxiosClient } from "@clients/axios";
 import { useQuery } from "@tanstack/react-query";
 
 const client = mainAxiosClient.getInstance();
 
-const instancesDescriptorCompany =
+const instancesDescriptorUniqueInvoiceNumber =
   instancesDescriptor[InstancesDescriptorKeys.uniqueInvoiceNumber];
 
-export interface GetUniqueInvoiceNumber extends UniqueInvoiceNumber {
+const instancesDescriptorInvoice =
+  instancesDescriptor[InstancesDescriptorKeys.invoice];
+
+export interface GetUniqueInvoiceNumberResponse extends UniqueInvoiceNumber {
   companyName: string;
   companyNit: string;
 }
 
+export interface GetInvoiceResponse extends Invoice {
+  sourceDisplay: string;
+}
+
+export interface FetchInvoicesParams {
+  date?: string;
+  dateTo?: string;
+  dateFrom?: string;
+}
+
+export const fetchInvoices = (
+  params?: FetchInvoicesParams
+): Promise<AxiosResponse<GetInvoiceResponse[]>> =>
+  client.get<GetInvoiceResponse[]>(instancesDescriptorInvoice.apiRoute || "", {
+    params,
+  });
+
 export const fetchUniqueInvoiceNumbers = (): Promise<
-  AxiosResponse<GetUniqueInvoiceNumber[]>
+  AxiosResponse<GetUniqueInvoiceNumberResponse[]>
 > =>
-  client.get<GetUniqueInvoiceNumber[]>(
-    instancesDescriptorCompany.apiRoute || ""
+  client.get<GetUniqueInvoiceNumberResponse[]>(
+    instancesDescriptorUniqueInvoiceNumber.apiRoute || ""
   );
 
 export const useUniqueInvoiceNumbersQuery = () => {
-  return useQuery<GetUniqueInvoiceNumber[], AxiosError>(
+  return useQuery<GetUniqueInvoiceNumberResponse[], AxiosError>(
     ["unique-invoice-numbers"],
     () => fetchUniqueInvoiceNumbers().then((response) => response.data),
     {

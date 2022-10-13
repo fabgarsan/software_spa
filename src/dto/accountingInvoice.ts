@@ -10,3 +10,28 @@ export interface UniqueInvoiceNumber {
   authorizationDateEnd: Date;
   active: boolean;
 }
+
+export interface Invoice {
+  id: number;
+  printCount: number;
+  source: string;
+  uniqueInvoiceNumber: number;
+  dianResolutionNumber: string;
+  status: number;
+  automaticRange: string;
+  nit: string;
+  name: string;
+  total: number;
+}
+
+export interface InvoiceItem {
+  id: number;
+  taxDescription: string;
+  base: number;
+  invoice: number;
+  units: number;
+  unitMeasure: string;
+  description: string;
+  tax: number;
+  total: number;
+}

@@ -227,7 +227,7 @@ export const ParkingPlanCRUDDialogCreateEdit: React.FunctionComponent<
               render={({ field }) => (
                 <FormControl className={classes.formControl}>
                   <InputLabel htmlFor="id-tax-group-select">
-                    {FORM_FIELDS.PARKING_PLAN.LABEL_VEHICLE_TYPE}
+                    {FORM_FIELDS.PARKING_PLAN.LABEL_TAX_GROUP}
                   </InputLabel>
                   <Select
                     fullWidth

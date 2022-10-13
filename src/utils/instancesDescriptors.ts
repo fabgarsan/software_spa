@@ -16,6 +16,7 @@ export enum InstancesDescriptorKeys {
   pointOfSaleWorkShift,
   printer,
   uniqueInvoiceNumber,
+  invoice,
   tax,
   taxGroup,
 }
@@ -182,6 +183,14 @@ export const instancesDescriptor: Record<
       generic: buildGenericPermissionInstanceDescriptor("pointofsale"),
     },
     apiRoute: "points-of-sales/",
+  },
+  [InstancesDescriptorKeys.invoice]: {
+    plural: "Facturas",
+    singular: "Factura",
+    permissions: {
+      generic: buildGenericPermissionInstanceDescriptor("invoice"),
+    },
+    apiRoute: "accg-invoice-invoices/",
   },
   [InstancesDescriptorKeys.pointOfSaleWorkShift]: {
     plural: "Turnos de Puntos de Venta",

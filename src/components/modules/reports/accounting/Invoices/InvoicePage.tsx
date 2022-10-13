@@ -1,41 +1,42 @@
 import React, { useReducer, useState } from "react";
 import { CONTAINERS } from "@utils/constants";
-import { HistoryTable } from "./HistoryTable";
-import { HistoryFilter } from "./HistoryFilter";
+import { InvoiceTable } from "./InvoiceTable";
+import { InvoiceFilter } from "./InvoiceFilter";
 import { CommonLayout } from "@components/shared";
 import {
   reducerFilter,
   filterInitial,
-} from "@components/modules/reports/signControl/SignInOutControlLogBookPage/SignInOutControlLogBookContainer.reducer";
-import { useParkingServicesQuery } from "@components/modules/reports/services/parkingServices/HistoryPage/HistoryPage.hooks";
+} from "@components/modules/reports/accounting/Invoices/InvoicePage.reducer";
+import { useInvoicesQuery } from "@components/modules/reports/accounting/Invoices/InvoicePage.hooks";
 
-export const HistoryPage = () => {
+export const InvoicePage = () => {
   const [search, setSearch] = useState<boolean>(true);
   const [state, dispatch] = useReducer(reducerFilter, filterInitial);
-  console.log(state.params, "LOS PARAMETROS");
 
-  const presentUsersQuery = useParkingServicesQuery({
+  const presentUsersQuery = useInvoicesQuery({
     params: state.params,
     enabled: search,
     disableSearch: () => setSearch(false),
   });
-  const { data: services } = presentUsersQuery;
+  const { data: invoices } = presentUsersQuery;
 
   const onSearch = () => {
     setSearch(true);
   };
 
   return (
-    <CommonLayout title={CONTAINERS.SIGN_IN_OUT_LOG_BOOK_TITLE} canView>
-      <HistoryFilter
+    <CommonLayout title={CONTAINERS.REPORT_INVOICES} canView>
+      <InvoiceFilter
         searchText={state.params.search || ""}
         setSearchText={(text) => dispatch({ type: "setSearchText", text })}
         filterType={state.filterType}
         date={state.params.date || ""}
         dateFrom={state.params.dateFrom || ""}
         dateTo={state.params.dateTo || ""}
-        onDateToChange={(date) => dispatch({ type: "filterRangeTo", date })}
-        onDateFromChange={(date) => dispatch({ type: "filterRangeFrom", date })}
+        onDateToChange={(date) => dispatch({ type: "filterDateRangeTo", date })}
+        onDateFromChange={(date) =>
+          dispatch({ type: "filterDateRangeFrom", date })
+        }
         onDateChange={(date) => {
           dispatch({ type: "filterDate", date });
         }}
@@ -44,7 +45,7 @@ export const HistoryPage = () => {
         }
         onSearch={onSearch}
       />
-      <HistoryTable list={services || []} />
+      <InvoiceTable list={invoices || []} />
     </CommonLayout>
   );
 };
