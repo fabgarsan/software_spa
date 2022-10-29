@@ -7,6 +7,7 @@ export * from "./DatePickerRange";
 export * from "./DetailViewGeneric";
 export * from "./DialogConfirmation";
 export * from "./DialogCreateEditBase";
+export * from "./DownloadXLSXButton";
 export * from "./Drawer";
 export * from "./ExtendedUserCRUDDialogCreateEdit";
 export * from "./IDScanner";

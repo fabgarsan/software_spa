@@ -27,12 +27,11 @@ export const InvoicePage = () => {
   return (
     <CommonLayout title={CONTAINERS.REPORT_INVOICES} canView>
       <InvoiceFilter
-        searchText={state.params.search || ""}
         setSearchText={(text) => dispatch({ type: "setSearchText", text })}
         filterType={state.filterType}
-        date={state.params.date || ""}
-        dateFrom={state.params.dateFrom || ""}
-        dateTo={state.params.dateTo || ""}
+        date={state.params.created || ""}
+        dateFrom={state.params.createdAfter || ""}
+        dateTo={state.params.createdBefore || ""}
         onDateToChange={(date) => dispatch({ type: "filterDateRangeTo", date })}
         onDateFromChange={(date) =>
           dispatch({ type: "filterDateRangeFrom", date })

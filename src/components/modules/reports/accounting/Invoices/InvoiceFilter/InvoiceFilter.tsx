@@ -20,7 +20,6 @@ interface LogBookFilterProps {
   dateTo: string;
   date: string;
   dateFrom: string;
-  searchText: string;
   filterType: string;
   setSearchText: (text: string) => void;
   onDateFromChange: (date: string | null) => void;
@@ -34,10 +33,8 @@ export const InvoiceFilter = ({
   date,
   dateTo,
   dateFrom,
-  searchText,
   filterType,
   onDateFromChange,
-  setSearchText,
   onDateToChange,
   onDateChange,
   onFilterTypeChange,
@@ -45,15 +42,6 @@ export const InvoiceFilter = ({
 }: LogBookFilterProps) => {
   return (
     <Grid container>
-      <Grid item xs={12} sm={6}>
-        <TextField
-          fullWidth
-          label="Buscar"
-          placeholder="Buscar..."
-          value={searchText}
-          onChange={(event) => setSearchText(event.target.value)}
-        />
-      </Grid>
       <Grid item xs={12} md={4}>
         <Box>
           {filterType === "range" && (

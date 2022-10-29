@@ -40,6 +40,7 @@ import {
   faReceipt,
   faIdCard,
   faBuildingColumns,
+  faFileSpreadsheet,
 } from "@fortawesome/pro-light-svg-icons";
 
 const loadIcons = (): void => {
@@ -83,6 +84,7 @@ const loadIcons = (): void => {
   library.add(faIdCard);
   library.add(faEyeSlash);
   library.add(faBuildingColumns);
+  library.add(faFileSpreadsheet);
 };
 
 export default loadIcons;

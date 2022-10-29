@@ -25,9 +25,9 @@ export interface GetInvoiceResponse extends Invoice {
 }
 
 export interface FetchInvoicesParams {
-  date?: string;
-  dateTo?: string;
-  dateFrom?: string;
+  created?: string;
+  createdBefore?: string;
+  createdAfter?: string;
 }
 
 export const fetchInvoices = (

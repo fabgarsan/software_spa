@@ -15,12 +15,15 @@ export interface Invoice {
   id: number;
   printCount: number;
   source: string;
+  prefix: string;
   uniqueInvoiceNumber: number;
   dianResolutionNumber: string;
   status: number;
   automaticRange: string;
   nit: string;
   name: string;
+  base: number;
+  tax: number;
   total: number;
 }
 

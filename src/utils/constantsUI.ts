@@ -314,7 +314,7 @@ export const TABLE_HEADERS = {
 };
 export const TABLE_PAGINATOR = {
   LIMIT: 10,
-  ROWS_PER_PAGE_OPTIONS: [5, 20, 50, 100],
+  ROWS_PER_PAGE_OPTIONS: [5, 10, 20, 50, 100],
   LABEL_ROWS_PER_PAGE: "Filas por página",
   NEXT_ICON_BUTTON_TEXT: "Siguiente",
   BACK_ICON_BUTTON_TEXT: "Atras",

@@ -18,9 +18,9 @@ export type FilterActions =
 export const filterInitial: FilterState = {
   filterType: "date",
   params: {
-    date: format(new Date(), FORMATS.DATE_TIME_TO_SEND),
-    dateFrom: format(new Date(), FORMATS.DATE_TIME_TO_SEND),
-    dateTo: format(new Date(), FORMATS.DATE_TIME_TO_SEND),
+    created: format(new Date(), FORMATS.DATE_TIME_TO_SEND),
+    createdAfter: format(new Date(), FORMATS.DATE_TIME_TO_SEND),
+    createdBefore: format(new Date(), FORMATS.DATE_TIME_TO_SEND),
   },
 };
 
@@ -33,32 +33,32 @@ export const reducerFilter: React.Reducer<FilterState, FilterActions> = (
       return {
         ...state,
         params: {
-          date:
+          created:
             (action.date &&
               format(new Date(action.date), FORMATS.DATE_TIME_TO_SEND)) ||
-            filterInitial.params.date,
+            filterInitial.params.created,
         },
       };
     case "filterDateRangeFrom":
       return {
         ...state,
         params: {
-          dateTo: state.params.dateTo,
-          dateFrom:
+          createdBefore: state.params.createdBefore,
+          createdAfter:
             (action.date &&
               format(new Date(action.date), FORMATS.DATE_TIME_TO_SEND)) ||
-            filterInitial.params.date,
+            filterInitial.params.created,
         },
       };
     case "filterDateRangeTo":
       return {
         ...state,
         params: {
-          dateTo:
+          createdBefore:
             (action.date &&
               format(new Date(action.date), FORMATS.DATE_TIME_TO_SEND)) ||
-            filterInitial.params.date,
-          dateFrom: state.params.dateFrom,
+            filterInitial.params.created,
+          createdAfter: state.params.createdAfter,
         },
       };
     case "changeFilterType":
