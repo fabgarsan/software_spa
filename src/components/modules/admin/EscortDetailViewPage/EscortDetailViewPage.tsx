@@ -1,5 +1,5 @@
 import React from "react";
-import { InstancesDescriptorKeys, instancesDescriptor } from "@utils/index";
+import { instancesDescriptor, InstancesDescriptorKeys } from "@utils/index";
 import { useReactQueryCRUDGenericApiCall } from "@api/reactQueryApi";
 import { Services } from "./Services";
 import { ImageList } from "./ImageList";
@@ -7,6 +7,8 @@ import { DetailViewGeneric } from "@components/shared";
 import { Escort } from "@dto/escorts";
 import { useParams } from "react-router-dom";
 import { differenceInHours } from "date-fns";
+import { OtpManagement } from "@components/shared/OtpManagement";
+import { Box } from "@mui/material";
 
 const { escort: escortDescriptorKey } = InstancesDescriptorKeys;
 
@@ -50,6 +52,7 @@ export const EscortDetailViewPage: React.FunctionComponent = () => {
         { label: "Ciudad", value: escortData?.cityName || "" },
       ]
     : [];
+  if (!escortData) return <Box>Cargando...</Box>;
   return (
     <DetailViewGeneric
       canView
@@ -59,10 +62,11 @@ export const EscortDetailViewPage: React.FunctionComponent = () => {
       attributes={attributes}
     >
       <Services
-        currentServices={escortData?.services || []}
+        currentServices={escortData.services || []}
         escortId={escortId}
       />
       <ImageList escortId={escortId} />
+      <OtpManagement userId={Number(escortId)} />
     </DetailViewGeneric>
   );
 };

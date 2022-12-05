@@ -6,6 +6,11 @@ import { ExtendedUser } from "@dto/users";
 import { GetPointOfSale } from "@api/pointOfSale";
 import { GetParkingServiceResponse } from "@api/parking";
 import { PointOfSaleWorkShift } from "@dto/pointOfSale";
+import {
+  CreateNewOptCodeRequest,
+  GenerateNewOptCodeResponse,
+  GetOptCodeResponse,
+} from "@api/authenticator";
 
 const client = mainAxiosClient.getInstance();
 
@@ -130,4 +135,30 @@ export const useUploadEscortImageMutation = ({
         if (onSuccessCallBack) onSuccessCallBack();
       },
     }
+  );
+
+export const fetchOptCodesByUser = (
+  userId: number
+): Promise<AxiosResponse<GetOptCodeResponse[]>> =>
+  client.get<GetOptCodeResponse[]>(
+    `${instancesDescriptorUser.apiRoute}${userId}/otp-codes-operation/` || ""
+  );
+
+export const generateNewOptCodeByUser = (
+  userId: number
+): Promise<AxiosResponse<GenerateNewOptCodeResponse>> =>
+  client.get<GenerateNewOptCodeResponse>(
+    `${instancesDescriptorUser.apiRoute}${userId}/generate-otp-codes-operation/` ||
+      ""
+  );
+
+export const createNewOptCodeByUser = (
+  userId: number,
+  data: CreateNewOptCodeRequest
+): Promise<AxiosResponse> =>
+  client.post<null, AxiosResponse, CreateNewOptCodeRequest>(
+    `${instancesDescriptorUser.apiRoute}${userId}/otp-codes-operation/` ||
+      "" ||
+      "",
+    data
   );

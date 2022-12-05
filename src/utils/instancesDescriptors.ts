@@ -12,6 +12,7 @@ export enum InstancesDescriptorKeys {
   parkingService,
   parkingPlanRate,
   vehicleType,
+  authenticator,
   pointOfSale,
   pointOfSaleWorkShift,
   printer,
@@ -215,6 +216,14 @@ export const instancesDescriptor: Record<
       generic: buildGenericPermissionInstanceDescriptor("printer"),
     },
     apiRoute: "sys-configuration-printers/",
+  },
+  [InstancesDescriptorKeys.authenticator]: {
+    plural: "Codigos OTP",
+    singular: "Codigo OTP",
+    permissions: {
+      generic: buildGenericPermissionInstanceDescriptor("otpcode"),
+    },
+    apiRoute: "auth-otp-generate-new-code/",
   },
 };
 export type GenericPermission = {
